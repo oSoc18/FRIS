@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="jquery.soap.js"></script>
+
+<body>
+    <h1>Demo page for Fris project</h1>
+    <script>
+        $(document).ready(function () {
+		//ugly test
+
+            var objXMLHttpRequest = new XMLHttpRequest();
+            objXMLHttpRequest.open("POST", "https://frisr3.researchportal.be/ws/",
+                true);
+            var packet =
+                '<?xml version="1.0" encoding="utf-8" ?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><getVersion xmlns="http://service.web.com.crunchify/"></getVersion></soap:Body></soap:Envelope>';
+
+            var parameters = "name=Mohamed";
+
+            objXMLHttpRequest.onreadystatechange = function () {
+                if (objXMLHttpRequest.readyState == 4 && objXMLHttpRequest.status == 200) {
+                    result = objXMLHttpRequest.responseXML;
+                    alert(objXMLHttpRequest.responseText);
+                    alert(objXMLHttpRequest.responseXML);
+                }
+            }
+            objXMLHttpRequest.send(parameters);
+
+            // Add mentioned below code only if your application calls webservice synchronously. Otherwise use "onreadystatechange" process response.
+            response = objXMLHttpRequest.responseXML; 
+
+            alert(objXMLHttpRequest.responseText + "  " + response);
+            
+        });
+    </script>
+
+</body>
+
+</html>
