@@ -6,39 +6,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="jquery.soap.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+
+</style>
 
 <body>
     <h1>Demo page for Fris project</h1>
+    <div id="demo"></div>
+    <svg id="canvas" width="1000" height="400">
+        <circle cx="300" cy="70" r="40" fill="green" />
+
+        <circle cx="150" cy="70" r="40" fill="purple" />
+
+    </svg>
     <script>
-        $(document).ready(function () {
-		//ugly test
+        var svg = d3.select("svg");
 
-            var objXMLHttpRequest = new XMLHttpRequest();
-            objXMLHttpRequest.open("POST", "https://frisr3.researchportal.be/ws/",
-                true);
-            var packet =
-                '<?xml version="1.0" encoding="utf-8" ?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><getVersion xmlns="http://service.web.com.crunchify/"></getVersion></soap:Body></soap:Envelope>';
+        function init() {
 
-            var parameters = "name=Mohamed";
+            $.ajaxSetup({
+                async: false
+            });
 
-            objXMLHttpRequest.onreadystatechange = function () {
-                if (objXMLHttpRequest.readyState == 4 && objXMLHttpRequest.status == 200) {
-                    result = objXMLHttpRequest.responseXML;
-                    alert(objXMLHttpRequest.responseText);
-                    alert(objXMLHttpRequest.responseXML);
-                }
+            var svg = d3.select("svg"),
+                margin = 200,
+                width = svg.attr("width"),
+                height = svg.attr("height"),
+                g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")"),
+                jsonData = rJSON('/static/research_outputs.json');
+
+            //console.log(jsonData.real - time);
+            //positioningText(jsonData);
+            var text = jsonData.sustainability;
+            var result = [];
+            for (var i in text) {
+                result.push([i, text[i]]);
+                createText(svg, text[i], i);
+
+
             }
-            objXMLHttpRequest.send(parameters);
+            console.log(result);
 
-            // Add mentioned below code only if your application calls webservice synchronously. Otherwise use "onreadystatechange" process response.
-            response = objXMLHttpRequest.responseXML; 
+            //  var circles = d3.select("canvas").selectAll('circle').data(rJSON());
+        }
 
-            alert(objXMLHttpRequest.responseText + "  " + response);
-            
-        });
+        function createText(svg, text, orientation) {
+            svg.append("text")
+                .attr("x", function (data, i) {
+                    return i * orientation
+                })
+                .attr("y", function (data, i) {
+                    return (i + orientation) + 90
+                })
+                .attr("font-size", "10px")
+                .attr("class", "title")
+                .text(text);
+
+        }
+
+
+
+        // read the file and return data
+        function rJSON(file) {
+            var result;
+            $.getJSON(file, {}, function (data) {
+                result = data;
+            });
+            return result;
+
+        }
+
+        function pJSON(file) {
+            return JSON.parse(file);
+        }
+
+
+        $(document).ready(init);
     </script>
 
 </body>
