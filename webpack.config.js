@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
@@ -8,11 +9,13 @@ const config = {
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/static/'
     },
     context: path.resolve(__dirname, 'src'),
     devServer: {
         port: 3000,
+
     },
     devtool: 'inline-source-map',
     plugins: [
