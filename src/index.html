@@ -11,20 +11,29 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <style>
-
 </style>
 
 <body>
-    <h1>Demo page for Fris project</h1>
-    <div id="demo"></div>
-    <svg id="canvas" width="1000" height="400">
-        <circle cx="300" cy="70" r="40" fill="green" />
-
-        <circle cx="150" cy="70" r="40" fill="purple" />
+    <div class="center">
+        <h1 class>Demo page for Fris project</h1>
+    </div>
+    <div id="demo">
+        <input type="search" name="search" id="search_id" class="center" placeholder="Demo element : yeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah">
+    </div>
+    <svg id="canvas">
 
     </svg>
     <script>
         var svg = d3.select("svg");
+        var keywordDetailled = ["IA", "Machine learning", "Pacman"]
+        var root = {
+            "name": "IA stuff",
+            "children": ["AgglomerativeCluster",
+                "CommunityStructure",
+                "HierarchicalCluster",
+                "Don't click me"
+            ]
+        };
 
         function init() {
 
@@ -33,41 +42,189 @@
             });
 
             var svg = d3.select("svg"),
-                margin = 200,
                 width = svg.attr("width"),
                 height = svg.attr("height"),
                 g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")"),
-                jsonData = rJSON('/static/research_outputs.json');
+                jsonData = rJSON('/static/research_outputs.json'),
+                text = jsonData.wavelets,
+                result = [];
+            var radius = 50;
+            var side = 2 * radius * Math.cos(Math.PI / 4),
+                dx = radius - side / 2;
 
-            //console.log(jsonData.real - time);
-            //positioningText(jsonData);
-            var text = jsonData.sustainability;
-            var result = [];
+            var g = svg.append('g')
+                .attr('transform', 'translate(' + [dx, dx] + ')');
+            //first element
+            svg.append("line")
+                .attr("x1", 1120)
+                .attr("x2", 750)
+                .attr("y1", 350)
+                .attr("y2", 350)
+                .attr("stroke", "black")
+
+
+            svg.append("text")
+                .text(text[0])
+                .attr("x", 1300)
+                .attr("y", 350)
+                .attr("class", "text")
+                .style('pointer-events', 'auto')
+                .on("click", function () {
+                    d3.event.stopPropagation();
+                    var element = d3.select(this);
+                    element.attr("class", "keyword-main");
+                    createTextToNodes(element, keywordDetailled);
+
+                })
+            //second element
+            svg.append("line")
+                .attr("x1", 560)
+                .attr("x2", 750)
+                .attr("y1", 350)
+                .attr("y2", 350)
+                .attr("stroke", "black")
+
+
+            svg.append("text")
+                .text(text[1])
+                .attr("x", 300)
+                .attr("y", 350)
+                .attr("class", "text")
+                .style('pointer-events', 'auto')
+                .on("click", function () {
+                    d3.event.stopPropagation();
+                    var element = d3.select(this);
+                    element.attr("class", "keyword-main");
+                    createTextToNodes(element, keywordDetailled);
+
+                })
+            svg.append("line")
+                .attr("x1", 750)
+                .attr("x2", 750)
+                .attr("y1", 350)
+                .attr("y2", 550)
+                .attr("stroke", "black")
+
+
+            svg.append("text")
+                .text(root.name)
+                .attr("x", 750)
+                .attr("y", 560)
+                .attr("class", "text")
+                .style('pointer-events', 'auto')
+                .on("click", function () {
+                    d3.event.stopPropagation();
+                    var element = d3.select(this);
+                    element.attr("class", "keyword-main");
+                    createTextToNodes(element, root);
+
+                })
+            svg.append("line")
+                .attr("x1", 750)
+                .attr("x2", 750)
+                .attr("y1", 350)
+                .attr("y2", 110)
+                .attr("stroke", "black")
+
+
+            svg.append("text")
+                .text(text[3])
+                .attr("x", 750)
+                .attr("y", 100)
+                .attr("class", "text")
+                .style('pointer-events', 'auto')
+                .on("click", function () {
+                    d3.event.stopPropagation();
+                    var element = d3.select(this);
+                    element.attr("class", "keyword-main");
+                    createTextToNodes(element, keywordDetailled);
+
+                })
+            //Normally we use this
+            /*
             for (var i in text) {
                 result.push([i, text[i]]);
+                console.log(text[i])
                 createText(svg, text[i], i);
-
-
             }
-            console.log(result);
+            */
+            svg.append("circle")
+                .attr("r", 40)
+                .attr("cx", 750)
+                .attr("cy", 350)
+                .attr("fill", "orangered");
+            svg.append("text")
+                .attr("x", 750)
+                .attr("y", 350)
+                .text("Organization")
+                .style("fill", "#eee")
 
-            //  var circles = d3.select("canvas").selectAll('circle').data(rJSON());
         }
 
         function createText(svg, text, orientation) {
+            var positionX = orientation * 300 + 400;
+            var positionY = orientation * 100 + 100;
+            var radiusCircle = 50;
+            //This positionning is only for the demo 
+            //it's static but we don't care about that until the demo is finish
+            //Huhuhu
+
+
+
+            //Old version, I need to randomize the positionning
+            /* 
+            svg.append("line")
+                .attr("x1", positionX)
+                .attr("x2", 750)
+                .attr("y1", positionY)
+                .attr("y2", 350)
+                .attr("stroke", "black")
+
+
             svg.append("text")
-                .attr("x", function (data, i) {
-                    return i * orientation
+                .text(text)
+                .attr("x", positionX)
+                .attr("y", positionY)
+                .attr("class", "text")
+                .style('pointer-events', 'auto')
+                .on("click", function () {
+                    d3.event.stopPropagation();
+                    var element = d3.select(this);
+                    element.attr("class", "keyword-main");
+                    createTextToNodes(element, keywordDetailled);
+
                 })
-                .attr("y", function (data, i) {
-                    return (i + orientation) + 90
-                })
-                .attr("font-size", "10px")
-                .attr("class", "title")
-                .text(text);
+                */
 
         }
 
+        function createTextToNodes(element, keywordDetailled) {
+            //return the coordinates of the element
+            var positionX = element.attr("x");
+            var positionY = element.attr("y");
+            var count = 1; //size of array
+            var svg = d3.select("svg");
+            for (var i = 0; i < keywordDetailled.children.length; i++) {
+                svg.append("line")
+                    .attr("x1", positionX)
+                    .attr("x2", (positionX / 2) + (i * 250))
+                    .attr("y1", positionY - 20)
+                    .attr("y2", positionY - 50)
+                    .attr("stroke", "grey");
+                svg.append("text")
+                    .text(keywordDetailled.children[i])
+                    .attr("x", (positionX / 2) + (i * 250))
+                    .attr("y", positionY - 50)
+                    .attr("class", "text")
+                    .style('pointer-events', 'auto')
+                    .on("click", function () {
+                        d3.event.stopPropagation();
+                        alert("I SAY :  DON'T CLICK ME ! ")
+
+                    })
+            }
+
+        }
 
 
         // read the file and return data

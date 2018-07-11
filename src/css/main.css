@@ -30,5 +30,80 @@
 }
 
 .title {
-    font-weight: bold;
+    fill: #222;
+    font-size: 14px;
+    font-weight: 200;
 }
+
+.left {
+    margin-bottom: 25%;
+}
+
+.circle {
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    background: #1e272e;
+    padding: 3em;
+}
+
+.link {
+    stroke: #999;
+    stroke-width: 1.1px;
+    stroke-opacity: .7;
+}
+
+text {
+    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+    pointer-events: none;
+    font-weight: 200;
+}
+
+.node:hover circle {
+    fill: orange;
+}
+
+.keyword-main {
+    font: 20px "Roboto", "Lato", Arial, sans-serif;
+    font-weight: 200;
+    color: #323211;
+    overflow: hidden;
+}
+
+.center {
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+}
+
+.node {
+    cursor: pointer;
+}
+
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.node text {
+    font: 10px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+}
+
+body {
+    overflow: hidden;
+}
+
+#canvas {
+    width: 1900px;
+    height: 1080px;
+}
+
+    
