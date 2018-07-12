@@ -1,42 +1,62 @@
 .node circle {
-    fill: #999;
+    fill: #999
 }
 
 .node text {
-    font: 10px sans-serif;
+    font: 10px sans-serif
 }
 
 .node--internal circle {
-    fill: #555;
+    fill: #555
 }
 
 .node--internal text {
-    text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+    text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff
+}
+
+.outline {
+    margin: 0 auto;
+    width: 60%;
+    margin-bottom: 2em
+}
+
+.titletext {
+    display: flex;
+    color: #72c5f7;
+    align-items: center;
+    justify-content: center;
+    position: relative
 }
 
 .link {
     fill: none;
     stroke: #555;
-    stroke-opacity: 0.4;
-    stroke-width: 1.5px;
+    stroke-opacity: .4;
+    stroke-width: 1.5px
 }
 
 .bar {
-    fill: green;
+    fill: green
+}
+
+html,
+body {
+    width: 1900px;
+    height: 1080px
 }
 
 .highlight {
-    fill: red;
+    fill: red
 }
 
 .title {
     fill: #222;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: 200
 }
 
 .left {
-    margin-bottom: 25%;
+    margin-bottom: 25%
 }
 
 .circle {
@@ -44,66 +64,158 @@
     color: #fff;
     text-align: center;
     background: #1e272e;
-    padding: 3em;
+    padding: 3em
 }
 
 .link {
     stroke: #999;
     stroke-width: 1.1px;
-    stroke-opacity: .7;
+    stroke-opacity: .7
 }
 
 text {
     font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-anchor: middle;
     pointer-events: none;
+    font-weight: 200
+}
+
+.textFadeIn {
+    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+    pointer-events: none;
     font-weight: 200;
+    -webkit-animation: fadein 1s;
+    -moz-animation: fadein 1s;
+    -ms-animation: fadein 1s;
+    -o-animation: fadein 1s;
+    animation: fadein 1s
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
 }
 
 .node:hover circle {
-    fill: orange;
+    fill: orange
 }
 
 .keyword-main {
-    font: 20px "Roboto", "Lato", Arial, sans-serif;
+    font: 20px Roboto, Lato, Arial, sans-serif;
     font-weight: 200;
     color: #323211;
-    overflow: hidden;
+    overflow: hidden
 }
 
 .center {
     width: 90%;
     display: block;
     margin: 0 auto;
+    height: 40px
 }
 
 .node {
-    cursor: pointer;
+    cursor: pointer
 }
 
 .node circle {
     fill: #fff;
-    stroke: steelblue;
-    stroke-width: 1.5px;
+    stroke: #4682b4;
+    stroke-width: 1.5px
 }
 
 .node text {
-    font: 10px sans-serif;
+    font: 10px sans-serif
 }
 
 .link {
     fill: none;
     stroke: #ccc;
-    stroke-width: 1.5px;
+    stroke-width: 1.5px
 }
 
 body {
-    overflow: hidden;
+    overflow: hidden
 }
 
 #canvas {
-    width: 1900px;
-    height: 1080px;
+    margin-top: 3%;
+    margin-left: 10%;
+    width: 80%;
+    height: 70%
 }
 
-    
+path {
+    fill: none;
+    stroke: #999
+}
+
+input[type=search] {
+    background-color: #eee;
+    border: none;
+    color: #000;
+    box-shadow: 1px;
+    border-radius: 40px;
+    display: block;
+    margin: 0 auto
+}
+
+.borderCircle {
+    box-shadow: 10px 5px 5px #be3402
+}
+
+.search {
+    flex: 0 0 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative
+}
+
+.search__input {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    border: none;
+    padding: .7rem 2rem;
+    border-radius: 100px;
+    width: 70%;
+    transition: all .2s;
+    margin-right: -3.25rem
+}
+
+.search__input:focus {
+    outline: none;
+    width: 80%
+}
+
+.search__input::-webkit-input-placeholder {
+    font-weight: 100
+}
+
+.search__box {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    background-color: #fff;
+    padding: .5rem 1rem;
+    border: none;
+    max-height: 0;
+    left: 0;
+    overflow: hidden
+}
+
+.information {
+    width: 300px;
+    float: left;
+    background-color: red
+}
+
+hr {
+    color: #7f8fa6
+}

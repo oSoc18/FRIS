@@ -8,26 +8,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/main.css">
 </head>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<style>
-</style>
+<script src="js/jquery.js"></script>
+<script src="js/d3.v5.min.js"></script>
+<script src="js/function.js"></script>
 
 <body>
-    <div class="center">
-        <h1 class>Demo page for Fris project</h1>
+    <div class="titletext">
+        <h1 class>Demo page for FRIS - Flanders Research Information Space</h1>
+
     </div>
+    <hr class="outline">
+
     <div id="demo">
-        <input type="search" name="search" id="search_id" class="center" placeholder="Demo element : yeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah">
+
+        <input type="search" name="search" id="search_id" class="search__input" placeholder="Keyword : UGent">
     </div>
+    <span></span>
     <svg id="canvas">
 
     </svg>
+
     <script>
         var svg = d3.select("svg");
         var keywordDetailled = ["IA", "Machine learning", "Pacman"]
         var root = {
-            "name": "IA stuff",
+            "name": "IA",
+            "long_name": "Intelligence artificial",
             "children": ["AgglomerativeCluster",
                 "CommunityStructure",
                 "HierarchicalCluster",
@@ -36,27 +42,24 @@
         };
 
         function init() {
-
             $.ajaxSetup({
                 async: false
             });
-
             var svg = d3.select("svg"),
                 width = svg.attr("width"),
                 height = svg.attr("height"),
                 g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")"),
-                jsonData = rJSON('/static/research_outputs.json'),
+                jsonData = readJSON('/static/research_outputs.json'),
                 text = jsonData.wavelets,
                 result = [];
             var radius = 50;
             var side = 2 * radius * Math.cos(Math.PI / 4),
                 dx = radius - side / 2;
-
             var g = svg.append('g')
                 .attr('transform', 'translate(' + [dx, dx] + ')');
             //first element
             svg.append("line")
-                .attr("x1", 1120)
+                .attr("x1", 1065)
                 .attr("x2", 750)
                 .attr("y1", 350)
                 .attr("y2", 350)
@@ -64,21 +67,21 @@
 
 
             svg.append("text")
-                .text(text[0])
-                .attr("x", 1300)
-                .attr("y", 350)
+                .text(wrapWord(text[0]))
+                .attr("x", 1120)
+                .attr("y", 355)
                 .attr("class", "text")
                 .style('pointer-events', 'auto')
                 .on("click", function () {
                     d3.event.stopPropagation();
                     var element = d3.select(this);
                     element.attr("class", "keyword-main");
-                    createTextToNodes(element, keywordDetailled);
+                    createTextToNodes(element, root);
 
                 })
             //second element
             svg.append("line")
-                .attr("x1", 560)
+                .attr("x1", 455)
                 .attr("x2", 750)
                 .attr("y1", 350)
                 .attr("y2", 350)
@@ -86,30 +89,9 @@
 
 
             svg.append("text")
-                .text(text[1])
-                .attr("x", 300)
-                .attr("y", 350)
-                .attr("class", "text")
-                .style('pointer-events', 'auto')
-                .on("click", function () {
-                    d3.event.stopPropagation();
-                    var element = d3.select(this);
-                    element.attr("class", "keyword-main");
-                    createTextToNodes(element, keywordDetailled);
-
-                })
-            svg.append("line")
-                .attr("x1", 750)
-                .attr("x2", 750)
-                .attr("y1", 350)
-                .attr("y2", 550)
-                .attr("stroke", "black")
-
-
-            svg.append("text")
-                .text(root.name)
-                .attr("x", 750)
-                .attr("y", 560)
+                .text(wrapWord(text[1]))
+                .attr("x", 410)
+                .attr("y", 355)
                 .attr("class", "text")
                 .style('pointer-events', 'auto')
                 .on("click", function () {
@@ -123,12 +105,34 @@
                 .attr("x1", 750)
                 .attr("x2", 750)
                 .attr("y1", 350)
+                .attr("y2", 640)
+                .attr("stroke", "black")
+
+
+            svg.append("text")
+                .text(wrapWord(text[3]))
+                .attr("x", 750)
+                .attr("y", 655)
+                .attr("class", "text")
+                .style('pointer-events', 'auto')
+                .on("click", function () {
+                    d3.event.stopPropagation();
+                    var element = d3.select(this);
+                    element.attr("class", "keyword-main");
+
+                    createTextToNodes(element, root);
+
+                })
+            svg.append("line")
+                .attr("x1", 750)
+                .attr("x2", 750)
+                .attr("y1", 350)
                 .attr("y2", 110)
                 .attr("stroke", "black")
 
 
             svg.append("text")
-                .text(text[3])
+                .text(root.name)
                 .attr("x", 750)
                 .attr("y", 100)
                 .attr("class", "text")
@@ -137,7 +141,8 @@
                     d3.event.stopPropagation();
                     var element = d3.select(this);
                     element.attr("class", "keyword-main");
-                    createTextToNodes(element, keywordDetailled);
+                    element.text(root.long_name);
+                    createTextToNodes(element, root);
 
                 })
             //Normally we use this
@@ -149,10 +154,11 @@
             }
             */
             svg.append("circle")
-                .attr("r", 40)
+                .attr("r", 50)
                 .attr("cx", 750)
                 .attr("cy", 350)
-                .attr("fill", "orangered");
+                .attr("fill", "orangered")
+                .attr("class", "borderCircle");
             svg.append("text")
                 .attr("x", 750)
                 .attr("y", 350)
@@ -204,44 +210,29 @@
             var positionY = element.attr("y");
             var count = 1; //size of array
             var svg = d3.select("svg");
+
             for (var i = 0; i < keywordDetailled.children.length; i++) {
+
                 svg.append("line")
                     .attr("x1", positionX)
                     .attr("x2", (positionX / 2) + (i * 250))
                     .attr("y1", positionY - 20)
                     .attr("y2", positionY - 50)
+                    .attr("class", "textFadeIn")
                     .attr("stroke", "grey");
                 svg.append("text")
                     .text(keywordDetailled.children[i])
                     .attr("x", (positionX / 2) + (i * 250))
                     .attr("y", positionY - 50)
-                    .attr("class", "text")
+                    .attr("class", "textFadeIn")
                     .style('pointer-events', 'auto')
                     .on("click", function () {
                         d3.event.stopPropagation();
-                        alert("I SAY :  DON'T CLICK ME ! ")
-
-                    })
+                        alert("\t¯\\_(ツ)_/¯\nDON'T CLICK ME !")
+                    });
             }
 
         }
-
-
-        // read the file and return data
-        function rJSON(file) {
-            var result;
-            $.getJSON(file, {}, function (data) {
-                result = data;
-            });
-            return result;
-
-        }
-
-        function pJSON(file) {
-            return JSON.parse(file);
-        }
-
-
         $(document).ready(init);
     </script>
 
