@@ -46,12 +46,27 @@ body {
 }
 
 #body {
+  /*
     display: flex;
     justify-content: center;
     flex-direction: column;
-    text-align: center; 
+    text-align: center;
+  */
 }
 
+svg{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+a{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
 .highlight {
     fill: red
 }
@@ -146,9 +161,6 @@ text {
     stroke-width: 1.5px
 }
 
-body {
-    overflow: hidden
-}
 
 #canvas {
     margin-top: 3%;
@@ -247,7 +259,109 @@ hr {
     stroke-width: 1.5px;
 }
 
+svg {
+    margin: auto auto;
+}
 
-svg{
-    margin:auto auto;
+.popup {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+}
+
+@supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+    .popup {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}
+
+.popup__content {
+    width: 66.6666667%;
+    height: 80%;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 3rem 5rem;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    background-color: #fff;
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.25);
+    transition: all .5s .2s;
+}
+
+.popup__scrollcontent {
+    height: 100%;
+    overflow: auto;
+}
+
+.popup__top {
+    width: 100%;
+    float: left;
+    vertical-align: middle;
+    padding-left: 3rem;
+    padding-top: 3rem;
+}
+
+.popup__left {
+    width: 50%;
+    float: left;
+    vertical-align: middle;
+    padding: 3rem;
+}
+
+
+.popup__right {
+    width: 50%;
+    float: right;
+    vertical-align: middle;
+    padding: 3rem;
+}
+.popup__text {
+    font-size: 1.4rem;
+    margin-bottom: 4rem;
+}
+
+.popup:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup:target .popup__content {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup__close:link,
+.popup__close:visited {
+    color: #777;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    font-size: 3rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+    line-height: 1;
+}
+
+.popup__close:hover {
+    color: #55c57a;
+}
+
+li {
 }

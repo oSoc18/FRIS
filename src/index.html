@@ -7,10 +7,13 @@
     <title>Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/function.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </head>
-<script src="js/jquery.js"></script>
-<script src="js/d3.v3.min.js"></script>
-<script src="js/function.js"></script>
+
 
 <body id="body">
     <div class="titletext">
@@ -23,6 +26,8 @@
 
         <input type="search" name="search" id="search_id" class="search__input" placeholder="Keyword : UGent">
     </div>
+    <a href="#popup">Learn more</a>
+
     <script>
         var svg = d3.select("svg");
         var keywordDetailled = ["IA", "Machine learning", "Pacman"]
@@ -48,7 +53,7 @@
             "name": "EDM",
             "children": [{
                 "name": "IA",
-                "long_name":"Intelligence Artificial",
+                "long_name": "Intelligence Artificial",
                 "children": [{
                     "name": "Machine learning",
                     "children": [{
@@ -86,7 +91,7 @@
                         "size": 7074
                     }]
                 }]
-            },{
+            }, {
                 "name": "flex",
                 "children": [{
                     "name": "FlareVis",
@@ -121,7 +126,7 @@
                 }]
             }, {
                 "name": "IA",
-                "long_name":"Intelligence Artificial",
+                "long_name": "Intelligence Artificial",
                 "children": [{
                     "name": "Machine",
                     "children": [{
@@ -145,7 +150,7 @@
             duration = 750,
             rectW = 60,
             rectH = 30;
-
+      
         var tree = d3.layout.tree().nodeSize([70, 40]);
         var diagonal = d3.svg.diagonal()
             .projection(function (d) {
@@ -328,4 +333,57 @@
 
 </body>
 
+<div class="popup" id="popup">
+        <a href="#section-tours" class="popup__close">&times;</a>
+        <div class="popup__content">
+            <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
+            <div class="popup__scrollcontent">
+                <div class="popup__top">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
+                    <p class="popup__text">
+
+                        <li>Universiteit Hasselt</li>
+                        <li>Wetenschapspark 2</li>
+                        <li>3590 Diepenbeek, Belgium</li>
+
+                    </p>
+                </div>
+                <div class="popup__left">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Projects</h3>
+                    <p class="popup__text">
+
+                        <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
+                        <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
+                        <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut</li>
+                        <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
+                        <li>IBBT Art&#38;D project: Photography beyond the still image (Photography and Kinetography)</li>
+                        <li>FWO-project: CoLaSUE: Contextbewuste basisinfrastructuur voor locale diensten in grootschalige Ubicomp
+                            omgevingen
+                        </li>
+                        <li>Het transformeren van human interface designs via model-driven engineering</li>
+
+                    </p>
+                </div>
+
+                <div class="popup__right">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
+                    <p class="popup__text">
+
+                        <li>Frank Van Reeth</li>
+                        <li>Philippe Bekaert</li>
+                        <li>Bram Bonne</li>
+                        <li>Jens Brulmans</li>
+                        <li>Johan Claer</li>
+                        <li>Karin Coninx</li>
+                        <li>Sven Coppers</li>
+                        <li>Fredy Cuenca Lucero</li>
+                        <li>Tom De Weyer</li>
+                        <li>Fabian Di Fiore</li>
+                        <li>...</li>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </html>
