@@ -46,7 +46,7 @@ body {
 }
 
 #body {
-  /*
+    /*
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -54,19 +54,20 @@ body {
   */
 }
 
-svg{
+svg {
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-align: center;
 }
 
-a{
+a {
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-align: center;
 }
+
 .highlight {
     fill: red
 }
@@ -93,13 +94,6 @@ a{
     stroke: #999;
     stroke-width: 1.1px;
     stroke-opacity: .7
-}
-
-text {
-    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-anchor: middle;
-    pointer-events: none;
-    font-weight: 200
 }
 
 .textFadeIn {
@@ -161,12 +155,10 @@ text {
     stroke-width: 1.5px
 }
 
-
 #canvas {
-    margin-top: 3%;
-    margin-left: 10%;
-    width: 80%;
-    height: 70%
+    margin: 0 auto;
+    overflow: auto;
+    display: block;
 }
 
 path {
@@ -181,11 +173,23 @@ input[type=search] {
     box-shadow: 1px;
     border-radius: 40px;
     display: block;
-    margin: 0 auto
+    margin: 0 auto;
+    padding: 17px;
+    padding-left: 55px;
+    font-size: 13px;
+    color: gray;
+    background-image: url('http://i47.tinypic.com/r02vbq.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    outline: 0;
 }
 
 .borderCircle {
     box-shadow: 10px 5px 5px #be3402
+}
+
+.margin-content {
+    margin: 20px;
 }
 
 .search {
@@ -260,7 +264,7 @@ hr {
 }
 
 svg {
-    margin: auto auto;
+    margin: 0 auto;
 }
 
 .popup {
@@ -324,13 +328,13 @@ svg {
     padding: 3rem;
 }
 
-
 .popup__right {
     width: 50%;
     float: right;
     vertical-align: middle;
     padding: 3rem;
 }
+
 .popup__text {
     font-size: 1.4rem;
     margin-bottom: 4rem;
@@ -363,5 +367,66 @@ svg {
     color: #55c57a;
 }
 
-li {
+.node {
+    cursor: pointer;
+}
+
+.overlay {
+    background-color: #EEE;
+}
+
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.node text {
+    font-size: 10px;
+    font-family: sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+}
+
+.templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+}
+
+.ghostCircle.show {
+    display: block;
+}
+
+.ghostCircle,
+.activeDrag .ghostCircle {
+    display: none;
+}
+
+.node {
+    cursor: pointer;
+}
+
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.node text {
+    font: 10px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+}
+
+.img-head {
+    max-width: 40px;
 }

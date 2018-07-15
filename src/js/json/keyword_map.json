@@ -1,0 +1,34 @@
+{
+    "name": "UCL",
+    "keyword": [{
+            "id": 1,
+            "name": "IA",
+            "number": 100
+        },
+        {
+            "id": 2,
+            "name": "Databse",
+            "number": 50
+        },
+        {
+            "id": 3,
+            "name": "Machine learning",
+            "number": 200
+        },
+        {
+            "id": 4,
+            "name": "Public health",
+            "number": 100
+        },
+        {
+            "id": 5,
+            "name": "Robotic",
+            "number": 100
+        },
+        {
+            "id": 6,
+            "name": "Science",
+            "number": 100
+        }
+    ]
+}

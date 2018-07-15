@@ -1,0 +1,31 @@
+{
+    "name": "Me",
+    "size": 200000,
+    "link": "http://google.com",
+    "children": [{
+            "name": "Person 01",
+            "size": 150000,
+            "link": "http://google.com"
+        },
+        {
+            "name": "Person 02",
+            "size": 150000,
+            "link": "http://yahoo.com"
+        },
+        {
+            "name": "Person 03",
+            "size": 150000,
+            "link": "http://youtube.com"
+        },
+        {
+            "name": "Person 04",
+            "size": 150000,
+            "link": "http://twitter.com"
+        },
+        {
+            "name": "Person 05",
+            "size": 150000,
+            "link": "http://facebook.com"
+        }
+    ]
+}

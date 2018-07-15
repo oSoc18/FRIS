@@ -1,0 +1,149 @@
+{
+    "name": "UGent",
+    "children": [{
+            "name": "analytics",
+            "children": [{
+                    "name": "cluster",
+                    "children": [{
+                            "name": "AgglomerativeCluster",
+                            "size": 3938
+                        },
+                        {
+                            "name": "CommunityStructure",
+                            "size": 3812
+                        },
+                        {
+                            "name": "HierarchicalCluster",
+                            "size": 6714
+                        },
+                        {
+                            "name": "MergeEdge",
+                            "size": 743
+                        }
+                    ]
+                },
+                {
+                    "name": "graph",
+                    "children": [{
+                            "name": "BetweennessCentrality",
+                            "size": 3534
+                        },
+                        {
+                            "name": "LinkDistance",
+                            "size": 5731
+                        },
+                        {
+                            "name": "MaxFlowMinCut",
+                            "size": 7840
+                        },
+                        {
+                            "name": "ShortestPaths",
+                            "size": 5914
+                        },
+                        {
+                            "name": "SpanningTree",
+                            "size": 3416
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "name": "data",
+            "children": [{
+                "name": "converters",
+                "children": [{
+                        "name": "Converters",
+                        "size": 721
+                    },
+                    {
+                        "name": "DelimitedTextConverter",
+                        "size": 4294
+                    },
+                    {
+                        "name": "GraphMLConverter",
+                        "size": 9800
+                    },
+                    {
+                        "name": "IDataConverter",
+                        "children": [{
+                                "name": "Converters",
+                                "size": 721
+                            },
+                            {
+                                "name": "DelimitedTextConverter",
+                                "size": 4294
+                            },
+                            {
+                                "name": "GraphMLConverter",
+                                "size": 9800
+                            },
+                            {
+                                "name": "IDataConverter",
+                                "size": 1314
+                            },
+                            {
+                                "name": "JSONConverter",
+                                "size": 2220
+                            }
+                        ],
+                        "size": 1314
+                    },
+                    {
+                        "name": "JSONConverter",
+                        "size": 2220
+                    }
+                ]
+            }]
+        },
+        {
+            "name": "display",
+            "children": [{
+                    "name": "DirtySprite",
+                    "size": 8833
+                },
+                {
+                    "name": "LineSprite",
+                    "size": 1732
+                },
+                {
+                    "name": "RectSprite",
+                    "size": 3623
+                },
+                {
+                    "name": "TextSprite",
+                    "size": 10066
+                }
+            ]
+        },
+        {
+            "name": "query",
+            "children": [{
+                    "name": "AggregateExpression",
+                    "size": 1616
+                },
+                {
+                    "name": "And",
+                    "size": 1027
+                },
+                {
+                    "name": "Arithmetic",
+                    "size": 3891
+                },
+                {
+                    "name": "Average",
+                    "size": 891
+                },
+                {
+                    "name": "BinaryExpression",
+                    "size": 2893
+                },
+                {
+                    "name": "Comparison",
+                    "size": 5103
+                }
+            ]
+        }
+    ]
+}

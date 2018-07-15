@@ -1,0 +1,99 @@
+{
+    "name": "EDM",
+    "school": "UCL",
+    "children": [{
+        "name": "IA",
+        "long_name": "Intelligence Artificial",
+        "school": "ULB",
+        "children": [{
+            "name": "Machine learning",
+            "children": [{
+                "name": "Heuristic Evaluation Functions",
+                "size": 3938
+            }, {
+                "name": "Pure Heuristic Search",
+                "size": 3812
+            }, {
+                "name": "Greedy Best First Search",
+                "size": 6714
+            }]
+        }, {
+            "name": "graph",
+            "children": [{
+                "name": "BetweennessCentrality",
+                "size": 3534
+            }, {
+                "name": "LinkDistance",
+                "size": 5731
+            }, {
+                "name": "MaxFlowMinCut",
+                "size": 7840
+            }, {
+                "name": "ShortestPaths",
+                "size": 5914
+            }, {
+                "name": "SpanningTree",
+                "size": 3416
+            }]
+        }, {
+            "name": "optimization",
+            "children": [{
+                "name": "AspectRatioBanker",
+                "size": 7074
+            }]
+        }]
+    }, {
+        "name": "flex",
+        "children": [{
+            "name": "FlareVis",
+            "size": 4116
+        }]
+    }, {
+        "name": "physics",
+        "children": [{
+            "name": "DragForce",
+            "size": 1082
+        }, {
+            "name": "GravityForce",
+            "size": 1336
+        }, {
+            "name": "IForce",
+            "size": 319
+        }, {
+            "name": "NBodyForce",
+            "size": 10498
+        }, {
+            "name": "Particle",
+            "size": 2822
+        }, {
+            "name": "Simulation",
+            "size": 9983
+        }, {
+            "name": "Spring",
+            "size": 2213
+        }, {
+            "name": "SpringForce",
+            "size": 1681
+        }]
+    }, {
+        "name": "IA",
+        "long_name": "Intelligence Artificial",
+        "school": "UCL",
+        "children": [{
+            "name": "Machine",
+            "children": [{
+                "name": "Heuristic",
+                "size": 3938
+            }, {
+                "name": "Search 1",
+                "size": 3812
+            }, {
+                "name": "Search 2",
+                "size": 6714
+            }]
+        }, {
+            "name": "Visualization",
+            "size": 16540
+        }]
+    }]
+}

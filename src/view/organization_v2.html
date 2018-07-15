@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hot topics by organization</title>
+
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="../js/jquery.js"></script>
+    <script src="../js/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="../js/function.js"></script>
+
+    <style>
+        #body {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        svg {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            display: block;
+            overflow: visible;
+            box-shadow: 0px -0px 10000px transparent/*trick for chrome*/
+        }
+    </style>
+</head>
+
+<body id="body">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"><img class="img-head" src="/src/css/img/fris.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/src">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="organization.html">Tree view</a>
+                </li>
+                <li class="nav-item dropdown">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="organization_v2.html">Tree view v2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="keyword-map.html">Keyword map</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="demo.html">Keyword map (light)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="../index.html">Go home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#popup">Learn more</a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="organization.html">Vue standard</a>
+
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div>
+
+    </div>
+    <script src="../js/trees/horizontal_tree.js"></script>
+
+
+</body>
+
+<div class="popup" id="popup">
+    <a href="#section-tours" class="popup__close">&times;</a>
+    <div class="popup__content">
+        <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
+        <div class="popup__scrollcontent">
+            <div class="popup__top">
+                <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
+                <p class="popup__text">
+
+                    <li>Universiteit Hasselt</li>
+                    <li>Wetenschapspark 2</li>
+                    <li>3590 Diepenbeek, Belgium</li>
+
+                </p>
+            </div>
+            <div class="popup__left">
+                <h3 class="heading-tertiary u-margin-bottom-small">Projects</h3>
+                <p class="popup__text">
+
+                    <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
+                    <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
+                    <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut</li>
+                    <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
+                    <li>IBBT Art&#38;D project: Photography beyond the still image (Photography and Kinetography)</li>
+                    <li>FWO-project: CoLaSUE: Contextbewuste basisinfrastructuur voor locale diensten in grootschalige Ubicomp
+                        omgevingen
+                    </li>
+                    <li>Het transformeren van human interface designs via model-driven engineering</li>
+
+                </p>
+            </div>
+
+            <div class="popup__right">
+                <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
+                <p class="popup__text">
+
+                    <li>Frank Van Reeth</li>
+                    <li>Philippe Bekaert</li>
+                    <li>Bram Bonne</li>
+                    <li>Jens Brulmans</li>
+                    <li>Johan Claer</li>
+                    <li>Karin Coninx</li>
+                    <li>Sven Coppers</li>
+                    <li>Fredy Cuenca Lucero</li>
+                    <li>Tom De Weyer</li>
+                    <li>Fabian Di Fiore</li>
+                    <li>...</li>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
