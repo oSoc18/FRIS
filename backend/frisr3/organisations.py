@@ -19,12 +19,30 @@ class Organisation:
     def acronym(self):
         return self.data.acronym
     
+    @property
+    def keywords(self):
+        return self.localized_keywords()
+    
+    @property
+    def research_activity(self):
+        return self.localized_research_activity()
+    
     def localized_name(self, locale='en'):
-        name = self.data.name
-        if name:
-            return localize_text(name, locale=locale)
-        else:
+        text = self.data.name
+        if not text:
             return None
+        return localize_text(text, locale)
+
+    def localized_keywords(self, locale='en'):
+        keywords = self.data.keywords.keyword
+        return [k._value_1 for k in keywords if k.locale == locale]
+    
+    def localized_research_activity(self, locale='en'):
+        text = self.data.researchActivity
+        if not text:
+            return None
+        return localize_text(text, locale) 
+
 
 
 class OrganisationService:
