@@ -1,15 +1,18 @@
 from flask import Flask, request, jsonify, abort
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 from frisr3.organisations import OrganisationService
 
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/')
 def index():
     return "Hello oSoC!"
 
+
 @app.route('/organisations/<uuid>')
+@cross_origin()
 def organisation(uuid=None):
     service = OrganisationService()
     org = service.find_organisation(uuid)
@@ -17,7 +20,9 @@ def organisation(uuid=None):
         abort(404)
     return jsonify(org_attrs(org))
 
+
 @app.route('/organisations')
+@cross_origin()
 def list_organisations():
     keyword = request.args.get('keyword')
     service = OrganisationService()
@@ -29,13 +34,15 @@ def list_organisations():
 
 # TODO: how do we want to handle this case?
 # I think we want multiple json representations for the same object ...
+
+
 def org_attrs(org):
     return {
-        'uuid': org.uuid(),
-        'name': org.name(),
-        'acronym': org.acronym(),
-        'keywords': org.keywords(),
-        'researchActivity': org.research_activity()
+        'uuid': org.uuid,
+        'name': org.name,
+        'acronym': org.acronym,
+        'keywords': org.keywords,
+        'researchActivity': org.research_activity
     }
 
 

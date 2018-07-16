@@ -62,10 +62,14 @@
 
             <div id="demo" class="col-md-12">
 
-                <input type="search" name="search" id="autocomplete" class="search__input" placeholder="Keyword : UGent ( for test : just write IA...and press enter, Thomas !)">
+                <input type="search" name="keyword" id="autocomplete" class="search__input" placeholder="Keyword : UGent ( for test : just write IA...and press enter, Thomas !)">
             </div>
 
         </div>
+        <!--   <form action="http://127.0.0.1:5000/organisations" method="GET">
+            <input type="text" name="keyword">
+        <input type="submit" value="dummy button">
+        </form> -->
 
         <div class="container">
 
@@ -106,52 +110,63 @@
                     "Scala",
                     "Scheme"
                 ];
-                var d = readTextFile("search.json", function (data) {
-                    var data = $.parseJSON(data);
-                    for (let i = 0; i < data.length; i++) {
-                        suggestion.push(data[i].name);
-                    }
-                });
+
+
+                /*    var d = readTextFile("http://127.0.0.1:5000/organisations", function (data) {
+                       var data = $.parseJSON(data);
+                       for (let i = 0; i < data.length; i++) {
+                           suggestion.push(data[i].name);
+                       }
+                   }); */
                 $("#autocomplete").autocomplete({
                     source: suggestion
                 });
                 //Compare the search keyword with a list
                 search.keypress(function (e) {
+
                     if (e.which == 13) {
                         var search_text = $('#autocomplete')[0].value;
                         words = search_text.split(" ");
                         var organization = [];
-                        readTextFile("data.json", function (text) {
-                            var data = JSON.parse(text);
-                            for (let index = 0; index < data.children.length; index++) {
-                                const element = data.children[index];
-                                words.forEach(function (word) {
-                                    if (element.name === word) {
-                                        organization.push(JSON.stringify(element.school));
-                                    }
-                                });
+                        // using XMLHttpRequest
+                        var url = "http://127.0.0.1:5000/organisations";
+                       /*  $.ajax({
+                            url: url,
+                            type: "POST",
+                            dataType: "json",
+                            data: words,
+                            success: function (data, textStatus, jqXHR) {
+                                alert("success");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("failure:"+textStatus);
                             }
-                            //delete the previous results
-                            var body = $('.result');
-                            $('.result').html("");
-                            organization.forEach(function (org) {
-                                body.append(createElementSearch(org));
-
+                        }); */
+                        $.getJSON("http://127.0.0.1:5000/organisations?keyword=" + words, function (
+                            data) {
+                            var items = [];
+                            $.each(data, function (key, val) {
+                                items.push("<h1 id='" + val.uuid + "'>" + val.name +
+                                    "</h1>");
                             });
 
+                            $("<ul/>", {
+                                "class": "my-new-list",
+                                html: items.join("")
+                            }).appendTo("body");
                         });
-                    }
-                });
+                    };
 
-                function createElementSearch(object) {
-                    var data = clearString(object);
-                    return " \
+                    function createElementSearch(object) {
+                        var data = clearString(object);
+                        return " \
                     <h1>" + data +
-                        "</h1> \
+                            "</h1> \
                     <p><a href='/src/view/organization.html'>Search trends by organization</a></p> \
                     ";
-                }
+                    }
 
+                })
             });
         </script>
     </div>

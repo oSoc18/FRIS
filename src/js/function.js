@@ -26,7 +26,7 @@ function clearString(string) {
 function readTextFile(file, callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
-    rawFile.open("GET", "js/json/"+file, true);
+    rawFile.open("GET", "js/json/" + file, true);
     rawFile.onreadystatechange = function () {
         if (rawFile.readyState === 4 && rawFile.status == "200") {
             callback(rawFile.responseText);
@@ -35,10 +35,27 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
-function cosElementCircle(i,length,width){
+function cosElementCircle(i, length, width) {
     return (radius * Math.cos((i / (length / 2)) * Math.PI)) + (width / 2);
 }
 
-function sinElementCircle(i,length,width){
+function sinElementCircle(i, length, width) {
     return (radius * Math.sin((i / (length / 2)) * Math.PI)) + (width / 2);
+}
+
+function getJSONP(url, success) {
+
+    var ud = '_' + +new Date,
+        script = document.createElement('script'),
+        head = document.getElementsByTagName('head')[0] ||
+        document.documentElement;
+
+    window[ud] = function (data) {
+        head.removeChild(script);
+        success && success(data);
+    };
+
+    script.src = url.replace('callback=?', 'callback=' + ud);
+    head.appendChild(script);
+
 }
