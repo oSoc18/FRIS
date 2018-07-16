@@ -1,4 +1,5 @@
 import zeep
+from frisr3.settings import DEFAULT_LOCALE
 from frisr3.fris_utils import localize_text
 
 WSDL_URL = 'https://frisr3.researchportal.be/ws/OrganisationServiceFRIS?wsdl'
@@ -8,34 +9,20 @@ class Organisation:
     def __init__(self, data):
         self.data = data
 
-    @property
     def uuid(self):
         return self.data.uuid
     
-    @property
-    def name(self):
-        return self.localized_name()
-
-    def localized_name(self, locale='en'):
+    def name(self, locale=DEFAULT_LOCALE):
         return localize_text(self.data.name, locale)
 
-    @property
     def acronym(self):
         return self.data.acronym
     
-    @property
-    def keywords(self):
-        return self.localized_keywords()
-
-    def localized_keywords(self, locale='en'):
+    def keywords(self, locale=DEFAULT_LOCALE):
         keywords = self.data.keywords.keyword
         return [k._value_1 for k in keywords if k.locale == locale]
 
-    @property
-    def research_activity(self):
-        return self.localized_research_activity()
-
-    def localized_research_activity(self, locale='en'):
+    def research_activity(self, locale=DEFAULT_LOCALE):
         return localize_text(self.data.researchActivity, locale) 
 
 
