@@ -1,4 +1,4 @@
-def localize_text(localized_text, locale='en'):
+def localize_text(localized_text, locale):
     """ Get a value from a FRIS LocalizedText object """
 
     if localized_text is None:
