@@ -1,0 +1,61 @@
+{
+    "num": "EDM",
+    "name": "Expertisecentrum voor Digitale Media",
+    "children": [
+        {
+            "num": "Computerwetenschappen",
+            "children": [
+                {
+                    "content":[
+                        "Trolololol"
+                    ],
+                    "num": "Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut (R-4265)",
+                    "name": "",
+                    "children":[]
+                }
+            ]
+        },
+        {
+            "num": "numerieke analyse",
+            "children": [
+                
+            ]
+        },
+        {
+            "num": "systemen",
+            "children": [
+                
+            ]
+        },
+        {
+            "num": "controle",
+            "children": [
+                
+            ]
+        },
+        {
+            "num": "Informatica",
+            "children": [
+                
+            ]
+        },
+        {
+            "num": "systeemtheorie",
+            "children": [
+                
+            ]
+        },
+        {
+            "num": "Systeemtechnologie",
+            "children": [
+                
+            ]
+        },
+        {
+            "num": "computertechnologie",
+            "children": [
+                
+            ]
+        }
+    ]
+}
