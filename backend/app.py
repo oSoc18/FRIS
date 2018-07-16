@@ -38,11 +38,11 @@ def list_organisations():
 
 def org_attrs(org):
     return {
-        'uuid': org.uuid,
-        'name': org.name,
-        'acronym': org.acronym,
-        'keywords': org.keywords,
-        'researchActivity': org.research_activity
+        'uuid': org.uuid(),
+        'name': org.name(),
+        'acronym': org.acronym(),
+        'keywords': org.keywords(),
+        'researchActivity': org.research_activity()
     }
 
 
