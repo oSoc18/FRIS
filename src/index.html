@@ -130,18 +130,18 @@
                         var organization = [];
                         // using XMLHttpRequest
                         var url = "http://127.0.0.1:5000/organisations";
-                       /*  $.ajax({
-                            url: url,
-                            type: "POST",
-                            dataType: "json",
-                            data: words,
-                            success: function (data, textStatus, jqXHR) {
-                                alert("success");
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                alert("failure:"+textStatus);
-                            }
-                        }); */
+                        /*  $.ajax({
+                             url: url,
+                             type: "POST",
+                             dataType: "json",
+                             data: words,
+                             success: function (data, textStatus, jqXHR) {
+                                 alert("success");
+                             },
+                             error: function (jqXHR, textStatus, errorThrown) {
+                                 alert("failure:"+textStatus);
+                             }
+                         }); */
                         $.getJSON("http://127.0.0.1:5000/organisations?keyword=" + words, function (
                             data) {
                             var items = [];
