@@ -121,6 +121,7 @@
                         var search_text = $('#autocomplete')[0].value;
                         words = search_text.split(" ");
                         var organization = [];
+<<<<<<< master
                         readTextFile("data.json", function (text) {
                             var data = JSON.parse(text);
                             for (let index = 0; index < data.children.length; index++) {
@@ -137,6 +138,30 @@
                             organization.forEach(function (org) {
                                 body.append(createElementSearch(org));
 
+=======
+                        $('#search_result').html("");
+                        // using XMLHttpRequest
+                        /*  var url = "http://127.0.0.1:5000/organisations"; */
+                        $.getJSON("http://127.0.0.1:5000/organisations?keyword=" + words, function (
+                            data) {
+                            var items = [];
+                            $.each(data, function (key, val) {
+                                l(val);
+                                var shortcut = createLinksKeywords(data[key].keywords);
+                                items.push(
+                                    " \
+                                <div class='jumbotron'> \
+                                <div class='inline-header' ><h1 id='" +
+                                    val.uuid + "'>" + val.name +
+                                    "</h1><span class='text-right'><a class=btn btn-default href=/src/view/demo_k.html?uuid=" +
+                                    val.uuid +
+                                    " role=button>» View map </a></span> </div><hr>\
+                                    <p class='text-justify'>" +
+                                    val.research_activity +
+                                    "</p>"+shortcut+" \
+                                    </div>" 
+                                );
+>>>>>>> local
                             });
 
                         });
