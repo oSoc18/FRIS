@@ -18,7 +18,7 @@ def organisation(uuid=None):
     org = service.find_organisation(uuid)
     if not org:
         abort(404)
-    return jsonify(org_attrs(org))
+    return jsonify(org.attributes)
 
 
 @app.route('/organisations')
@@ -29,30 +29,11 @@ def list_organisations():
     #  TODO: do this properly ..
     if keyword:
         results = service.find_by_keyword(keyword)
-        return jsonify([org_attrs(org) for org in results])
+        return jsonify([org.attributes() for org in results])
     return 'ok'
 
 # TODO: how do we want to handle this case?
 # I think we want multiple json representations for the same object ...
-
-#just use for the result page
-
-def org_attrs_short(org):
-    return {
-        'uuid':org.uuid(),
-        'name':org.name(),
-        'acronym':org.acronym()
-    }
-
-def org_attrs(org):
-    return {
-        'uuid': org.uuid(),
-        'name': org.name(),
-        'acronym': org.acronym(),
-        'keywords': org.keywords(),
-        'researchActivity': org.research_activity()
-    }
-
 
 if __name__ == '__main__':
     app.run(debug=True)

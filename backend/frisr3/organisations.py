@@ -23,8 +23,25 @@ class Organisation:
         return [k._value_1 for k in keywords if k.locale == locale]
 
     def research_activity(self, locale=DEFAULT_LOCALE):
-        return localize_text(self.data.researchActivity, locale) 
+        return localize_text(self.data.researchActivity, locale)
+    
+    def __repr__(self):
+        return self.name()
 
+    def __hash__(self):
+        return self.uuid().__hash__()
+    
+    def __eq__(self, other):
+        return self.uuid() == other.uuid()
+
+    def attributes(self):
+        return {
+            'uuid': self.uuid(),
+            'name': self.name(),
+            'acronym': self.acronym(),
+            'keywords': self.keywords(),
+            'research_activity': self.research_activity(),
+        }
 
 class OrganisationService:
     def __init__(self):
