@@ -11,7 +11,7 @@ def index():
     return "Hello oSoC!"
 
 
-@app.route('/organisations/<uuid>')
+@app.route('/organisation/<uuid>')
 @cross_origin()
 def organisation(uuid=None):
     service = OrganisationService()
@@ -35,6 +35,14 @@ def list_organisations():
 # TODO: how do we want to handle this case?
 # I think we want multiple json representations for the same object ...
 
+#just use for the result page
+
+def org_attrs_short(org):
+    return {
+        'uuid':org.uuid(),
+        'name':org.name(),
+        'acronym':org.acronym()
+    }
 
 def org_attrs(org):
     return {
