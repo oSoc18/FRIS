@@ -19,10 +19,13 @@ class ResearchOutput:
         return localize_text(self.data.title, locale)
     
     def abstract(self, locale=DEFAULT_LOCALE):
-        return localize_text(self.data.abstract, locale)
+        if 'abstract' in self.data:
+            return localize_text(self.data.abstract, locale)
+        return None
+
 
     def keywords(self, locale=DEFAULT_LOCALE):
-        keywords = self.data.keywords
+        keywords = self.data.keywords.keyword
         return [k._value_1 for k in keywords if k.locale == locale]
     
     # TODO: this is ugly.
@@ -35,6 +38,15 @@ class ResearchOutput:
             if not org.uuid in organisations:
                 organisations[org.uuid] = Organisation(org)
         return list(organisations.values())
+    
+    def attributes(self):
+        return {
+            'uuid': self.uuid(),
+            'title': self.title(),
+            'abstract': self.abstract(),
+            'keywords': self.keywords(),
+        }
+
 
 class ResearchOutputQuery:
     def __init__(self, client: zeep.Client, params: dict):
@@ -67,18 +79,28 @@ class ResearchOutputQuery:
     
     def results(self) -> Iterator[ResearchOutput]:
         request_params = self.query_params()
+        count = self.params.get('count')
+
         page_size = request_params['window']['pageSize']
+        if count < page_size:
+            page_size = count
+            request_params['window']['pageSize'] = count
 
         page_number = 0
         while True:
             request_params['window']['pageNumber'] = page_number
             response = self.client.service.getResearchOutput(request_params)
 
+            # TODO: should this be done here?
+            if count is None:
+                count = response.total
+
             for elem in response._value_1:
                 for output in elem.values():
                     yield ResearchOutput(output)
             
-            if response.total <= page_number * page_size:
+            page_number += 1
+            if count <= page_number * page_size:
                 # all results fetched!
                 break
     

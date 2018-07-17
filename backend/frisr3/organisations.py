@@ -19,6 +19,8 @@ class Organisation:
         return self.data.acronym
     
     def keywords(self, locale=DEFAULT_LOCALE):
+        if self.data.keywords is None:
+            return None
         keywords = self.data.keywords.keyword
         return [k._value_1 for k in keywords if k.locale == locale]
 

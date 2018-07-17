@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, abort
 from flask_cors import CORS,cross_origin
 from frisr3.organisations import OrganisationService
 
+from search import search_keyword
+
 app = Flask(__name__)
 CORS(app)
 
@@ -32,8 +34,13 @@ def list_organisations():
         return jsonify([org.attributes() for org in results])
     return 'ok'
 
-# TODO: how do we want to handle this case?
-# I think we want multiple json representations for the same object ...
+
+@app.route('/organisations/search')
+def organisation_search():
+    keyword = request.args.get('keyword', '')
+    result = search_keyword(keyword)
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
