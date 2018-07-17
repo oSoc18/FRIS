@@ -19,7 +19,7 @@
 </head>
 
 <body id="body">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
             <img class="img-head" src="/src/css/img/fris.png" alt="">
         </a>
@@ -50,10 +50,21 @@
                     <a class="nav-link " href="/src/view/demo.html">Keyword map (light)</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/src/view/demo.html">Fucking awesome circle :)</a>
+                    <a class="nav-link " href="/src/view/demo_k.html">Fucking awesome circle :)</a>
                 </li>
 
             </ul>
+
+        </div>
+    </nav> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/src">
+            <img class="img-head" src="/src/css/img/fris.png" alt="icon">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <a class="breadcrumb-item active" href="/src">Home</a>
+
 
         </div>
     </nav>
@@ -62,16 +73,20 @@
 
             <div id="demo" class="col-md-12">
 
-                <input type="search" name="search" id="autocomplete" class="search__input" placeholder="Keyword : UGent ( for test : just write IA...and press enter, Thomas !)">
+                <input type="search" name="keyword" id="autocomplete" class="search__input" placeholder="Keyword : Database">
             </div>
 
         </div>
+        <!--   <form action="http://127.0.0.1:5000/organisations" method="GET">
+            <input type="text" name="keyword">
+        <input type="submit" value="dummy button">
+        </form> -->
 
-        <div class="container">
+        <div class="container margin-content">
 
             <div class="row">
 
-                <div class="result">
+                <div id="search_result" class="result col-xs-6 col-md-4 col-lg-12">
 
                 </div>
             </div>
@@ -106,39 +121,24 @@
                     "Scala",
                     "Scheme"
                 ];
-                var d = readTextFile("search.json", function (data) {
-                    var data = $.parseJSON(data);
-                    for (let i = 0; i < data.length; i++) {
-                        suggestion.push(data[i].name);
-                    }
-                });
+
+
+                /*    var d = readTextFile("http://127.0.0.1:5000/organisations", function (data) {
+                       var data = $.parseJSON(data);
+                       for (let i = 0; i < data.length; i++) {
+                           suggestion.push(data[i].name);
+                       }
+                   }); */
                 $("#autocomplete").autocomplete({
                     source: suggestion
                 });
                 //Compare the search keyword with a list
                 search.keypress(function (e) {
+
                     if (e.which == 13) {
                         var search_text = $('#autocomplete')[0].value;
                         words = search_text.split(" ");
                         var organization = [];
-<<<<<<< master
-                        readTextFile("data.json", function (text) {
-                            var data = JSON.parse(text);
-                            for (let index = 0; index < data.children.length; index++) {
-                                const element = data.children[index];
-                                words.forEach(function (word) {
-                                    if (element.name === word) {
-                                        organization.push(JSON.stringify(element.school));
-                                    }
-                                });
-                            }
-                            //delete the previous results
-                            var body = $('.result');
-                            $('.result').html("");
-                            organization.forEach(function (org) {
-                                body.append(createElementSearch(org));
-
-=======
                         $('#search_result').html("");
                         // using XMLHttpRequest
                         /*  var url = "http://127.0.0.1:5000/organisations"; */
@@ -161,22 +161,30 @@
                                     "</p>"+shortcut+" \
                                     </div>" 
                                 );
->>>>>>> local
                             });
 
+                            $("#search_result").append(items.join(""));
                         });
-                    }
-                });
+                    };
+                    function createLinksKeywords(keywords){
+                        var stringLink = "";
+                        $.each(keywords,function(key,val){
+                            stringLink += '<button class="btn btn-outline-success margin-button-link" href="#" role="button">'+val+'</button> ';
+                        });
+                        return stringLink;
 
-                function createElementSearch(object) {
-                    var data = clearString(object);
-                    return " \
+                    }
+
+                    function createElementSearch(object) {
+                        var data = clearString(object);
+                        return " \
                     <h1>" + data +
-                        "</h1> \
+                            "</h1> \
                     <p><a href='/src/view/organization.html'>Search trends by organization</a></p> \
                     ";
-                }
+                    }
 
+                })
             });
         </script>
     </div>
