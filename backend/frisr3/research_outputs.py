@@ -1,6 +1,7 @@
 import zeep
 from frisr3.settings import *
 from frisr3.fris_utils import localize_text
+from frisr3.organisations import Organisation
 
 from typing import Iterator
 
@@ -23,6 +24,17 @@ class ResearchOutput:
     def keywords(self, locale=DEFAULT_LOCALE):
         keywords = self.data.keywords
         return [k._value_1 for k in keywords if k.locale == locale]
+    
+    # TODO: this is ugly.
+    def associated_organisations(self):
+        organisations = {}
+        participants = self.data.participants.participant
+        assignments = [p.assignment for p in participants if p.assignment]
+        for assignment in assignments:
+            org = assignment.organisation
+            if not org.uuid in organisations:
+                organisations[org.uuid] = Organisation(org)
+        return list(organisations.values())
 
 class ResearchOutputQuery:
     def __init__(self, client: zeep.Client, params: dict):
