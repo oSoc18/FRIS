@@ -20,7 +20,7 @@ def organisation(uuid=None):
     org = service.find_organisation(uuid)
     if not org:
         abort(404)
-    return jsonify(org.attributes)
+    return jsonify(org.attributes())
 
 
 @app.route('/organisations')
