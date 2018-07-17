@@ -61,13 +61,6 @@ svg {
     text-align: center;
 }
 
-a {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-}
-
 .highlight {
     fill: red
 }
@@ -429,4 +422,33 @@ svg {
 
 .img-head {
     max-width: 40px;
+}
+
+.arr-right .breadcrumb-item+.breadcrumb-item::before {
+    content: "›";
+    vertical-align: top;
+    color: #408080;
+    font-size: 35px;
+    line-height: 18px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    display: inline-block;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    color: #6c757d;
+    content: ">"
+}
+
+.margin-button-link {
+    margin: 3px;
+}
+
+.inline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.content-justify{
+    text-align: justify;
 }
