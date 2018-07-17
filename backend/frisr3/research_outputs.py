@@ -30,12 +30,27 @@ class ResearchOutputQuery:
         self.params = params
     
     def query_params(self):
+        locale = self.params.get('locale', DEFAULT_LOCALE)
+        page_size = self.params.get('page_size', DEFAULT_PAGE_SIZE)
+
         p = {}
         p['window'] = {
-            'pageSize': self.params.get('page_size', DEFAULT_PAGE_SIZE),
+            'pageSize': page_size,
             'pageNumber': zeep.xsd.SkipValue,
             'orderings': zeep.xsd.SkipValue,
         }
+
+        if 'keyword' in self.params:
+            keyword = self.params['keyword']
+            p['keyword'] = [{
+                'search': keyword,
+                'locale': locale,
+            }]
+        
+        if 'organisation' in self.params:
+            org = self.params['organisation']
+            p['associatedOrganisations'] = [{ 'identifier': org}]
+        
         return p
     
     def results(self) -> Iterator[ResearchOutput]:
