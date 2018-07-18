@@ -52,8 +52,11 @@
             $('#content').append(items[0].name); // show the name in the search bar
             init(items);
             */
-            $('#content').append(data.name ? data.name : 'Unknown'); // show the name in the search bar
             init(data);
+            page = getPage();
+            var link = "<a href='/keyword="+localStorage.getItem("page")+"' class='breadcrumb-item  white'>Search / </a>"
+            $('#content').append(link).append(data.name ? data.name : 'Unknown'); // show the name in the search bar
+            
 
         });
     });
