@@ -19,10 +19,7 @@ class ResearchOutput:
         return localize_text(self.data.title, locale)
     
     def abstract(self, locale=DEFAULT_LOCALE):
-        if 'abstract' in self.data:
-            return localize_text(self.data.abstract, locale)
-        return None
-
+        return localize_text(self.data.researchAbstract, locale)
 
     def keywords(self, locale=DEFAULT_LOCALE):
         if not self.data.keywords:
