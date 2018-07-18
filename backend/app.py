@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, abort
 from flask_cors import CORS,cross_origin
 from frisr3.organisations import OrganisationService
+from frisr3.research_outputs import ResearchOutputService
+from lib.cluster import cluster_outputs
 
 from search import search_keyword
 
@@ -41,6 +43,16 @@ def organisation_search():
     result = search_keyword(keyword)
     return jsonify(result)
 
+@app.route('/organisation/<uuid>/output_cluster')
+def organisation_output_cluster(uuid):
+    organisation_service = OrganisationService()
+    org = organisation_service.find_organisation(uuid)
+    if not org:
+        abort(404)
+    output_service = ResearchOutputService()
+    outputs = list(output_service.outputs(organisation=uuid))
+    tree = cluster_outputs(outputs, org.name())
+    return jsonify(tree)
 
 if __name__ == '__main__':
     app.run(debug=True)
