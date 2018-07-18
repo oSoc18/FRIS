@@ -113,6 +113,8 @@
 
                             $("#search_result").append(items.join("")).hide().fadeIn(500);
                         });
+                        $('#autocomplete').removeClass('margin-content');
+                        $('#autocomplete').style.margin='20px';
                     };
 
                     function createLinksKeywords(keywords) {
