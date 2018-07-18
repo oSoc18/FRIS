@@ -45,3 +45,9 @@
     font-size: 70%;
     line-height: 1;
 }
+.cropText {
+    max-width: 20em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

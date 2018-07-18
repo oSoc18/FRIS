@@ -1,0 +1,145 @@
+<div class="margin-content">
+    <div class="row">
+
+        <div id="demo" class="col-md-12">
+
+            <input type="search" name="keyword" id="autocomplete" class="search__input" placeholder="Keyword : Database">
+        </div>
+
+    </div>
+
+
+    <div class="container margin-content">
+
+        <div class="row">
+
+            <div id="search_result" class="result col-xs-6 col-md-4 col-lg-12">
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $(function () {
+            var words = []
+            search = $('#autocomplete');
+
+            //Compare the search keyword with a list
+            search.keypress(function (e) {
+
+                if (e.which == 13) {
+                    var search_text = $('#autocomplete')[0].value;
+                    words = search_text.split(" ");
+                    var organization = [];
+                    $('#search_result').html("");
+                    $.getJSON("http://127.0.0.1:5000/organisations?keyword=" + words, function (
+                        data) {
+                        var items = [];
+                        l(data);
+                        if (data.length > 0) {
+                            $.each(data, function (key, val) {
+                                var shortcut = createLinksKeywords(data[key].keywords);
+                                //crop text
+                                var cropText = (val.research_activity + "").substr(
+                                    0, 500) + "...";
+                                items.push(
+                                    " \
+                            <div class='jumbotron'> \
+                            <div class='inline-header' ><h1 id='" +
+                                    val.uuid + "'>" + val.name +
+                                    "</h1> <span class='text-right'><a class=btn btn-default href=/explore?uuid=" +
+                                    val.uuid +
+                                    " role=button>» Explore graph </a></span> </div><hr>\
+                                <p class='text-justify overflow'>" +
+                                    cropText +
+                                    "</p>" + shortcut +
+                                    " \
+                                <p class='text-right'><a class=btn btn-default href='#popup' role=button>» View the organisation </a></p></div>"
+                                );
+                            });
+                        } else {
+                            items.push("No result...");
+                        }
+
+                        $("#search_result").append(items.join("")).hide().fadeIn(500);
+                    });
+                };
+
+                function createLinksKeywords(keywords) {
+                    var stringLink = "";
+                    $.each(keywords, function (key, val) {
+                        stringLink +=
+                            '<button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">' +
+                            val + '</button> ';
+                    });
+                    return stringLink;
+
+                }
+
+                function createElementSearch(object) {
+                    var data = clearString(object);
+                    return " \
+                <h1>" + data +
+                        "</h1> \
+                <p><a href='/src/view/organization.html'>Search trends by organization</a></p> \
+                ";
+                }
+
+            })
+        });
+    </script>
+</div>
+
+<div class="popup" id="popup">
+    <a href="#section-tours" class="popup__close">&times;</a>
+    <div class="popup__content">
+        <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
+        <div class="popup__scrollcontent">
+            <div class="popup__top">
+                <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
+                <p class="popup__text">
+
+                    <li>Universiteit Hasselt</li>
+                    <li>Wetenschapspark 2</li>
+                    <li>3590 Diepenbeek, Belgium</li>
+
+                </p>
+            </div>
+            <div class="popup__left">
+                <h3 class="heading-tertiary u-margin-bottom-small">Projects</h3>
+                <p class="popup__text">
+
+                    <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
+                    <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
+                    <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut</li>
+                    <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
+                    <li>IBBT Art&#38;D project: Photography beyond the still image (Photography and Kinetography)</li>
+                    <li>FWO-project: CoLaSUE: Contextbewuste basisinfrastructuur voor locale diensten in grootschalige Ubicomp
+                        omgevingen
+                    </li>
+                    <li>Het transformeren van human interface designs via model-driven engineering</li>
+
+                </p>
+            </div>
+
+            <div class="popup__right">
+                <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
+                <p class="popup__text">
+
+                    <li>Frank Van Reeth</li>
+                    <li>Philippe Bekaert</li>
+                    <li>Bram Bonne</li>
+                    <li>Jens Brulmans</li>
+                    <li>Johan Claer</li>
+                    <li>Karin Coninx</li>
+                    <li>Sven Coppers</li>
+                    <li>Fredy Cuenca Lucero</li>
+                    <li>Tom De Weyer</li>
+                    <li>Fabian Di Fiore</li>
+                    <li>...</li>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

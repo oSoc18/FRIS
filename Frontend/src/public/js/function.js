@@ -74,3 +74,10 @@ function getUrlParameter(sParam) {
         }
     }
 };
+
+function minimizeText(texte,limit){
+    l(texte);
+    if(texte.length>limit){
+        return texte.substring(1,100);
+    }100
+}

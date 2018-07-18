@@ -20,32 +20,13 @@
 
 <body id="body">
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
-            <img class="img-head" src="/src/css/img/fris.png" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/src">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-           
-            </ul>
-        </div>
-    </nav> -->
     <nav class="navbar navbar-expand-lg navbar-inverse bg-dark">
         <a class="navbar-brand" href="/src">
             <img class="img-head" src="/src/css/img/fris.png" alt="icon">
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <a class="breadcrumb-item active" href="/src">Home</a>
+            <a class="breadcrumb-item  white" href="/src">Home</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
@@ -104,22 +85,26 @@
                         $.getJSON("http://127.0.0.1:5000/organisations?keyword=" + words, function (
                             data) {
                             var items = [];
+                            l(data);
                             if (data.length > 0) {
                                 $.each(data, function (key, val) {
                                     var shortcut = createLinksKeywords(data[key].keywords);
+                                    //crop text
+                                    var cropText = (val.research_activity + "").substr(
+                                        0, 500) + "...";
                                     items.push(
                                         " \
                                 <div class='jumbotron'> \
                                 <div class='inline-header' ><h1 id='" +
                                         val.uuid + "'>" + val.name +
-                                        "</h1><span class='text-right'><a class=btn btn-default href=/src/view/demo_k.html?uuid=" +
+                                        "</h1> <span class='text-right'><a class=btn btn-default href=/explore?uuid=" +
                                         val.uuid +
-                                        " role=button>» View map </a></span> </div><hr>\
-                                    <p class='text-justify'>" +
-                                        val.research_activity +
+                                        " role=button>» Explore graph </a></span> </div><hr>\
+                                    <p class='text-justify overflow'>" +
+                                        cropText +
                                         "</p>" + shortcut +
                                         " \
-                                    </div>"
+                                    <p class='text-right'><a class=btn btn-default href='#popup' role=button>» View the organisation </a></p></div>"
                                     );
                                 });
                             } else {
@@ -134,7 +119,7 @@
                         var stringLink = "";
                         $.each(keywords, function (key, val) {
                             stringLink +=
-                                '<button class="btn btn-outline-success margin-button-link" href="#" role="button">' +
+                                '<button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">' +
                                 val + '</button> ';
                         });
                         return stringLink;
@@ -153,6 +138,60 @@
                 })
             });
         </script>
+    </div>
+
+    <div class="popup" id="popup">
+        <a href="#section-tours" class="popup__close">&times;</a>
+        <div class="popup__content">
+            <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
+            <div class="popup__scrollcontent">
+                <div class="popup__top">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
+                    <p class="popup__text">
+
+                        <li>Universiteit Hasselt</li>
+                        <li>Wetenschapspark 2</li>
+                        <li>3590 Diepenbeek, Belgium</li>
+
+                    </p>
+                </div>
+                <div class="popup__left">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Projects</h3>
+                    <p class="popup__text">
+
+                        <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
+                        <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
+                        <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut</li>
+                        <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
+                        <li>IBBT Art&#38;D project: Photography beyond the still image (Photography and Kinetography)</li>
+                        <li>FWO-project: CoLaSUE: Contextbewuste basisinfrastructuur voor locale diensten in grootschalige Ubicomp
+                            omgevingen
+                        </li>
+                        <li>Het transformeren van human interface designs via model-driven engineering</li>
+
+                    </p>
+                </div>
+
+                <div class="popup__right">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
+                    <p class="popup__text">
+
+                        <li>Frank Van Reeth</li>
+                        <li>Philippe Bekaert</li>
+                        <li>Bram Bonne</li>
+                        <li>Jens Brulmans</li>
+                        <li>Johan Claer</li>
+                        <li>Karin Coninx</li>
+                        <li>Sven Coppers</li>
+                        <li>Fredy Cuenca Lucero</li>
+                        <li>Tom De Weyer</li>
+                        <li>Fabian Di Fiore</li>
+                        <li>...</li>
+
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </html>
