@@ -231,7 +231,10 @@ body{
     width:3em;
     cursor: pointer;
     line-height:3em;
+    margin: 0.5%;
 }
+
+
 
 .button{
     font-family: "Whitney SSm A", "Whitney SSm B", "Lucida Grande", "Lucida Sans", "Verdana", "Helvetica","Times","Arial Unicode MS","EversonMono";
@@ -241,7 +244,13 @@ body{
     margin:0px;
 }
 
-.buttonImage{
+.buttonImage1{
+    margin: 5px;
+    width:30px;
+    height:30px;
+    opacity:.2
+}
+.buttonImage2{
     width:40px;
     height:40px;
     opacity:.2
