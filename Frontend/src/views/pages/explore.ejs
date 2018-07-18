@@ -43,13 +43,18 @@
     $(function () {
         var uuid = getUrlParameter('uuid');
         ///organisations/<uuid>
-        $.getJSON("http://127.0.0.1:5000/organisation/" + uuid, function (data) {
+        $.getJSON("http://127.0.0.1:5000/organisation/" + uuid + "/output_cluster", function (data) {
+            /*
             var items = [];
             $.each(data, function (key, val) {
                 items.push(data);
             });
             $('#content').append(items[0].name); // show the name in the search bar
             init(items);
+            */
+            $('#content').append(data.name ? data.name : 'Unknown'); // show the name in the search bar
+            init(data);
+
         });
     });
 
@@ -178,6 +183,8 @@
         write the fucking file 
         */
         //items
+
+        /*
         var foo = new Array(0); //create an empty array with length 45  
         for (var i = 0; i < items[0].keywords.length; i++) {
             foo.push({
@@ -189,7 +196,31 @@
             num: items[0].keywords[0],
             children: foo
         };
-        loadDataFile(jsonData);
+        */
+
+        let rMap = (obj) => {
+            // obj is a cluster
+            if (obj.name && obj.children) {
+               return {
+                    num: obj.name,
+                    children: obj.children.map(rMap)
+                };
+            // obj is a leaf node
+            } else {
+                return {
+                    num: obj.name,
+                    children: obj.research_outputs.map((ro) => {
+                        return {
+                            num: ro.title,
+                            children: []
+                        }
+                    })
+                };
+
+            }
+        }
+
+        loadDataFile(rMap(items));
 
         function loadDataFile(file) {
 
