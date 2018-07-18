@@ -36,11 +36,11 @@
 
     <div class="svgContainer">
         <div class="controlPanel">
-            <div id="homeButton" class="button" onclick="clickHome();">
-                <img src="../img/upArrow.png" class="buttonImage">
+            <div id="homeButton" class="buttonHome">
+                <img src="../css/img/refresh-page-option.svg" class="buttonImage">
             </div>
-            <div id="upButton" class="button" onclick="clickUp();">
-                <img src="../img/leftArrow.jpg" class="buttonImage">
+            <div id="upButton" class="buttonBack">
+                <img src="../css/img/leftArrow.jpg" class="buttonImage">
             </div>
         </div>
     </div>
@@ -78,7 +78,6 @@
 
         function init(items) {
 
-            //begin Sander
             d3.select(".loading").style("visibility", "visible");
             var tooltip = d3.select("body").append("div")
                 .attr("class", "tooltip")
@@ -97,6 +96,14 @@
 
             // Change the Toggle
             d3.select("#otherTitle").text("dd");
+
+            $('div.buttonBack').click(function(){
+                clickBack();
+            });
+
+            $('div.buttonHome').click(function(){
+                clickHome();
+            });
 
             dataFile = dataPath + fileName;
             var width = 720,
@@ -1185,7 +1192,7 @@
                 resetAll();
             }
 
-            function clickUp() {
+            function clickBack() {
                 if (focusNode) {
                     click2(focusNode.parent);
                 }
