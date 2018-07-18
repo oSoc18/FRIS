@@ -25,6 +25,8 @@ class ResearchOutput:
 
 
     def keywords(self, locale=DEFAULT_LOCALE):
+        if not self.data.keywords:
+            return []
         keywords = self.data.keywords.keyword
         return [k._value_1 for k in keywords if k.locale == locale]
     
@@ -55,14 +57,7 @@ class ResearchOutputQuery:
     
     def query_params(self):
         locale = self.params.get('locale', DEFAULT_LOCALE)
-        page_size = self.params.get('page_size', DEFAULT_PAGE_SIZE)
-
         p = {}
-        p['window'] = {
-            'pageSize': page_size,
-            'pageNumber': zeep.xsd.SkipValue,
-            'orderings': zeep.xsd.SkipValue,
-        }
 
         if 'keyword' in self.params:
             keyword = self.params['keyword']
@@ -79,12 +74,18 @@ class ResearchOutputQuery:
     
     def results(self) -> Iterator[ResearchOutput]:
         request_params = self.query_params()
-        count = self.params.get('count')
 
-        page_size = request_params['window']['pageSize']
-        if count < page_size:
-            page_size = count
-            request_params['window']['pageSize'] = count
+        # determine page size
+        page_size = self.params.get('page_size', DEFAULT_PAGE_SIZE)
+
+        count = self.params.get('count')
+        if count:
+            page_size = min(page_size, count)
+
+        request_params['window'] = {
+            'pageSize': page_size,
+            'orderings': zeep.xsd.SkipValue,
+        }
 
         page_number = 0
         while True:
@@ -100,12 +101,13 @@ class ResearchOutputQuery:
                     yield ResearchOutput(output)
             
             page_number += 1
-            if count <= page_number * page_size:
+            if page_number * page_size >= count:
                 # all results fetched!
                 break
     
     def __iter__(self) -> Iterator[ResearchOutput]:
         return self.results()
+
 
 class ResearchOutputService:
     def __init__(self):
