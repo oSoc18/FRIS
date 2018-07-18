@@ -79,6 +79,7 @@ def cluster_outputs(outputs, root_name):
     # discard outputs without keywords
     outputs = [o for o in outputs if kw_mapping[o.uuid()]]
     kw_matrix = keyword_matrix(outputs, kw_nums, kw_mapping)
+    kw_correlations = keyword_correlations(kw_nums, kw_mapping)
     similarity = output_similarity(outputs, kw_mapping)
     distances = 1 - similarity
 
@@ -99,7 +100,7 @@ def cluster_outputs(outputs, root_name):
         children = []
         for cluster in cluster_idxs(idxs):
             node = {}
-            node['name'] = "No name yet"
+            node['name'] = keywords[group_keyword(cluster, idxs)]
             node['size'] = len(cluster)
             if len(cluster) > MAX_CLUSTER_SIZE:
                 node['children'] = cluster_tree(cluster)
@@ -114,6 +115,23 @@ def cluster_outputs(outputs, root_name):
             children.append(node)
         children.sort(key=lambda c: c['size'], reverse=True)
         return children
+    
+    def group_keyword(idxs, parent_idxs):
+        all_counts = np.sum(kw_matrix[parent_idxs], axis=0)
+        counts = np.sum(kw_matrix[idxs], axis=0)
+
+        # normalized proximity to outputs in this group
+        pos = np.sum(counts * kw_correlations, axis=0) / len(idxs)
+
+        # normalized proximity to outputs in other groups
+        other_counts = all_counts - counts
+        num_other = len(parent_idxs) - len(idxs)
+        neg = np.sum( other_counts * kw_correlations, axis=0) / num_other
+
+        scores = pos - neg
+        best = np.argmax(scores)
+        return best
+
     
     return {
         'name': root_name,
