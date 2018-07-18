@@ -449,6 +449,18 @@ svg {
     justify-content: space-between;
     align-items: baseline;
 }
-.content-justify{
+
+.content-justify {
     text-align: justify;
+}
+
+.btn-static {
+    pointer-events: none;
+}
+
+.overflow {
+}
+
+.white{
+    color:#fff;
 }
