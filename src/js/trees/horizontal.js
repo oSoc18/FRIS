@@ -1,11 +1,11 @@
 var margin = {
-    top: 20,
+    top: 200,
     right: 120,
-    bottom: 20,
+    bottom: 200,
     left: 120
 },
-width = 960 - margin.right - margin.left,
-height = 800 - margin.top - margin.bottom;
+width = screen.width - margin.right - margin.left,
+height = screen.height - margin.top - margin.bottom;
 
 var i = 0,
 duration = 750,
@@ -25,7 +25,7 @@ var svg = d3.select("body").append("svg")
 .append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("../js/json/flare.json", function (error, flare) {
+d3.json("../js/json/out.json", function (error, flare) {
 if (error) throw error;
 
 root = flare;
@@ -44,7 +44,7 @@ root.children.forEach(collapse);
 update(root);
 });
 
-d3.select(self.frameElement).style("height", "800px");
+d3.select(self.frameElement).style("height", screen.height);
 
 function update(source) {
 

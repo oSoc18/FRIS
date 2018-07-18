@@ -40,59 +40,6 @@
 
     </div>
     </div>
-    <div class="noteContainer" id="noteContainer" onclick="toggleNoteBox()">
-        <div id="noteText" class="noteContainerText">
-            <div>
-                <span style="position:absolute;top:5px;left:5px;font-size:20px;color:darkgrey"> [X] </span>
-                <div style="text-align: center; font-weight:bold; font-size:120%"> US Code Explorer 2 - Force Directed Graph (Beta)</div>
-            </div>
-
-            <p style="padding-top:5px">This is an experimental visualization of US Law using a
-                <a href="http://en.wikipedia.org/wiki/Force-directed_graph_drawing" target="_blank"> Force Directed Graph.</a>
-                The chart uses a "hub and spoke" layout to represent the hierarchy of a given Title of the U.S. Code such as Title 17 (Copyright).
-                The center circle represents a "parent" portion of the code - a portion with sub-portions under it (e.g.
-                Chapter 10) and the surrounding circles on the edge represent the "child" portions that belong to that parent
-                (Section 100, Section 101, Section 103..).
-
-            </p>
-            <p>
-                You can click on an outer circle to open up the "children" that reside under that circle. If a circle has "children", the
-                circle border will be a thick grey. The selected circle will then be the new "parent", and its "children"
-                portions will be displayed.
-            </p>
-            <p>
-                You can use the up arrow to navigate to the "root" circle (e.g. Title 17), and the left arrow to return to the "parent" of
-                the currently opened part. You can also click anywhere in the whitespace to return to the top circle. By
-                default, one of the Titles of the Code: Title 17 (Copyright) - is displayed. Click on the Circles to begin
-                exploring the parts and sub-parts. Click on
-                <span onclick="toggleNoteBox();loadTitle()" style="text-decoration: underline">
-                    [Load Title 35] </span> to load Title 35 - the Patent Code. Other data visualizations of the law
-                <a href="http://harrysurden.com/wordpress/projects" target="_blank">are available here</a>
-            </p>
-
-            You can read more about
-            <a href="http://www.harrysurden.com/wordpress/archives/620" target="_blank"> this app on this blog post. </a>
-            <p>This demo was made using the
-                <a href="http://d3js.org/">d3 data visualization framework</a> and javascript. It was created by parsing .xml files of the
-                <a href="http://uscode.house.gov/download/download.shtml">
-                    US Code created by the US House of Representatives. </a> These files contain the text of the titles of
-                the US Federal Code "marked up" in .xml format. The US Code .xml files were then processed and parsed into
-                .json files with the data and hierarchy. The data within the .json files were then fed into the
-                <a href="http://d3js.org/">
-                    d3 visualization framework for visualization.</a>
-                The d3 visualizations were modified to a suitable form for browsing the code.
-                <br>
-            </p>
-            Please Note: This visualization is a beta and has not been thoroughly tested. Please do not rely on the laws or the code
-            being error free. </p>
-
-            <p>
-                This is a modified version of Mike Bostock's
-                <a href="http://bl.ocks.org/mbostock/4062045">force directed layout.</a>
-                Thanks to Mike Bostock for the excellent d3 visualization framework.
-            </p>
-        </div>
-    </div>
     <script type="text/javascript">
         $(function () {
             var uuid = getUrlParameter('uuid');
@@ -109,39 +56,27 @@
 
 
         function init(items) {
-            l(items);
+
+            //begin Sander
+            d3.select(".loading").style("visibility", "visible");
+            var tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("z-index", "10")
+                .style("opacity", 0);
+            var div = d3.select("svgclass").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+            // Change the Toggle
             d3.select(".loading").style("visibility", "visible");
             var dataFile;
             var dataPath;
             var titles = ["usc35.json", "usc17.json", "usc20.json"];
             fileName = titles[1];
-            var selectTitle = getUrlParameter("title");
-            var otherTitle = "";
-            if (selectTitle) {
-                if (selectTitle == "35") {
-                    fileName = titles[0];
-                    activeTitle = "Title35";
-                    otherTitle = "17";
-                } else {
-                    fileName = titles[1];
-                    activeTitle = "Title17";
-                    otherTitle = "35";
-                }
-            } else {
-                fileName = titles[1];
-                activeTitle = "Title17";
-                otherTitle = "35"
-            }
+
             // Change the Toggle
-            d3.select("#otherTitle").text(otherTitle);
-            if (window.location.host == "www.harrysurden.com") {
-                //        dataFile = '/data/USCode/json/usc35.json';
-                dataPath = '../js/json/';
-            } else {
-                dataPath = '../js/json/';
-                //        dataFile = "../../data/USCode/json/usc35.json";
-            }
-            l(fileName);
+            d3.select("#otherTitle").text("dd");
+
             dataFile = dataPath + fileName;
             var width = 720,
                 height = 660,
@@ -239,9 +174,10 @@
             //items
             var foo = new Array(0); //create an empty array with length 45  
             for (var i = 0; i < items[0].keywords.length; i++) {
-                foo.push({"num":items[0].keywords[i]});
-            }
-            l(foo);
+                foo.push({
+                    "num": items[0].keywords[i]
+                });
+            }   
             var jsonData = {
                 name: items[0].keywords[0],
                 num: items[0].keywords[0],
