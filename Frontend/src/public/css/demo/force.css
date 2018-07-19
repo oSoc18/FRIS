@@ -29,10 +29,8 @@ body{
 .label {
     font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-anchor: middle;
-    /*stroke:black;*/
     font-weight:bold;
     fill:black;
-    /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
 }
 
 
@@ -40,10 +38,12 @@ body{
 
 
 .nameText {
-    font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font:  "Helvetica Neue", Helvetica, Arial, sans-serif;
     /*fill:#280E11;*/
+    font-weight: bold;
     fill:black;
-    opacity:.6;
+    opacity:.9;
+    font-size: 150%;
     /*fill:white;*/
     text-anchor: middle;
     /*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
