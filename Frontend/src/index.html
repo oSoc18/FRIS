@@ -82,7 +82,7 @@
                         words = search_text.split(" ");
                         var organization = [];
                         $('#search_result').html("");
-                        $.getJSON("http://127.0.0.1:5000/organisations?keyword=" + words, function (
+                        $.getJSON("http://172.21.190.91:5000/organisations?keyword=" + words, function (
                             data) {
                             var items = [];
                             l(data);

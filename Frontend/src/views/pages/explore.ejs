@@ -104,8 +104,8 @@
                 var textBoxVisible = false;
                 var scaleMaster = null;
                 var scaleMasterBase = 1.4;
-                var windowWidthIdeal = 1100;
-                var windowHeightIdeal = 700;
+                var windowWidthIdeal = 1910;
+                var windowHeightIdeal = 1080;
                 var skipCount = 0;
                 var skipAmount = 0;
                 // Check if we're running on a mobile
@@ -141,8 +141,10 @@
                     width = width + textBoxSize;
                 }
                 scaleMasterBase = 1.4 * scaleRatio;
-                width = width * (scaleRatio);
-                height = height * (scaleRatio);
+                //width = width * (scaleRatio);
+                //height = height * (scaleRatio);
+                width = window.innerWidth - 15;
+                height = window.innerHeight - 215;
                 var wCenterX = height / 2;
                 var wCenterY = width / 2;
                 var svgContainer = d3.select(".svgContainer");
@@ -485,6 +487,7 @@
                                 .on("click", click2)
                                 .call(force.drag);
                             var maxRow = 3;
+                            var line_error = 2
                             for (var i = 0; i < n.length; i++) {
                                 if (i <= maxRow) {
                                     var display = n[i];
@@ -496,7 +499,19 @@
                                     text1.append("text")
                                         .attr('x', 0)
                                         .attr("y", function (d) {
-                                            return ((i) * 10) + labelshift;
+                                            if(n.length == 1){
+                                                line_error = 10;
+                                            }
+                                            else if (n.length == 2){
+                                                line_error = 4  ;
+                                            }
+                                            else if (n.length == 3){
+                                                line_error = -5;
+                                            }
+                                            else {
+                                                line_error = -13;
+                                            }
+                                            return line_error + ((i) * 18) + labelshift;
                                         })
                                         .attr("class", "nameText")
                                         .classed("large", function (d) {
@@ -506,6 +521,8 @@
                                                 return false
                                             }
                                         })
+                                        .style("font-size", "90%")
+                                        .style("font-weight", "500")
                                         .text(display)
                                 }
                             }
