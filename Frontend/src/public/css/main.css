@@ -45,15 +45,6 @@ body {
     height: 100%;
 }
 
-#body {
-    /*
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-  */
-}
-
 svg {
     display: flex;
     justify-content: center;
@@ -457,8 +448,6 @@ svg {
     pointer-events: none;
 }
 
-.overflow {}
-
 .white {
     color: #fff;
 }
@@ -521,4 +510,9 @@ svg {
 
 .morelink {
     display: block;
+}
+
+.jumbotron {
+    padding: 2rem;
+    text-align: justify;
 }
