@@ -488,3 +488,25 @@ svg {
     border: 0;
     background: transparent;
 }
+
+.align-items-center {
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+
+.d-flex {
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+.middle {
+    margin-top: 20%;
+}
+
+.vertical-center {
+    min-height: 100%;
+    /* Fallback for browsers do NOT support vh unit */
+    min-height: auto;
+    /* These two lines are counted as one :-)       */
+    align-items: center;
+}

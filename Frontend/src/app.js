@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 // use res.render to load up an ejs view file
 
 
-app.get('/keyword=Learning', function (req, res) {
+app.get('/keyword?:keyword', function (req, res) {
     res.render('pages/index');
 });
 
