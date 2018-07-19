@@ -435,7 +435,7 @@
             // Remove the old circle text
             d3.selectAll(".label").remove();
             // Add the section Num to the Circle
-            g2.append("text")
+            /*g2.append("text")
                 .text(function (d) {
                     var num = "";
                     num = d.num;
@@ -460,9 +460,10 @@
                     }
                 })
                 .on("click", click2)
-                .call(force.drag);
+                .call(force.drag);*/
             // Remove all of the earlier Circle Names
             d3.selectAll(".nameText").remove();
+            
             // Select each node and add the descriptive Name
             // or descriptive content below
             g2.append("g")
@@ -478,7 +479,6 @@
                             displayText = d.content[0];
                         }
                     }
-                    //                        var displayText = toProperCase(d.name);
                     var n = chopText(displayText, maxLength);
                     var text1 = d3.select(this)
                         .on("click", click2)
@@ -495,7 +495,7 @@
                             text1.append("text")
                                 .attr('x', 0)
                                 .attr("y", function (d) {
-                                    return 15 + ((i) * 10) + labelshift;
+                                    return ((i) * 10) + labelshift;
                                 })
                                 .attr("class", "nameText")
                                 .classed("large", function (d) {
