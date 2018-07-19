@@ -4,6 +4,7 @@ from itertools import chain, product
 
 from scipy.cluster import hierarchy
 from scipy.cluster.hierarchy import fcluster
+from scipy.spatial import distance
 from scipy.spatial.distance import squareform
 
 from typing import Iterable, List
@@ -61,6 +62,12 @@ def keyword_correlations(kw_nums, kw_mapping):
     correlation = mat / (counts + counts[:, np.newaxis] - mat)
     return correlation
 
+def output_profiles(kw_matrix, kw_correlations):
+    mat = np.dot(kw_matrix, kw_correlations)
+    normalized = mat / np.sum(mat, axis=1)[:, np.newaxis]
+    return normalized
+
+
 def output_similarity(outputs, kw_mapping):
     n = len(outputs)
     similarity = np.zeros((n, n), dtype=np.float64)
@@ -72,7 +79,6 @@ def output_similarity(outputs, kw_mapping):
     return similarity
 
 
-MAX_CLUSTER_SIZE = 15
 def cluster_outputs(outputs, root_name):
     keywords, kw_nums = get_keyword_set(outputs)
     kw_mapping = keyword_mapping(keywords, outputs)
@@ -80,63 +86,41 @@ def cluster_outputs(outputs, root_name):
     outputs = [o for o in outputs if kw_mapping[o.uuid()]]
     kw_matrix = keyword_matrix(outputs, kw_nums, kw_mapping)
     kw_correlations = keyword_correlations(kw_nums, kw_mapping)
-    similarity = output_similarity(outputs, kw_mapping)
-    distances = 1 - similarity
 
-    def cluster_idxs(idxs):
-        """ cluster a subset of the outputs """
-        dists = distances[np.ix_(idxs, idxs)]
-        Z = hierarchy.ward(squareform(dists))
+    profiles = output_profiles(kw_matrix, kw_correlations)
+    # TODO: avoid converting to square form and back
+    distances = squareform(distance.pdist(profiles, 'cosine'))
 
-        labels = fcluster(Z, criterion='distance', t=(0.7*np.max(Z[:,2])))
+    Z = hierarchy.ward(squareform(distances))
+    labels = fcluster(Z, criterion='distance', t=0.3*np.max(Z[:, 2]))
 
-        clusters = {}
-        for (i, label) in enumerate(labels):
-            clusters.setdefault(label, []).append(idxs[i])
-        return [np.array(c) for c in clusters.values()]
+    cs = {}
+    for (i, label) in enumerate(labels):
+        cs.setdefault(label, []).append(i)
+    clusters = [np.array(c) for c in cs.values()]
 
-    def cluster_tree(idxs):
-        """ recursively cluster a subset of the outputs """
-        children = []
-        for cluster in cluster_idxs(idxs):
-            node = {}
-            node['name'] = keywords[group_keyword(cluster, idxs)]
-            node['size'] = len(cluster)
-            if len(cluster) > MAX_CLUSTER_SIZE:
-                node['children'] = cluster_tree(cluster)
-            else:
-                node_outputs = []
-                for idx in cluster:
-                    output = outputs[idx]
-                    attrs = outputs[idx].attributes()
-                    attrs['keywords'] = list(kw_mapping[output.uuid()])
-                    node_outputs.append(attrs)
-                node['research_outputs'] = node_outputs
-            children.append(node)
-        children.sort(key=lambda c: c['size'], reverse=True)
-        return children
     
-    def group_keyword(idxs, parent_idxs):
-        all_counts = np.sum(kw_matrix[parent_idxs], axis=0)
-        counts = np.sum(kw_matrix[idxs], axis=0)
-
-        # normalized proximity to outputs in this group
-        pos = np.sum(counts * kw_correlations, axis=0) / len(idxs)
-
-        # normalized proximity to outputs in other groups
-        other_counts = all_counts - counts
-        num_other = len(parent_idxs) - len(idxs)
-        neg = np.sum( other_counts * kw_correlations, axis=0) / num_other
-
-        scores = pos - neg
+    def group_keyword(idxs):
+        profile = np.mean(profiles[idxs], axis=0)
+        avg_profile = np.mean(profiles, axis=0)
+        # kw_vec = np.mean(kw_vecs[pubs], axis=0)
+        scores = profile - avg_profile
         best = np.argmax(scores)
         return best
-
     
+    children = []
+    for c in clusters:
+        children.append({
+            'name': keywords[group_keyword(c)],
+            'size': len(c),
+            'research_outputs': [outputs[i].attributes() for i in c],
+        })
+    children.sort(key=lambda c: c['size'], reverse=True)
+
     return {
         'name': root_name,
         'size': len(outputs),
-        'children': cluster_tree(np.arange(len(outputs))),
+        'children': children,
     }
 
 
