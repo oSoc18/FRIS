@@ -4925,7 +4925,7 @@ tbody.collapse.show {
     padding-right: .5rem;
     padding-left: .5rem;
     color: #6c757d;
-    content: "$"
+    content: ">"
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {

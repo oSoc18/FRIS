@@ -1,3 +1,15 @@
+var page = [];
+
+function appendPage(attributes) {
+    page.push(attributes);
+    localStorage.setItem("page", attributes);
+    l(localStorage.getItem("page"));
+}
+
+function getPage() {
+    return page;
+}
+
 function readJSON(file) {
     var result;
     $.getJSON(file, {}, function (data) {
@@ -73,11 +85,13 @@ function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
-};
+}
 
-function minimizeText(texte,limit){
+
+function minimizeText(texte, limit) {
     l(texte);
-    if(texte.length>limit){
-        return texte.substring(1,100);
-    }100
+    if (texte.length > limit) {
+        return texte.substring(1, 100);
+    }
+
 }
