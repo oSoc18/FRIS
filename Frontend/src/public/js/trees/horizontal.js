@@ -1,8 +1,8 @@
 var margin = {
     top: 200,
-    right: 120,
+    right: 200,
     bottom: 200,
-    left: 120
+    left: 200
 },
 width = screen.width - margin.right - margin.left,
 height = screen.height - margin.top - margin.bottom;
@@ -54,7 +54,7 @@ var nodes = tree.nodes(root).reverse(),
 
 // Normalize for fixed-depth.
 nodes.forEach(function (d) {
-    d.y = d.depth * 180;
+    d.y = d.depth * 250;
 });
 
 // Update the nodes…

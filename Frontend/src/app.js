@@ -7,21 +7,26 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 // use res.render to load up an ejs view file
-
+// index page 
+app.get('/', function (req, res) {
+    res.render('pages/index');
+});
 
 app.get('/keyword?:keyword', function (req, res) {
     res.render('pages/index');
 });
-
-// index page 
-
-app.get('/', function (req, res) {
-    res.render('pages/index');
+// about page 
+app.get('/organisation', function (req, res) {
+    res.render('pages/organisation');
 });
+
+
 // about page 
 app.get('/explore', function (req, res) {
     res.render('pages/explore');
 });
+
+
 
 app.listen(8080);
 console.log('8080 is the magic port');

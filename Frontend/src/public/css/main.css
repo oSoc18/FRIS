@@ -437,7 +437,6 @@ svg {
     padding-right: .5rem;
     padding-left: .5rem;
     color: #6c757d;
-    content: ">"
 }
 
 .margin-button-link {
@@ -509,4 +508,17 @@ svg {
     min-height: auto;
     /* These two lines are counted as one :-)       */
     align-items: center;
+}
+
+.menu-item:hover {
+    color: #eee;
+    text-decoration: none;
+}
+
+.morecontent span {
+    display: none;
+}
+
+.morelink {
+    display: block;
 }
