@@ -44,17 +44,9 @@
         var uuid = getUrlParameter('uuid');
         ///organisations/<uuid>
         $.getJSON("http://127.0.0.1:5000/organisation/" + uuid + "/output_cluster", function (data) {
-            /*
-            var items = [];
-            $.each(data, function (key, val) {
-                items.push(data);
-            });
-            $('#content').append(items[0].name); // show the name in the search bar
-            init(items);
-            */
             init(data);
             page = getPage();
-            var link = "<a href='/keyword?"+localStorage.getItem("page")+"' class='breadcrumb-item  white'>Search / </a>"
+            var link = "<a href='/keyword?"+localStorage.getItem("page")+"' class='breadcrumb-item menu-item  white'>Search </a> / "
             $('#content').append(link).append(data.name ? data.name : 'Unknown'); // show the name in the search bar
             
 

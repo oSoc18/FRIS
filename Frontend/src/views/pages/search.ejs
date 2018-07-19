@@ -25,19 +25,11 @@
                 search = $('#autocomplete');
             l(window.location.search);
             var oldSearch = "";
-            if('null'!=window.location.search){
-                oldSearch=window.location.search;
-                oldSearch.replace("?","");
+            if ('null' != window.location.search) {
+                oldSearch = window.location.search;
+                oldSearch.replace("?", "");
                 quickSearch(oldSearch);
             }
-
-         /*
-            if (window.location.pathname.indexOf("keyword")) {
-                var keyword = window.location.pathname.split("keyword=").pop();
-                research(keyword);
-
-            }
-         */
 
             //Compare the search keyword with a list
             search.keypress(function (e) {
@@ -70,7 +62,7 @@
 
             function research() {
                 var search_text = $('#autocomplete')[0].value;
-                    words = search_text.split(" ");
+                words = search_text.split(" ");
                 var organization = [];
                 $('#search_result').html("");
                 appendPage(words);
@@ -88,23 +80,27 @@
                             <div class='jumbotron'> \
                             <div class='inline-header' ><h1 id='" +
                                 val.uuid + "'>" + val.name +
-                                "</h1> <span class='text-right'><a class=btn btn-default href=/explore?uuid=" +
+                                "</h1> <span class='text-right'><a class=btn btn-default href='#popup' role=button>» See univeristy details</a> <a class=btn btn-default href=/explore?uuid=" +
                                 val.uuid +
                                 " role=button>» Explore graph </a></span> </div><hr>\
                                 <p class='text-justify overflow'>" +
                                 cropText +
                                 "</p>" + shortcut +
                                 " \
-                                <p class='text-right'><a class=btn btn-default href='#popup' role=button>» View the organisation </a></p></div>"
+                                <p class='text-right'></p></div>"
                             );
                         });
                     } else {
                         items.push("No result...");
                     }
-                    $('#div-search').animate({ 'marginTop': '1%', opacity: 1 }, 1000);
+                    $('#div-search').animate({
+                        'marginTop': '1%',
+                        opacity: 1
+                    }, 1000);
                     $("#search_result").append(items.join("")).hide().fadeIn(500);
                 });
             }
+
             function quickSearch(words) {
                 var organization = [];
                 $('#search_result').html("");
@@ -116,8 +112,7 @@
                         $.each(data, function (key, val) {
                             var shortcut = createLinksKeywords(data[key].keywords);
                             //crop text
-                            var cropText = (val.research_activity + "").substr(
-                                0, 500) + "...";
+
                             items.push(
                                 " \
                             <div class='jumbotron'> \
@@ -126,18 +121,31 @@
                                 "</h1> <span class='text-right'><a class=btn btn-default href=/explore?uuid=" +
                                 val.uuid +
                                 " role=button>» Explore graph </a></span> </div><hr>\
-                                <p class='text-justify overflow'>" +
-                                cropText +
-                                "</p>" + shortcut +
+                                <p class='text-justify' id=" +
+                                val.uuid + ">" +
+                                val.research_activity +
+                                "<br></p>" + shortcut +
                                 " \
                                 <p class='text-right'><a class=btn btn-default href='#popup' role=button>» View the organisation </a></p></div>"
                             );
+                            l(val.uuid);
+
+
                         });
+
                     } else {
                         items.push("No result...");
                     }
-                    $('#div-search').animate({ 'marginTop': '1%', opacity: 1 }, 1000);
+                    $('#div-search').animate({
+                        'marginTop': '1%',
+                        opacity: 1
+                    }, 1000);
                     $("#search_result").append(items.join("")).hide().fadeIn(500);
+                 /*    $('text-justify').shorten({
+                        moreText: 'read more',
+                        lessText: 'read less',
+                        showChars: 50
+                    }); */
                 });
             }
         });
@@ -147,7 +155,8 @@
 <div class="popup" id="popup">
     <a href="#section-tours" class="popup__close">&times;</a>
     <div class="popup__content">
-        <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
+        <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (
+            <a href="/organisation"> EDM</a>)</h2>
         <div class="popup__scrollcontent">
             <div class="popup__top">
                 <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
@@ -197,3 +206,4 @@
         </div>
     </div>
 </div>
+</script>
