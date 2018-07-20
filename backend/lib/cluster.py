@@ -122,5 +122,3 @@ def cluster_outputs(outputs, root_name):
         'size': len(outputs),
         'children': children,
     }
-
-
