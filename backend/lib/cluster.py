@@ -62,6 +62,20 @@ def keyword_correlations(kw_nums, kw_mapping):
     correlation = mat / (counts + counts[:, np.newaxis] - mat)
     return correlation
 
+def conditional_keyword_probs(kw_nums, kw_mapping):
+    n = len(kw_nums)
+
+    # count co-occurences of keywords
+    mat = np.zeros((n, n), dtype=np.int32)
+    for kw_set in kw_mapping.values():
+        nums = [kw_nums[k] for k in kw_set]
+        for k1 in nums:
+            for k2 in nums:
+                mat[k1, k2] += 1
+    counts = np.diagonal(mat)
+    conditionals = mat / counts[:, np.newaxis]
+    return conditionals
+
 def output_profiles(kw_matrix, kw_correlations):
     mat = np.dot(kw_matrix, kw_correlations)
     normalized = mat / np.sum(mat, axis=1)[:, np.newaxis]
