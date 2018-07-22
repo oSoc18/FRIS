@@ -62,6 +62,7 @@ def keyword_correlations(kw_nums, kw_mapping):
     correlation = mat / (counts + counts[:, np.newaxis] - mat)
     return correlation
 
+
 def conditional_keyword_probs(kw_nums, kw_mapping):
     n = len(kw_nums)
 
@@ -75,6 +76,7 @@ def conditional_keyword_probs(kw_nums, kw_mapping):
     counts = np.diagonal(mat)
     conditionals = mat / counts[:, np.newaxis]
     return conditionals
+
 
 def output_profiles(kw_matrix, kw_correlations):
     mat = np.dot(kw_matrix, kw_correlations)
@@ -113,7 +115,6 @@ def cluster_outputs(outputs, root_name):
         cs.setdefault(label, []).append(i)
     clusters = [np.array(c) for c in cs.values()]
 
-    
     def group_keyword(idxs):
         profile = np.mean(profiles[idxs], axis=0)
         avg_profile = np.mean(profiles, axis=0)
