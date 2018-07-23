@@ -1,25 +1,84 @@
 <div class="middle margin-content vertical-center " id="div-search">
+    <div class="row  margin-content margin-header">
+        <div class="col-centered">
+            <h1>
+
+                Find research groups in Flanders
+            </h1>
+        </div>
+    </div>
     <div class="row">
         <div id="demo" class="col-md-12">
 
-            <input type="search" name="keyword" id="autocomplete" class="search__input" placeholder="Keyword : Database">
+            <input type="search" name="keyword" id="autocomplete" class="search__input" placeholder="What's your domain of interest ? e.g. Database, Water, Learning">
         </div>
 
     </div>
-    <div class="container-fluid margin-content  d-flex align-items-center ">
-        <div id="set-result" class="row result-set">
+    <div class="margin-content align-items-center ">
+        <div class="row">
+            <div class="col-centered">
+                <h2>Research groups in your domain of interest</h2>
 
-
+            </div>
         </div>
     </div>
 
 
-    <div class="container-fluid margin-content  d-flex align-items-center ">
+    <div class="container-fluid margin-content ">
         <div class="row" id="search_result">
+            <div class='result col-xs-6 col-md-4 col-lg-4'>
 
+                <div class="jumbotron">
+                    <h4 class="display-6" id="39cd52d6-b523-4c29-8046-7d1899e0e799">Faculty of Business Economics</h4>
+                    <hr>
+                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Marine</button>
+                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Civil</button>
+                    <hr>
+                    <p class="lead">
+                        <span class="text-right">
+                            <a class="btn" btn-default="" href="#popup" role="button">» Details</a>
+                            <a class="btn" btn-default="" href="/explore?uuid=39cd52d6-b523-4c29-8046-7d1899e0e799&amp;keyword=engineering" role="button">» publication map </a>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class='result col-xs-6 col-md-4 col-lg-4'>
+
+                <div class="jumbotron">
+                    <h4 class="display-6" id="e329bd29-f7f2-4419-8cbd-e9f0e27a3f8c">Economics</h4>
+                    <hr>
+                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Marine</button>
+                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Civil</button>
+                    <hr>
+                    <p class="lead">
+                        <span class="text-right">
+                            <a class="btn" btn-default="" href="#popup" role="button">» Details</a>
+                            <a class="btn" btn-default="" href="/explore?uuid=e329bd29-f7f2-4419-8cbd-e9f0e27a3f8c&amp;keyword=engineering" role="button">» publication map </a>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class='result col-xs-6 col-md-4 col-lg-4'>
+
+                <div class="jumbotron">
+                    <h4 class="display-6" id="60e1f554-1c7c-43cb-a94e-0a2f867bb3be">Research Institute: Centre for Environmental Sciences</h4>
+                    <hr>
+                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Marine</button>
+                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Civil</button>
+                    <hr>
+                    <p class="lead">
+                        <span class="text-right">
+                            <a class="btn" btn-default="" href="#popup" role="button">» Details</a>
+                            <a class="btn" btn-default="" href="/explore?uuid=60e1f554-1c7c-43cb-a94e-0a2f867bb3be&amp;keyword=engineering" role="button">» publication map </a>
+                        </span>
+                    </p>
+                </div>
+            </div>
         </div>
 
     </div>
+
+
     <script>
         $(function () {
             var words = [],
@@ -43,9 +102,7 @@
             function createLinksKeywords(keywords) {
                 var stringLink = "";
                 var cpt = 0;
-                //  l(keywords);
                 for (var i = 0; i < keywords[0].keywords.length; i++) {
-                    // l(keywords[0].keywords);
                     stringLink +=
                         '<button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">' +
                         keywords[0].keywords[i] + '</button> ';
@@ -68,12 +125,11 @@
                 var search_text = $('#autocomplete')[0].value;
                 words = search_text.split(" ");
                 var organization = [];
-                $('#search_result').html("");
+                $('#search_result').html("").fadeOut(500);
                 appendPage(words);
                 $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
                     data) {
                     var items = [];
-
                     if (data.length > 0) {
 
                         data.forEach(element => {
@@ -87,13 +143,12 @@
                                 element.organisation.uuid + "'>" + element.organisation.name +
                                 "</h4><hr>\
                                 " + shortcut +
-                                "<hr><p class='lead'><span class='text-right'><a class=btn btn-default href='#popup' role=button>» See university details</a> <a class=btn btn-default href=/explore?uuid=" +
+                                "<hr><p class='lead'><span class='text-right'><a class=btn btn-default href='#popup' role=button>» Details</a> <a class=btn btn-default href=/explore?uuid=" +
                                 element.organisation.uuid +
                                 "&keyword=" + words +
-                                " role=button>» Explore graph </a></span></p></div></div>"
+                                " role=button>» publication map </a></span></p></div></div>"
                             );
                         });
-                        $('#set-result').append(" <p>Result : </p><hr>").hide().fadeIn(500);
 
                     } else {
                         items.push("No result...");
@@ -108,7 +163,7 @@
 
             function quickSearch(words) {
                 var organization = [];
-                $('#search_result').html("");
+                $('#search_result').html("").fadeOut(500);
                 appendPage(words);
                 $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
                     data) {
