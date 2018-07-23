@@ -41,6 +41,7 @@ def keyword_mapping(keyword_set, outputs) -> dict:
                     keywords.add(keyword)
     return mapping
 
+
 def keyword_matrix(outputs, kw_nums, kw_mapping):
     mat = np.zeros((len(outputs), len(kw_nums)), dtype=np.bool)
     for output_num, output in enumerate(outputs):
@@ -94,6 +95,25 @@ def output_similarity(outputs, kw_mapping):
             similarity[i, j] = len(kws1 & kws2) / len(kws1 | kws2)
     return similarity
 
+# Matthews Correlation Coefficient
+def matthews_correlation(data, reference):
+    s, _ = data.shape
+    n, _= reference.shape
+    
+    # True positives
+    tp = np.sum(data, axis=0)
+    # False negatives
+    fn = np.sum(reference, axis=0) - tp
+    # False positives
+    fp = s - tp
+    # True negatives
+    tn = n - s - fn
+    
+    numerator = tp*tn - fp*fn 
+    denominator = np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+    mcc = np.divide(numerator, denominator, out=np.zeros_like(numerator), where=denominator!=0)
+    return mcc
+
 
 def cluster_outputs(outputs, root_name):
     keywords, kw_nums = get_keyword_set(outputs)
@@ -102,38 +122,84 @@ def cluster_outputs(outputs, root_name):
     outputs = [o for o in outputs if kw_mapping[o.uuid()]]
     kw_matrix = keyword_matrix(outputs, kw_nums, kw_mapping)
     kw_correlations = keyword_correlations(kw_nums, kw_mapping)
+    n = len(outputs)
+
 
     profiles = output_profiles(kw_matrix, kw_correlations)
     # TODO: avoid converting to square form and back
     distances = squareform(distance.pdist(profiles, 'cosine'))
 
     Z = hierarchy.ward(squareform(distances))
-    labels = fcluster(Z, criterion='distance', t=0.3*np.max(Z[:, 2]))
 
-    cs = {}
-    for (i, label) in enumerate(labels):
-        cs.setdefault(label, []).append(i)
-    clusters = [np.array(c) for c in cs.values()]
-
-    def group_keyword(idxs):
-        profile = np.mean(profiles[idxs], axis=0)
-        avg_profile = np.mean(profiles, axis=0)
-        # kw_vec = np.mean(kw_vecs[pubs], axis=0)
-        scores = profile - avg_profile
-        best = np.argmax(scores)
-        return best
+    # compute membership vectors for each node in the cluster tree
+    cluster_elems = np.zeros((2 * n - 1, n), dtype=np.bool)
+    cluster_elems[:n] = np.diag(np.ones(n, dtype=np.bool))
+    for i in range(n-1):
+        a, b = Z[i, 0:2].astype(np.int)
+        cluster_elems[n+i, :] = np.logical_or(cluster_elems[a], cluster_elems[b])
     
-    children = []
-    for c in clusters:
-        children.append({
-            'name': keywords[group_keyword(c)],
-            'size': len(c),
-            'research_outputs': [outputs[i].attributes() for i in c],
-        })
-    children.sort(key=lambda c: c['size'], reverse=True)
+    # compute correlation between subtree membership and keywords
+    mccs = np.array([matthews_correlation(profiles[c], profiles) for c in cluster_elems])
+    # assign the best ranking keyword to each node
+    kws = np.argmax(mccs, axis=1)
+    # put the associated correlation in a vector for easy access
+    cluster_mcc = mccs[np.arange(2*n-1), kws]
 
-    return {
-        'name': root_name,
-        'size': len(outputs),
-        'children': children,
-    }
+
+    # Build parents list
+    parents = np.zeros(2 * n - 1, dtype=np.int64)
+    parents[2*n-2] = 2*n-2
+
+    for i in reversed(range(n-1)):
+        children = Z[i, 0:2].astype(np.int)
+            
+        mcc, parent_mcc = cluster_mcc[[n+i, parents[n+i]]]
+        kw, parent_kw = kws[[n+i, parents[n+i]]]
+
+        if mcc > parent_mcc and kw != parent_kw:
+            parents[children] = n + i
+        else:
+            parents[children] = parents[n+i]
+
+    # for now we'll ignore values that don't belong to a leaf node.
+    # because I'm not competent, I defined a leaf node as a node that has
+    # at least 1/3 of its size as direct children.
+    num_leaf_children = np.zeros(n-1, dtype=np.int)
+    for i in range(n):
+        num_leaf_children[parents[i] - n] += 1
+    print(num_leaf_children - Z[:, 3] / 3)
+    is_leaf = num_leaf_children > Z[:, 3] / 3
+    # the root may never be a leaf node.
+    is_leaf[-1] = False
+
+    for i in reversed(range(n-1)):
+        p = parents[n+i]
+        if is_leaf[p - n]:
+            # if parent is a leaf, discard this node
+            parents[parents == n + i] = p            
+
+    # extract tree
+    nodes = {}
+    for p in np.unique(parents):
+        if is_leaf[p - n]: 
+            research_outputs = [outputs[o].title() for o in np.where(cluster_elems[p])[0]]
+            nodes[p] = {
+                'name': keywords[kws[p]],
+                'size': len(research_outputs),
+                'research_outputs': research_outputs,
+            }
+        else:
+            nodes[p] = {
+                'name': keywords[kws[p]],
+                'size': 0,
+                'children': []
+            }
+    for p in np.unique(parents)[:-1]:
+        node = nodes.pop(p)
+        parent = nodes[parents[p]]
+        parent['children'].append(node)
+        parent['size'] += node['size']
+        
+    tree = nodes[2*n-2]
+    tree['name'] = root_name
+    return tree
