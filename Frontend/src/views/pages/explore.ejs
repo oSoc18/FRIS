@@ -44,19 +44,12 @@
             $(function () {
                 var uuid = getUrlParameter('uuid');
                 var quickSearch = getUrlParameter('keyword');
-                ///organisations/<uuid>
                 $.getJSON("http://127.0.0.1:5000/organisation/" + uuid + "/output_cluster", function (data) {
-                    /*
-                    var items = [];
-                    $.each(data, function (key, val) {
-                        items.push(data);
-                    });
-                    $('#content').append(items[0].name); // show the name in the search bar
-                    init(items);
-                    */
-                    l(quickSearch);
-                    $('#content').append("<a class='breadcrumb-item  white menu-item ' href='/keyword?" + quickSearch +"'> Search</a> / "); // show the name in the search bar
-                    $('#content').append(" <a class='breadcrumb-item  white menu-item '  href='#'> "+data.name ? data.name : 'Unknown'+"</a>"); // show the name in the search bar
+
+                    $('#content').append("<a class='breadcrumb-item  white menu-item ' href='/keyword?" +
+                        quickSearch + "'> Search</a> / "); // show the name in the search bar
+                    $('#content').append(" <a class='breadcrumb-item  white menu-item '  href='#'> " +
+                        data.name ? data.name : 'Unknown' + "</a>"); // show the name in the search bar
                     init(data);
 
                 });

@@ -24,21 +24,12 @@
         $(function () {
             var words = [],
                 search = $('#autocomplete');
-            // l(window.location.search);
             var oldSearch = "";
-            if ('null' != window.location.search) {
+            if ("" != window.location.search) {
                 oldSearch = window.location.search;
                 oldSearch.replace("?", "");
                 quickSearch(oldSearch);
             }
-
-            /*
-               if (window.location.pathname.indexOf("keyword")) {
-                   var keyword = window.location.pathname.split("keyword=").pop();
-                   research(keyword);
-
-               }
-            */
 
             //Compare the search keyword with a list
             search.keypress(function (e) {
@@ -84,14 +75,9 @@
                     var items = [];
 
                     if (data.length > 0) {
-                        /*   var textTitle = "<div><h1>Organisation result</h1></div>";
-                        $('#title').html(textTitle);
- */
+
                         data.forEach(element => {
-                            l(element);
-                            //researchOutput
                             var shortcut = createLinksKeywords(element.researchOutputs);
-                            //crop text
                             var cropText = (element.research_activity + "").substr(
                                 0, 500) + "...";
                             items.push(
@@ -129,14 +115,9 @@
                     var items = [];
 
                     if (data.length > 0) {
-                        /*   var textTitle = "<div><h1>Organisation result</h1></div>";
-                        $('#title').html(textTitle);
- */
+
                         data.forEach(element => {
-                            //l(element);
-                            //researchOutput
                             var shortcut = createLinksKeywords(element.researchOutputs);
-                            //crop text
                             var cropText = (element.research_activity + "").substr(
                                 0, 500) + "...";
                             items.push(
