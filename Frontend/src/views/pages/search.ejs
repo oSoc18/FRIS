@@ -24,184 +24,190 @@
     </div>
 
 
-    <div class="container-fluid margin-content ">
-        <div class="row" id="search_result">
-            <div class='result col-xs-6 col-md-4 col-lg-4'>
+    <div class="container-fluid margin-content  ">
+        <div class="align-items-center">
 
-                <div class="jumbotron">
-                    <h4 class="display-6" id="39cd52d6-b523-4c29-8046-7d1899e0e799">Faculty of Business Economics</h4>
-                    <hr>
-                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Marine</button>
-                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Civil</button>
-                    <hr>
-                    <p class="lead">
-                        <span class="text-right">
-                            <a class="btn" btn-default="" href="#popup" role="button">» Details</a>
-                            <a class="btn" btn-default="" href="/explore?uuid=39cd52d6-b523-4c29-8046-7d1899e0e799&amp;keyword=engineering" role="button">» publication map </a>
-                        </span>
-                    </p>
+            <div class="row " id="search_result">
+                <div class='result col-xs-4 col-md-4 col-lg-4 '>
+                    <a class="btn btn-outline-warning     margin-button-link" href="/keyword?Engineering" role="button">Engineering</a>
                 </div>
-            </div>
-            <div class='result col-xs-6 col-md-4 col-lg-4'>
-
-                <div class="jumbotron">
-                    <h4 class="display-6" id="e329bd29-f7f2-4419-8cbd-e9f0e27a3f8c">Economics</h4>
-                    <hr>
-                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Marine</button>
-                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Civil</button>
-                    <hr>
-                    <p class="lead">
-                        <span class="text-right">
-                            <a class="btn" btn-default="" href="#popup" role="button">» Details</a>
-                            <a class="btn" btn-default="" href="/explore?uuid=e329bd29-f7f2-4419-8cbd-e9f0e27a3f8c&amp;keyword=engineering" role="button">» publication map </a>
-                        </span>
-                    </p>
+                <div class='result col-xs-4 col-md-4 col-lg-4'>
+                    <a class="btn btn-outline-warning margin-button-link" href="/keyword?Database" role="button">Database</a>
                 </div>
-            </div>
-            <div class='result col-xs-6 col-md-4 col-lg-4'>
-
-                <div class="jumbotron">
-                    <h4 class="display-6" id="60e1f554-1c7c-43cb-a94e-0a2f867bb3be">Research Institute: Centre for Environmental Sciences</h4>
-                    <hr>
-                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Marine</button>
-                    <button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">Engineering, Civil</button>
-                    <hr>
-                    <p class="lead">
-                        <span class="text-right">
-                            <a class="btn" btn-default="" href="#popup" role="button">» Details</a>
-                            <a class="btn" btn-default="" href="/explore?uuid=60e1f554-1c7c-43cb-a94e-0a2f867bb3be&amp;keyword=engineering" role="button">» publication map </a>
-                        </span>
-                    </p>
+                <div class='result col-xs-4 col-md-4 col-lg-4'>
+                    <a class="btn btn-outline-warning margin-button-link" href="/keyword?Water" role="button">Water</a>
                 </div>
             </div>
         </div>
 
     </div>
 
+</div>
 
-    <script>
-        $(function () {
-            var words = [],
-                search = $('#autocomplete');
-            var oldSearch = "";
-            if ("" != window.location.search) {
-                oldSearch = window.location.search;
-                oldSearch.replace("?", "");
-                quickSearch(oldSearch);
+
+<script>
+    $(function () {
+        var words = [],
+            search = $('#autocomplete');
+        var oldSearch = "";
+        if ("" != window.location.search) {
+            oldSearch = window.location.search;
+            oldSearch.replace("?", "");
+            quickSearch(oldSearch);
+        }
+
+        //Compare the search keyword with a list
+        search.keypress(function (e) {
+
+            if (e.which == 13) {
+                research();
+            };
+
+        });
+
+        function createLinksKeywords(keywords) {
+            var stringLink = "";
+            var cpt = 0;
+            for (var i = 0; i < keywords[0].keywords.length; i++) {
+                stringLink +=
+                    '<a class="btn btn-outline-warning margin-button-link" href="/keyword?' + keywords[0].keywords[
+                        i] + '" role="button">' +
+                    keywords[0].keywords[i] + '</a> ';
             }
 
-            //Compare the search keyword with a list
-            search.keypress(function (e) {
+            return stringLink;
 
-                if (e.which == 13) {
-                    research();
-                };
+        }
 
-            });
+        function showMore() {
+            //removes the link
+            document.getElementById('link').parentElement.removeChild('link');
+            //shows the #more
+            document.getElementById('more').style.display = "block";
+        }
 
-            function createLinksKeywords(keywords) {
-                var stringLink = "";
-                var cpt = 0;
-                for (var i = 0; i < keywords[0].keywords.length; i++) {
-                    stringLink +=
-                        '<button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">' +
-                        keywords[0].keywords[i] + '</button> ';
-                }
-
-                return stringLink;
-
-            }
-
-            function createElementSearch(object) {
-                var data = clearString(object);
-                return " \
+        function createElementSearch(object) {
+            var data = clearString(object);
+            return " \
                 <h1>" + data +
-                    "</h1> \
+                "</h1> \
                 <p><a href='/src/view/organization.html'>Search trends by organization</a></p> \
                 ";
-            }
+        }
 
-            function research() {
-                var search_text = $('#autocomplete')[0].value;
-                words = search_text.split(" ");
-                var organization = [];
-                $('#search_result').html("").fadeOut(500);
-                appendPage(words);
-                $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
-                    data) {
-                    var items = [];
-                    if (data.length > 0) {
+        function research() {
+            var search_text = $('#autocomplete')[0].value;
+            words = search_text.split(" ");
+            var organization = [];
+            $('#search_result').html("").fadeOut(500);
+            appendPage(words);
+            $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
+                data) {
+                l(data);
+                var items = [];
+                var heroicBlabla =
+                    "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam.";
 
-                        data.forEach(element => {
-                            var shortcut = createLinksKeywords(element.researchOutputs);
-                            var cropText = (element.research_activity + "").substr(
-                                0, 500) + "...";
-                            items.push(
-                                " \
+                if (data.length > 0) {
+                    //  l(data);
+                    data.forEach(element => {
+                        var shortcut = createLinksKeywords(element.researchOutputs);
+                        var heroicBlabla =
+                            "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam. Veniam et veniam voluptate Lorem dolore officia tempor incididunt aute dolor sunt nisi.Dolor mollit excepteur elit minim incididunt.Tempor irure minim voluptate et velix.";
+
+                        var cropText = (heroicBlabla).substr(
+                            0, 250) + "...";
+                        items.push(
+                            " \
                                 <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron'> \
                             <h4 class='display-6' id='" +
-                                element.organisation.uuid + "'>" + element.organisation.name +
-                                "</h4><hr>\
+                            element.organisation.uuid + "'>" + element.organisation.name +
+                            "</h4><hr>\
                                 " + shortcut +
-                                "<hr><p class='lead'><span class='text-right'><a class=btn btn-default href='#popup' role=button>» Details</a> <a class=btn btn-default href=/explore?uuid=" +
-                                element.organisation.uuid +
-                                "&keyword=" + words +
-                                " role=button>» publication map </a></span></p></div></div>"
-                            );
-                        });
+                            "<hr><div class='fuck' id=" + element.organisation.uuid +
+                            ">" + cropText +"<a href='#popup'>Read more.</a>\
+                        </div><hr><p class='lead'><a class='btn btn-dark margin-button-link' href='#popup' ><i class='fa fa-list' aria-hidden='true'></i> Details</a> <a class='btn btn-warning margin-button-link' href=/explore?uuid=" +
+                            element.organisation.uuid +
+                            "&keyword=" + words +
+                            " ><i class='fa fa-share-alt' aria-hidden='true'></i> Publication map </a></p></div></div>"
+                        );
+                        $('.service-info').hide();
+                        $('.read-more').click(function () {
+                            $(this).siblings('.service-info').show();
+                            $(this).hide();
+                            $(this).parent().find('.read-less').show();
+                        })
+                        $('.read-less').click(function () {
+                            $(this).siblings('.service-info').hide();
+                            $(this).hide();
+                            $(this).parent().find('.read-more').show();
+                        })
 
-                    } else {
-                        items.push("No result...");
-                    }
-                    $('#div-search').animate({
-                        'marginTop': '1%',
-                        opacity: 1
-                    }, 1000);
-                    $("#search_result").append(items.join("")).hide().fadeIn(500);
-                });
-            }
+                    });
 
-            function quickSearch(words) {
-                var organization = [];
-                $('#search_result').html("").fadeOut(500);
-                appendPage(words);
-                $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
-                    data) {
-                    var items = [];
+                } else {
+                    items.push("No result...");
+                }
+                $('#div-search').animate({
+                    'marginTop': '1%',
+                    opacity: 1
+                }, 1000);
+                $("#search_result").append(items.join("")).hide().fadeIn(500);
+            });
+        }
 
-                    if (data.length > 0) {
+        function quickSearch(words) {
+            var organization = [];
+            $('#search_result').html("").fadeOut(500);
+            appendPage(words);
+            $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
+                data) {
+                var items = [];
+                var heroicBlabla =
+                    "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam. Veniam et veniam voluptate Lorem dolore officia tempor incididunt aute dolor sunt nisi.Dolor mollit excepteur elit minim incididunt.Tempor irure minim voluptate et velix.";
 
-                        data.forEach(element => {
-                            var shortcut = createLinksKeywords(element.researchOutputs);
-                            var cropText = (element.research_activity + "").substr(
-                                0, 500) + "...";
-                            items.push(
-                                " \
+                if (data.length > 0) {
+
+                    data.forEach(element => {
+                        var shortcut = createLinksKeywords(element.researchOutputs);
+                        var cropText = (element.research_activity + "").substr(
+                            0, 500) + "...";
+                        items.push(
+                            " \
                                 <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron'> \
                             <h4 class='display-6' id='" +
-                                element.organisation.uuid + "'>" + element.organisation.name +
-                                "</h4><hr>\
+                            element.organisation.uuid + "'>" + element.organisation.name +
+                            "</h4>\
                                 " + shortcut +
-                                "<hr><p class='lead'><span class='text-right'><a class=btn btn-default href='#popup' role=button>» See university details</a> <a class=btn btn-default href=/explore?uuid=" +
-                                element.organisation.uuid +
-                                "&keyword=" + words +
-                                " role=button>» Explore graph </a></span></p></div></div>"
-                            );
-                        });
-                        $('#set-result').append(" <p>Result : </p><hr>").hide().fadeIn(500);
+                            "<hr><div class='fuck' id=" + element.organisation.uuid + ">" +
+                            heroicBlabla +
+                            "</div><hr><p class='lead'><a class='btn btn-dark margin-button-link' href='#popup' >» Details</a> <a class='btn btn-warning margin-button-link' href=/explore?uuid=" +
+                            element.organisation.uuid +
+                            "&keyword=" + words +
+                            " role=button>» Explore graph </a></span></p></div></div>"
+                        );
+                        var selection = "#" + element.organisation.uuid;
+                        new showHideText(selection, {
+                            charQty: 10
 
-                    } else {
-                        items.push("No result...");
-                    }
-                    $('#div-search').animate({
-                        'marginTop': '1%',
-                        opacity: 1
-                    }, 1000);
-                    $("#search_result").append(items.join("")).hide().fadeIn(500);
-                });
-            }
-        });
-    </script>
+                        });
+                    });
+                    $('#set-result').append(" <p>Result : </p><hr>").hide().fadeIn(500);
+
+                } else {
+                    items.push("No result...");
+                }
+                $('#div-search').animate({
+                    'marginTop': '1%',
+                    opacity: 1
+                }, 1000);
+                $("#search_result").append(items.join("")).hide().fadeIn(500);
+            });
+        }
+
+
+    });
+</script>
 </div>
 
 <div class="popup" id="popup">

@@ -203,7 +203,7 @@
 
                 let rMap = (obj) => {
                     // obj is a cluster
-                    if (obj.name && obj.children) {
+                    if (obj.name&& obj.children) {
                         return {
                             num: obj.name,
                             children: obj.children.map(rMap),
