@@ -6,9 +6,11 @@
         </div>
 
     </div>
-    <div class="row result-set">
-            <p>Result : </p><hr>
+    <div class="container-fluid margin-content  d-flex align-items-center ">
+        <div id="set-result" class="row result-set">
 
+
+        </div>
     </div>
 
 
@@ -22,21 +24,12 @@
         $(function () {
             var words = [],
                 search = $('#autocomplete');
-            l(window.location.search);
             var oldSearch = "";
-            if('null'!=window.location.search){
-                oldSearch=window.location.search;
-                oldSearch.replace("?","");
+            if ("" != window.location.search) {
+                oldSearch = window.location.search;
+                oldSearch.replace("?", "");
                 quickSearch(oldSearch);
             }
-
-         /*
-            if (window.location.pathname.indexOf("keyword")) {
-                var keyword = window.location.pathname.split("keyword=").pop();
-                research(keyword);
-
-            }
-         */
 
             //Compare the search keyword with a list
             search.keypress(function (e) {
@@ -49,11 +42,15 @@
 
             function createLinksKeywords(keywords) {
                 var stringLink = "";
-                $.each(keywords, function (key, val) {
+                var cpt = 0;
+                //  l(keywords);
+                for (var i = 0; i < keywords[0].keywords.length; i++) {
+                    // l(keywords[0].keywords);
                     stringLink +=
                         '<button class="btn btn-outline-success btn-static margin-button-link" href="#" role="button">' +
-                        val + '</button> ';
-                });
+                        keywords[0].keywords[i] + '</button> ';
+                }
+
                 return stringLink;
 
             }
@@ -69,78 +66,82 @@
 
             function research() {
                 var search_text = $('#autocomplete')[0].value;
-                    words = search_text.split(" ");
+                words = search_text.split(" ");
                 var organization = [];
                 $('#search_result').html("");
                 appendPage(words);
                 $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
                     data) {
                     var items = [];
-                    l(data);
-                    if (data.length > 0) {
-                        /*   var textTitle = "<div><h1>Organisation result</h1></div>";
-                        $('#title').html(textTitle);
- */
-                        $.each(data, function (key, val) {
-                            var shortcut = createLinksKeywords(data[key].keywords);
 
-                            //crop text
-                            var cropText = (val.research_activity + "").substr(
+                    if (data.length > 0) {
+
+                        data.forEach(element => {
+                            var shortcut = createLinksKeywords(element.researchOutputs);
+                            var cropText = (element.research_activity + "").substr(
                                 0, 500) + "...";
                             items.push(
                                 " \
                                 <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron'> \
                             <h4 class='display-6' id='" +
-                                val.uuid + "'>" + val.name +
+                                element.organisation.uuid + "'>" + element.organisation.name +
                                 "</h4><hr>\
-                                <p class='lead'>" +
-                                val.research_activity +
-                                "</p>" + shortcut +
+                                " + shortcut +
                                 "<hr><p class='lead'><span class='text-right'><a class=btn btn-default href='#popup' role=button>» See university details</a> <a class=btn btn-default href=/explore?uuid=" +
-                                val.uuid +
+                                element.organisation.uuid +
+                                "&keyword=" + words +
                                 " role=button>» Explore graph </a></span></p></div></div>"
                             );
                         });
+                        $('#set-result').append(" <p>Result : </p><hr>").hide().fadeIn(500);
 
                     } else {
                         items.push("No result...");
                     }
-                    $('#div-search').animate({ 'marginTop': '1%', opacity: 1 }, 1000);
+                    $('#div-search').animate({
+                        'marginTop': '1%',
+                        opacity: 1
+                    }, 1000);
                     $("#search_result").append(items.join("")).hide().fadeIn(500);
                 });
             }
+
             function quickSearch(words) {
                 var organization = [];
                 $('#search_result').html("");
                 appendPage(words);
-                $.getJSON("http://127.0.0.1:5000/organisations?keyword=" + words, function (
+                $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
                     data) {
                     var items = [];
+
                     if (data.length > 0) {
-                        $.each(data, function (key, val) {
-                            var shortcut = createLinksKeywords(data[key].keywords);
-                            //crop text
-                            var cropText = (val.research_activity + "").substr(
+
+                        data.forEach(element => {
+                            var shortcut = createLinksKeywords(element.researchOutputs);
+                            var cropText = (element.research_activity + "").substr(
                                 0, 500) + "...";
                             items.push(
                                 " \
-                            <div class='jumbotron'> \
-                            <div class='inline-header' ><h1 id='" +
-                                val.uuid + "'>" + val.name +
-                                "</h1> <span class='text-right'><a class=btn btn-default href=/explore?uuid=" +
-                                val.uuid +
-                                " role=button>» Explore graph </a></span> </div><hr>\
-                                <p class='text-justify overflow'>" +
-                                cropText +
-                                "</p>" + shortcut +
-                                " \
-                                <p class='text-right'><a class=btn btn-default href='#popup' role=button>» View the organisation </a></p></div>"
+                                <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron'> \
+                            <h4 class='display-6' id='" +
+                                element.organisation.uuid + "'>" + element.organisation.name +
+                                "</h4><hr>\
+                                " + shortcut +
+                                "<hr><p class='lead'><span class='text-right'><a class=btn btn-default href='#popup' role=button>» See university details</a> <a class=btn btn-default href=/explore?uuid=" +
+                                element.organisation.uuid +
+                                "&keyword=" + words +
+                                " role=button>» Explore graph </a></span></p></div></div>"
                             );
                         });
+                        $('#set-result').append(" <p>Result : </p><hr>").hide().fadeIn(500);
+
                     } else {
                         items.push("No result...");
                     }
-                    $('#div-search').animate({ 'marginTop': '1%', opacity: 1 }, 1000);
+                    $('#div-search').animate({
+                        'marginTop': '1%',
+                        opacity: 1
+                    }, 1000);
                     $("#search_result").append(items.join("")).hide().fadeIn(500);
                 });
             }
