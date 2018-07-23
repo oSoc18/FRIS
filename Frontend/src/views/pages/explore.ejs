@@ -179,7 +179,9 @@
                     node = g.selectAll(".node");
                 var nodeCircle = g.selectAll(".nodeCircle");
                 var gcontainer = g.selectAll("g");
-                var colors = d3.scale.category10();
+                //var colors = d3.scale.category10();
+                var colornr = 0;
+                var colors = ["#E6311F","#E69B1F","#BDC40D","#16B8EE"];
                 var focusNode = null;
 
                 /*
@@ -201,26 +203,33 @@
                 };
                 */
 
+                //won't change color :/ colornr doesn't want to add 1 every time te loop is done
+
                 let rMap = (obj) => {
                     // obj is a cluster
                     if (obj.name && obj.children) {
                         return {
                             num: obj.name,
-                            children: obj.children.map(rMap)
+                            children: obj.children.map(rMap),
+                            color: colors[colornr]
                         };
-                        // obj is a leaf node
-                    } else {
+                        
+                    }
+                    // obj is a leaf node
+                    else {
                         return {
                             num: obj.name,
-                            children: obj.research_outputs.map((ro) => {
+                            color: "#989898"
+                            /*children: obj.research_outputs.map((ro) => {
                                 return {
                                     num: ro.title,
                                     children: []
                                 }
-                            })
+                            })*/
                         };
-
                     }
+                    colornr=colornr+1;
+                    if (colornr > 3){colornr = 0;}
                 }
 
                 loadDataFile(rMap(items));
@@ -376,7 +385,19 @@
 
                         })
                         .style("fill", function (d, i) {
-                            return colors(i);
+
+                            return d.color;
+                            /*if (hasChildren(d)) {
+                                return colors[1][1];
+                                colornr++;
+                                console.log(colornr);
+                            } else {
+                                return "#a89e92";
+                            }*/
+                            //colornr++;
+                            /*if (colornr > 3)
+                                colornr = 1;*/
+                            //return "#ffe100";//colors(i);
                         })
                         .on("click", click2)
 
@@ -610,7 +631,7 @@
                 }
                 // Color leaf nodes orange, and packages white or blue.
                 function color(d) {
-                    return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+                    return d._children ? "#ffe100" : d.children ? "#ffe100" : "#ffe100";
                 }
                 // Returns a list of all nodes under the root.
                 function flatten(root) {
