@@ -2,3 +2,5 @@
 Frontend/node_modules
 frontend/node_modules
 
+/Frontend/nbproject/private/
+/Frontend/src/node_modules/
