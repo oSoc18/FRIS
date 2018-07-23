@@ -51,7 +51,8 @@ def organisation_output_cluster(uuid):
         abort(404)
     output_service = ResearchOutputService()
     outputs = list(output_service.outputs(organisation=uuid))
-    tree = cluster_outputs(outputs, org.name())
+    tree = cluster_outputs(outputs)
+    tree['name'] = org.name()
     return jsonify(tree)
 
 if __name__ == '__main__':
