@@ -1,4 +1,3 @@
-
 <div class="middle margin-content vertical-center " id="div-search">
     <div class="row  margin-content margin-header">
         <div class="col-centered">
@@ -30,13 +29,13 @@
 
             <div class="row " id="search_result">
                 <div class='result col-xs-4 col-md-4 col-lg-4 '>
-                    <a class="btn btn-warning     margin-button-link" href="/keyword?Engineering" role="button">Engineering</a>
+                    <a class="btn btn-outline-warning     margin-button-link" href="/keyword?Engineering" role="button">Engineering</a>
                 </div>
                 <div class='result col-xs-4 col-md-4 col-lg-4'>
-                    <a class="btn btn-warning margin-button-link" href="/keyword?Database" role="button">Database</a>
+                    <a class="btn btn-outline-warning margin-button-link" href="/keyword?Database" role="button">Database</a>
                 </div>
                 <div class='result col-xs-4 col-md-4 col-lg-4'>
-                    <a class="btn btn-warning margin-button-link" href="/keyword?Water" role="button">Water</a>
+                    <a class="btn btn-outline-warning margin-button-link" href="/keyword?Water" role="button">Water</a>
                 </div>
             </div>
         </div>
@@ -44,7 +43,6 @@
     </div>
 
 </div>
-
 
 <script>
     $(function () {
@@ -58,18 +56,30 @@
             quickSearch(oldSearch);
         }
 
-        //Compare the search keyword with a list
         search.keypress(function (e) {
-
             if (e.which == 13) {
                 research();
-            }
-
+            };
         });
+
 
         $('#popup').show('show', function () {
             l(selectedUuid);
         });
+
+        function createLinksKeywords(keywords) {
+            var stringLink = "";
+            var cpt = 0;
+            for (var i = 0; i < keywords[0].keywords.length; i++) {
+                stringLink +=
+                    '<a class="btn btn-outline-warning margin-button-link" href="/keyword?' + keywords[0].keywords[
+                        i] +
+                    '" role="button">' +
+                    keywords[0].keywords[i] + '</a> ';
+            }
+
+            return stringLink;
+        }
 
         function createLinksKeywords(keywords) {
             var stringLink = "";
@@ -212,7 +222,6 @@
                 });
             });
         }
-
     });
 </script>
 </div>
@@ -221,44 +230,56 @@
     <a href="#section-tours" class="popup__close">&times;</a>
     <div class="popup__content">
         <div class="popup__scrollcontent">
-            <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
-            <div class="popup__top" id="id_uuid">
-
-                <hr>
-            </div>
+            <h1 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h1>
+            <hr>
             <div class="popup__left text-justify">
-                <h3 class="heading-tertiary u-margin-bottom-small">Projects</h3>
-                <p class="popup__text">
-                    <ul class="list-group">
-                        <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
-                        <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
-                        <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut</li>
-                        <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
-                        <li>IBBT Art&#38;D project: Photography beyond the still image (Photography and Kinetography)</li>
-                        <li>FWO-project: CoLaSUE: Contextbewuste basisinfrastructuur voor locale diensten in grootschalige Ubicomp
-                            omgevingen
-                        </li>
-                        <li>Het transformeren van human interface designs via model-driven engineering</li>
-                    </ul>
+                <div class="popup__top">
+                    <div class="popup_description">
+                        <h3>Description</h3>
+                        <div id="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. In natus, consequuntur perferendis consectetur officia voluptatum
+                            voluptas rem ut, ipsum, sequi cupiditate! Architecto tenetur odit atque non. Voluptas impedit
+                            dolore provident. Laborum officiis adipisci quia odit laboriosam reprehenderit earum quasi, sapiente
+                            suscipit accusantium? Quis error aliquid cupiditate, sapiente, ipsam repellat, nam consectetur
+                            dolor itaque fuga dolorum quaerat alias eveniet impedit velit? Vitae officia modi omnis dolor
+                            harum illum consequuntur vel dignissimos doloribus eveniet error aliquam nobis minima, quo deserunt
+                            unde rerum consequatur animi est. Ratione incidunt officia quas! Pariatur, aspernatur dolorum!
+                        </div>
+                    </div>
 
+                </div>
 
-                </p>
+                <div class="popup_publications">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Publications</h3>
+                    <p class="popup__text">
+                        <ul class="list-group">
+                            <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
+                            <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
+                            <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut
+                            </li>
+                            <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
+                            <li>
+                                <a href="#">... see more</a>
+                            </li>
+                        </ul>
+                    </p>
+                </div>
 
-                <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
-                <p class="popup__text">
+                <div class="popup_members">
+                    <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
+                    <p class="popup__text">
+                        <ul class="list-group">
+                            <li>Frank Van Reeth</li>
+                            <li>Philippe Bekaert</li>
+                            <li>Bram Bonne</li>
+                            <li>Jens Brulmans</li>
+                            <li>
+                                <a href="#">... see more</a>
+                            </li>
+                        </ul>
+                    </p>
+                </div>
 
-                    <li>Frank Van Reeth</li>
-                    <li>Philippe Bekaert</li>
-                    <li>Bram Bonne</li>
-                    <li>Jens Brulmans</li>
-                    <li>Johan Claer</li>
-                    <li>Karin Coninx</li>
-                    <li>Sven Coppers</li>
-                    <li>Fredy Cuenca Lucero</li>
-                    <li>Tom De Weyer</li>
-                    <li>Fabian Di Fiore</li>
-                    <li>...</li>
-                </p>
             </div>
 
             <div class="popup__right text-justify">
@@ -272,11 +293,19 @@
                 <div class="popup_contact">
                     <h3 class="heading-tertiary">Contact</h3>
                     <p class="popup__text">
-                        <li>
-                            <span class="icon-envelope-alt"></span> "icon-email" address@email.be</li>
-                        <li>
-                            <span class="icon-phone"></span> "icon-phone" 04777587308</li>
+                        <ul class="list-group">
+                            <li>
+                                <i class="fa fa-envelope"></i>
+                                <span class="icon-envelope-alt"></span>address@email.be</li>
+                            <li>
+                                <i class="fa fa-phone"></i>
+                                <span class="icon-phone"></span>04777587308</li>
+                        </ul>
+
                     </p>
+                </div>
+                <div class="button" id="popup_button">
+                    <a href="">See more at researchportal.be</a>
                 </div>
             </div>
         </div>
