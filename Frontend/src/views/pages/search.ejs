@@ -29,13 +29,13 @@
 
             <div class="row " id="search_result">
                 <div class='result col-xs-4 col-md-4 col-lg-4 '>
-                    <a class="btn btn-outline-warning     margin-button-link" href="/keyword?Engineering" role="button">Engineering</a>
+                    <a class="btn btn-warning     margin-button-link" href="/keyword?Engineering" role="button">Engineering</a>
                 </div>
                 <div class='result col-xs-4 col-md-4 col-lg-4'>
-                    <a class="btn btn-outline-warning margin-button-link" href="/keyword?Database" role="button">Database</a>
+                    <a class="btn btn-warning margin-button-link" href="/keyword?Database" role="button">Database</a>
                 </div>
                 <div class='result col-xs-4 col-md-4 col-lg-4'>
-                    <a class="btn btn-outline-warning margin-button-link" href="/keyword?Water" role="button">Water</a>
+                    <a class="btn btn-warning margin-button-link" href="/keyword?Water" role="button">Water</a>
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@
 </div>
 
 <script>
+
     $(function () {
         var selectedUuid = "";
         var words = [],
@@ -119,7 +120,7 @@
             appendPage(words);
             $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
                 data) {
-                l(data);
+                //  l(data);
                 var items = [];
                 var heroicBlabla =
                     "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam.";
@@ -165,8 +166,20 @@
                 }, 1000);
                 $("#search_result").append(items.join("")).hide().fadeIn(500);
                 $('.link').click(function (e) {
-                    l(this.id);
                     $('#id_uuid').html(this.id);
+                    var items = [];
+                    $.getJSON("http://127.0.0.1:5000/organisation/" + this.id, function (data) {
+                        var organisation = data.root_organisation.name;
+                        $('#title_organisation').html(organisation);
+                        $('#description_title').html(data.research_activity);
+                        var organisation = replaceAll(organisation.toLowerCase(), " ",
+                            "-");
+                        $('#link_portal').attr('href',
+                            'https://www.researchportal.be/en/organisation/' +
+                            organisation);
+                    });
+
+
                 });
             });
         }
@@ -182,7 +195,6 @@
                     "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam. Veniam et veniam voluptate Lorem dolore officia tempor incididunt aute dolor sunt nisi.Dolor mollit excepteur elit minim incididunt.Tempor irure minim voluptate et velix.";
 
                 if (data.length > 0) {
-
                     data.forEach(element => {
                         var shortcut = createLinksKeywords(element.researchOutputs);
                         var cropText = (element.research_activity + "").substr(
@@ -219,6 +231,17 @@
                 $('.link').click(function (e) {
                     l(this.id);
                     $('#id_uuid').html(this.id);
+                    $.getJSON("http://127.0.0.1:5000/organisation/" + this.id, function (data) {
+                        var organisation = data.root_organisation.name;
+                        $('#title_organisation').html(organisation);
+                        $('#description_title').html(data.research_activity);
+                        var organisation = replaceAll(organisation.toLowerCase(), " ",
+                            "-");
+                        $('#link_portal').attr('href',
+                            'https://www.researchportal.be/en/organisation/' +
+                            organisation);
+                    });
+
                 });
             });
         }
@@ -230,21 +253,15 @@
     <a href="#section-tours" class="popup__close">&times;</a>
     <div class="popup__content">
         <div class="popup__scrollcontent">
-            <h1 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h1>
+            <h1 class="heading-secondary u-margin-bottom-small" id="title_organisation"></h1>
             <hr>
             <div class="popup__left text-justify">
                 <div class="popup__top">
                     <div class="popup_description">
                         <h3>Description</h3>
-                        <div id="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. In natus, consequuntur perferendis consectetur officia voluptatum
-                            voluptas rem ut, ipsum, sequi cupiditate! Architecto tenetur odit atque non. Voluptas impedit
-                            dolore provident. Laborum officiis adipisci quia odit laboriosam reprehenderit earum quasi, sapiente
-                            suscipit accusantium? Quis error aliquid cupiditate, sapiente, ipsam repellat, nam consectetur
-                            dolor itaque fuga dolorum quaerat alias eveniet impedit velit? Vitae officia modi omnis dolor
-                            harum illum consequuntur vel dignissimos doloribus eveniet error aliquam nobis minima, quo deserunt
-                            unde rerum consequatur animi est. Ratione incidunt officia quas! Pariatur, aspernatur dolorum!
-                        </div>
+                        <p id="description_title">
+
+                        </p>
                     </div>
 
                 </div>
@@ -305,7 +322,7 @@
                     </p>
                 </div>
                 <div class="button" id="popup_button">
-                    <a href="">See more at researchportal.be</a>
+                    <a id="link_portal">See more at researchportal.be</a>
                 </div>
             </div>
         </div>
