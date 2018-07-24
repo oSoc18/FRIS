@@ -27,6 +27,12 @@ class Organisation:
     def research_activity(self, locale=DEFAULT_LOCALE):
         return localize_text(self.data.researchActivity, locale)
     
+    def root_organisation_uuid(self):
+        return self.data.rootOrganisationUuid
+    
+    def is_root_organisation(self):
+        return self.uuid() == self.root_organisation_uuid()
+    
     def __repr__(self):
         return self.name()
 

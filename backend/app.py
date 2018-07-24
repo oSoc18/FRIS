@@ -22,7 +22,18 @@ def organisation(uuid=None):
     org = service.find_organisation(uuid)
     if not org:
         abort(404)
-    return jsonify(org.attributes())
+
+
+    if org.is_root_organisation():
+        root_org = None
+    else:
+        r_org = service.find_organisation(org.root_organisation_uuid())
+        root_org = r_org.attributes()
+    
+    return jsonify({
+        **org.attributes(),
+        'root_organisation': root_org,
+    })
 
 
 @app.route('/organisations')
