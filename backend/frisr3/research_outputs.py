@@ -20,7 +20,9 @@ class ResearchOutput:
     
     def abstract(self, locale=DEFAULT_LOCALE):
         return localize_text(self.data.researchAbstract, locale)
-
+    
+    def publication_date(self):
+        return self.data.publicationDate
 
     def keywords(self, locale=DEFAULT_LOCALE):
         if not self.data.keywords:
@@ -45,6 +47,7 @@ class ResearchOutput:
             'title': self.title(),
             'abstract': self.abstract(),
             'keywords': self.keywords(),
+            'publication_date': self.publication_date(),
         }
 
 
