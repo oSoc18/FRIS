@@ -312,12 +312,9 @@ svg {
     overflow: auto;
 }
 
-.popup__top {
-    width: 100%;
-    float: left;
-    vertical-align: middle;
-    padding-left: 3rem;
-    padding-top: 3rem;
+#description {
+    height: 250px;
+    overflow: hidden;
 }
 
 .popup__left {
@@ -325,7 +322,11 @@ svg {
     float: left;
     vertical-align: middle;
     padding: 3rem;
-    font-size: 130%
+    font-size: 130%;
+}
+
+.popup__left div{
+    /*opacity: 0.5;*/
 }
 
 .popup__right {
@@ -335,16 +336,42 @@ svg {
     margin: 3rem;
 }
 
-.popup_contact{
+.popup_contact {
     padding: 2rem;
     background-color: #DDD;
     border-radius: 10px;
     font-size: 130%
 }
 
+.popup_members {
+    width: 40%;
+    padding-top: 2rem;
+    white-space: nowrap;
+    float: right;
+}
+
+.popup_publications {
+    width: 40%;
+    padding-top: 2rem;
+    white-space: nowrap;
+    float: left;
+}
+
+.popup_publications ul {
+    overflow: hidden;
+}
+
 .popup__text {
-    font-size: 1.4rem;
     margin-bottom: 2rem;
+}
+
+.popup_contact li {
+    list-style-type: none;
+    font-size: 110%;
+}
+
+#popup_button{
+    padding-top: 5%;
 }
 
 .popup:target {
