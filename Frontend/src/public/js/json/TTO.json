@@ -1,0 +1,53 @@
+{
+    "name": "TTO",
+    "children": [
+        {
+            "name": "University of Antwerpen",
+            "children": [
+                {
+                    "departement": "Valorisation office",
+                    "beneficiary name": "Valorisation Office",
+                    "email": "Valorisatie@uantwerpen.be",
+                    "phone": "03 265 30 25",
+                    "address": "Middelheimlaan 1 2020 Antwerpen"
+                }
+            ]
+        },
+        {
+            "name": "University of Ghent",
+            "children": [
+                {
+                    "departement": "Tech Transfer Office",
+                    "beneficiary name": "TechTransfer",
+                    "email": " techtransfer@ugent.be",
+                    "phone": "32 (0)9 264 78 83",
+                    "address": "Technologiepark-Zwijnaarde 15 9052 Gent-Zwijnaarde"
+                }
+            ]
+        },
+        {
+            "name": "University of Hasselt",
+            "children": [
+                {
+                    "departement": "Tech Transfer Office",
+                    "beneficiary name": "TechTransfer",
+                    "email": "techtransfer@uhasselt.be",
+                    "phone": "32 (0)11 26 80 26",
+                    "address": "Hasselt Campus 2nd floor Martelarenlaan 42 3500 Hassel"
+                }
+            ]
+        },
+        {
+            "name": "Vrije Universiteit Brussel",
+            "children": [
+                {
+                    "departement": "Tech Transfer Office",
+                    "beneficiary name": "TechTransfer",
+                    "email": "techtransfer@vub.be",
+                    "phone": "32 (0)2 629 22 07",
+                    "address": "Brussels Humanities, Sciences & Engineering Campus Pleinlaan 2 - Building M, 4th floor 1050 Brussels"
+                }
+            ]
+        }
+    ]
+}

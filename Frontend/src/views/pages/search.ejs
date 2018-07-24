@@ -70,8 +70,8 @@
             var cpt = 0;
             for (var i = 0; i < keywords[0].keywords.length; i++) {
                 stringLink +=
-                    '<a class="btn btn-outline-warning margin-button-link" href="/keyword?' + keywords[0].keywords[
-                        i] + '" role="button">' +
+                    '<a class="btn btn-outline-warning margin-button-link" href="/keyword?' + keywords[0].keywords[i] +
+                    '" role="button">' +
                     keywords[0].keywords[i] + '</a> ';
             }
 
@@ -125,7 +125,7 @@
                             "</h4><hr>\
                                 " + shortcut +
                             "<hr><div class='fuck' id=" + element.organisation.uuid +
-                            ">" + cropText +"<a href='#popup'>Read more.</a>\
+                            ">" + cropText + "<a href='#popup'>Read more.</a>\
                         </div><hr><p class='lead'><a class='btn btn-dark margin-button-link' href='#popup' ><i class='fa fa-list' aria-hidden='true'></i> Details</a> <a class='btn btn-warning margin-button-link' href=/explore?uuid=" +
                             element.organisation.uuid +
                             "&keyword=" + words +
@@ -213,8 +213,8 @@
 <div class="popup" id="popup">
     <a href="#section-tours" class="popup__close">&times;</a>
     <div class="popup__content">
-        <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
         <div class="popup__scrollcontent">
+            <h2 class="heading-secondary u-margin-bottom-small">Expertisecentrum voor Digitale Media (EDM)</h2>
             <div class="popup__top">
 
                 <hr>
@@ -222,25 +222,19 @@
             <div class="popup__left text-justify">
                 <h3 class="heading-tertiary u-margin-bottom-small">Projects</h3>
                 <p class="popup__text">
+                    <ul class="list-group">
+                        <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
+                        <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
+                        <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut</li>
+                        <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
+                        <li>IBBT Art&#38;D project: Photography beyond the still image (Photography and Kinetography)</li>
+                        <li>FWO-project: CoLaSUE: Contextbewuste basisinfrastructuur voor locale diensten in grootschalige Ubicomp
+                            omgevingen
+                        </li>
+                        <li>Het transformeren van human interface designs via model-driven engineering</li>
+                    </ul>
 
-                    <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
-                    <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
-                    <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut</li>
-                    <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
-                    <li>IBBT Art&#38;D project: Photography beyond the still image (Photography and Kinetography)</li>
-                    <li>FWO-project: CoLaSUE: Contextbewuste basisinfrastructuur voor locale diensten in grootschalige Ubicomp
-                        omgevingen
-                    </li>
-                    <li>Het transformeren van human interface designs via model-driven engineering</li>
 
-                </p>
-            </div>
-
-            <div class="popup__right text-justify">
-                <h3 class="heading-tertiary">Contact</h3>
-                <p class="popup__text">
-                        <li><span class="icon-envelope-alt"></span> "icon-email" address@email.be</li>
-                        <li><span class="icon-phone"></span> "icon-phone" 04777587308</li>
                 </p>
 
                 <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
@@ -257,8 +251,26 @@
                     <li>Tom De Weyer</li>
                     <li>Fabian Di Fiore</li>
                     <li>...</li>
-
                 </p>
+            </div>
+
+            <div class="popup__right text-justify">
+                <div class="popup_contact">
+                    <h3>Want to collaborate?</h3>
+                    <p>
+                        Contact the relevant Technology Transfer Office! They will get you connected.
+                    </p>
+                </div>
+                <br>
+                <div class="popup_contact">
+                    <h3 class="heading-tertiary">Contact</h3>
+                    <p class="popup__text">
+                        <li>
+                            <span class="icon-envelope-alt"></span> "icon-email" address@email.be</li>
+                        <li>
+                            <span class="icon-phone"></span> "icon-phone" 04777587308</li>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

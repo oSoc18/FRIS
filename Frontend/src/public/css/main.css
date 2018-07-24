@@ -325,18 +325,26 @@ svg {
     float: left;
     vertical-align: middle;
     padding: 3rem;
+    font-size: 130%
 }
 
 .popup__right {
-    width: 50%;
+    width: 40%;
     float: right;
     vertical-align: middle;
-    padding: 3rem;
+    margin: 3rem;
+}
+
+.popup_contact{
+    padding: 2rem;
+    background-color: #DDD;
+    border-radius: 10px;
+    font-size: 130%
 }
 
 .popup__text {
     font-size: 1.4rem;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .popup:target {
