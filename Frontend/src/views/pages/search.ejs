@@ -45,7 +45,6 @@
 </div>
 
 <script>
-
     $(function () {
         var selectedUuid = "";
         var words = [],
@@ -118,22 +117,29 @@
             var organization = [];
             $('#search_result').html("").fadeOut(500);
             appendPage(words);
+            search_json(words);
+
+        }
+
+        function quickSearch(words) {
+            var organization = [];
+            $('#search_result').html("").fadeOut(500);
+            appendPage(words);
+            search_json(words);
+
+        }
+
+        function search_json(words) {
             $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
                 data) {
-                //  l(data);
                 var items = [];
                 var heroicBlabla =
                     "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam.";
 
                 if (data.length > 0) {
-                    //  l(data);
                     data.forEach(element => {
                         var shortcut = createLinksKeywords(element.researchOutputs);
-                        var heroicBlabla =
-                            "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam. Veniam et veniam voluptate Lorem dolore officia tempor incididunt aute dolor sunt nisi.Dolor mollit excepteur elit minim incididunt.Tempor irure minim voluptate et velix.";
-
-                        var cropText = (heroicBlabla).substr(
-                            0, 250) + "...";
+                        var cropText = (heroicBlabla).substr(0, 250) + "...";
                         items.push(
                             " \
                                 <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron'> \
@@ -141,7 +147,7 @@
                             element.organisation.uuid + "'>" + element.organisation.name +
                             "</h4><hr>\
                                 " + shortcut +
-                            "<hr><div class='fuck' id=" + element.organisation.uuid +
+                            "<hr><div id=" + element.organisation.uuid +
                             ">" + cropText +
                             "<a href='#podpup'>Read more.</a>\
                         </div><hr><p class='lead' id='link-" +
@@ -184,67 +190,7 @@
             });
         }
 
-        function quickSearch(words) {
-            var organization = [];
-            $('#search_result').html("").fadeOut(500);
-            appendPage(words);
-            $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
-                data) {
-                var items = [];
-                var heroicBlabla =
-                    "Ad voluptate aute laborum occaecat nostrud labore ea eiusmod occaecat id reprehenderit ad cupidatat.Tempor est Lorem labore ad consequat tempor laboris dolor sint elit officia veniam. Veniam et veniam voluptate Lorem dolore officia tempor incididunt aute dolor sunt nisi.Dolor mollit excepteur elit minim incididunt.Tempor irure minim voluptate et velix.";
 
-                if (data.length > 0) {
-                    data.forEach(element => {
-                        var shortcut = createLinksKeywords(element.researchOutputs);
-                        var cropText = (element.research_activity + "").substr(
-                            0, 500) + "...";
-
-                        items.push(
-                            " \
-                                <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron'> \
-                            <h4 class='display-6' id='" +
-                            element.organisation.uuid + "'>" + element.organisation.name +
-                            "</h4>\
-                                " + shortcut +
-                            "<hr><div  id=" + element.organisation.uuid + ">" +
-                            heroicBlabla +
-                            "</div><hr><p class='lead' id='link-" +
-                            element.organisation.uuid +
-                            "'><a class='btn btn-dark margin-button-link link' id='" +
-                            element.organisation.uuid +
-                            "' href='#popup' >» Details</a><a class='btn btn-warning margin-button-link' href=/explore?uuid=" +
-                            element.organisation.uuid +
-                            "&keyword=" + words +
-                            " role=button>» Explore graph </a></span></p></div></div>"
-                        );
-
-                    });
-                } else {
-                    items.push("No result...");
-                }
-                $('#div-search').animate({
-                    'marginTop': '1%',
-                    opacity: 1
-                }, 1000);
-                $("#search_result").append(items.join("")).hide().fadeIn(500);
-                $('.link').click(function (e) {
-                    l(this.id);
-                    $('#id_uuid').html(this.id);
-                    $.getJSON("http://127.0.0.1:5000/organisation/" + this.id, function (data) {
-                        var organisation = data.root_organisation.name;
-                        $('#title_organisation').html(organisation);
-                        $('#description_title').html(data.research_activity);
-                        var organisation = replaceAll(organisation.toLowerCase(), " ",
-                            "-");
-                        $('#link_portal').attr('href',
-                            'https://www.researchportal.be/en/organisation/' +
-                            organisation);
-                    });
-
-                });
-            });
-        }
     });
 </script>
 </div>
@@ -259,9 +205,9 @@
                 <div class="popup__top">
                     <div class="popup_description">
                         <h3>Description</h3>
-                        <p id="description_title">
+                        <div id="description_title">
 
-                        </p>
+                        </div>
                     </div>
 
                 </div>
