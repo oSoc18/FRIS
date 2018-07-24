@@ -115,7 +115,7 @@ def matthews_correlation(data, reference):
     return mcc
 
 
-def cluster_outputs(outputs, root_name):
+def cluster_outputs(outputs):
     keywords, kw_nums = get_keyword_set(outputs)
     kw_mapping = keyword_mapping(keywords, outputs)
     # discard outputs without keywords
@@ -161,7 +161,7 @@ def cluster_outputs(outputs, root_name):
         else:
             parents[children] = parents[n+i]
 
-    # for now we'll ignore values that don't belong to a leaf node.
+        # for now we'll ignore values that don't belong to a leaf node.
     # because I'm not competent, I defined a leaf node as a node that has
     # at least 1/3 of its size as direct children.
     num_leaf_children = np.zeros(n-1, dtype=np.int)
@@ -178,7 +178,6 @@ def cluster_outputs(outputs, root_name):
             # if parent is a leaf, discard this node
             parents[parents == n + i] = p            
 
-    # extract tree
     nodes = {}
     for p in np.unique(parents):
         if is_leaf[p - n]: 
@@ -201,5 +200,5 @@ def cluster_outputs(outputs, root_name):
         parent['size'] += node['size']
         
     tree = nodes[2*n-2]
-    tree['name'] = root_name
+    tree['name'] = 'root'
     return tree

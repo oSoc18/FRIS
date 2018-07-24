@@ -22,7 +22,18 @@ def organisation(uuid=None):
     org = service.find_organisation(uuid)
     if not org:
         abort(404)
-    return jsonify(org.attributes())
+
+
+    if org.is_root_organisation():
+        root_org = None
+    else:
+        r_org = service.find_organisation(org.root_organisation_uuid())
+        root_org = r_org.attributes()
+    
+    return jsonify({
+        **org.attributes(),
+        'root_organisation': root_org,
+    })
 
 
 @app.route('/organisations')
@@ -51,7 +62,8 @@ def organisation_output_cluster(uuid):
         abort(404)
     output_service = ResearchOutputService()
     outputs = list(output_service.outputs(organisation=uuid))
-    tree = cluster_outputs(outputs, org.name())
+    tree = cluster_outputs(outputs)
+    tree['name'] = org.name()
     return jsonify(tree)
 
 if __name__ == '__main__':
