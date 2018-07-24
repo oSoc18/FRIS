@@ -175,6 +175,7 @@
                     $('#id_uuid').html(this.id);
                     var items = [];
                     $.getJSON("http://127.0.0.1:5000/organisation/" + this.id, function (data) {
+                        //l(data.uuid);
                         var organisation = data.root_organisation.name;
                         $('#title_organisation').html(organisation);
                         $('#description_title').html(data.research_activity);
