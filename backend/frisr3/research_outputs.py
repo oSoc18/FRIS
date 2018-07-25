@@ -32,14 +32,12 @@ class ResearchOutput:
     
     # TODO: this is ugly.
     def associated_organisations(self):
-        organisations = {}
+        organisation_ids = set()
         participants = self.data.participants.participant
         assignments = [p.assignment for p in participants if p.assignment]
         for assignment in assignments:
-            org = assignment.organisation
-            if not org.uuid in organisations:
-                organisations[org.uuid] = Organisation(org)
-        return list(organisations.values())
+            organisation_ids.add(assignment.organisation.uuid)
+        return organisation_ids
     
     def attributes(self):
         return {

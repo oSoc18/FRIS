@@ -1,23 +1,23 @@
 from frisr3.research_outputs import ResearchOutputService
+from frisr3.organisations import OrganisationService
 
 def search_keyword(search_term: str, num_outputs=100):
-    service = ResearchOutputService()
-
     # find outputs
-    outputs = service.outputs(
+    outputs = ResearchOutputService().outputs(
         keyword=search_term,
         count=num_outputs,
     )
 
-    # group outputs by organisation
-    data = {}
+    org_outputs = {}
     for output in outputs:
         for org in output.associated_organisations():
-            if not org.uuid() in data:
-                data[org.uuid()] = {
-                    'organisation': org.attributes(),
-                    'researchOutputs': [],
-                }
-            data[org.uuid()]['researchOutputs'].append(output.attributes())
-
-    return list(data.values())
+            org_outputs.setdefault(org, []).append(output.attributes())
+    
+    orgs = OrganisationService().find_organisations(org_outputs.keys())
+    data = [{
+        'organisation': org.attributes(),
+        'researchOutputs': org_outputs[org.uuid()],
+    } for org in orgs]
+    
+    data.sort(key=lambda d: len(d['researchOutputs']), reverse=True)
+    return data

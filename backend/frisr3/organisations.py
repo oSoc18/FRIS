@@ -55,13 +55,21 @@ class OrganisationService:
     def __init__(self):
         self.client = zeep.Client(wsdl=WSDL_URL, settings=CLIENT_SETTINGS)
 
-    def find_organisation(self, uuid: str) -> Organisation:
+    def find_organisations(self, uuids):
+        uuids = list(uuids)
         response = self.client.service.getOrganisations({
-            'uuids': [{ 'identifier': uuid }],
+            'uuids': [{ 'identifier': uuids }],
+            'window': {
+                'pageSize': len(uuids),
+                'pageNumber': zeep.xsd.SkipValue,
+                'orderings': zeep.xsd.SkipValue,
+            }
         })
-        if len(response.organisation) > 0:
-            data = response.organisation[0]
-            return Organisation(data)
+        orgs = [Organisation(o) for o in response.organisation]
+        return orgs
+
+    def find_organisation(self, uuid: str) -> Organisation:
+        return self.find_organisations([uuid])[0]
 
     def find_by_keyword(self, keyword):
         response = self.client.service.getOrganisations({
