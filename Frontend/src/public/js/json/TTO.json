@@ -1,174 +1,171 @@
-{
-    "name": "TTO",
-    "children": [
-        {
-            "name": "University of Antwerpen",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "Valorisation office",
-                    "beneficiary name": "Valorisation Office",
-                    "email": "Valorisatie@uantwerpen.be",
-                    "phone": "03 265 30 25",
-                    "address": "Middelheimlaan 1 2020 Antwerpen"
-                }
-            ]
-        },
-        {
-            "name": "University of Ghent",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "Tech Transfer Office",
-                    "beneficiary name": "TechTransfer",
-                    "email": " techtransfer@ugent.be",
-                    "phone": "32 (0)9 264 78 83",
-                    "address": "Technologiepark-Zwijnaarde 15 9052 Gent-Zwijnaarde"
-                }
-            ]
-        },
-        {
-            "name": "University of Hasselt",
-            "uuid": "593ed47a-ffdf-41f3-8215-b41317609402",
-            "children": [
-                {
-                    "departement": "Tech Transfer Office",
-                    "beneficiary name": "TechTransfer",
-                    "email": "techtransfer@uhasselt.be",
-                    "phone": "32 (0)11 26 80 26",
-                    "address": "Hasselt Campus 2nd floor Martelarenlaan 42 3500 Hassel"
-                }
-            ]
-        },
-        {
-            "name": "Vrije Universiteit Brussel",
-            "uuid": "a0f384af-99f2-4997-9ad1-84432f516132",
-            "children": [
-                {
-                    "departement": "Tech Transfer Office",
-                    "beneficiary name": "TechTransfer",
-                    "email": "techtransfer@vub.be",
-                    "phone": "32 (0)2 629 22 07",
-                    "address": "Brussels Humanities, Sciences & Engineering Campus Pleinlaan 2 - Building M, 4th floor 1050 Brussels"
-                }
-            ]
-        },
-        {
-            "name": "Botanic Garden Meise",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "Research Department",
-                    "beneficiary name": "Frederik Leliaert",
-                    "email": "frederik.leliaert@botanicgardenmeise.be",
-                    "phone": "32 2 260 09 20",
-                    "address": "Bouchout Domain, Nieuwelaan 38 1860 Meise"
-                }
-            ]
-        },
-        {
-            "name": "Flanders Hydraulics Research",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "",
-                    "beneficiary name": "",
-                    "email": "",
-                    "phone": "32 3 224 60 35",
-                    "address": "Berchemlei 115 2140 Antwerp"
-                }
-            ]
-        },
-        {
-            "name": "Flanders Marine Institute",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "",
-                    "beneficiary name": "",
-                    "email": "",
-                    "phone": "",
-                    "address": ""
-                }
-            ]
-        },
-        {
-            "name": "Institute for Agricultural and Fisheries Research",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "",
-                    "beneficiary name": "",
-                    "email": "ilvo@ilvo.vlaanderen.be",
-                    "phone": "32 9 272 25 00",
-                    "address": "Burgemeester Van Gansberghelaan 92 box 1 9820 Merelbeke"
-                }
-            ]
-        },
-        {
-            "name": "Institute of Tropical Medicine",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "",
-                    "beneficiary name": "",
-                    "email": "info@itg.be",
-                    "phone": "03 247 66 66",
-                    "address": "Nationalestraat 155, 2000 Antwerpen"
-                }
-            ]
-        },
-        {
-            "name": "KU Leuven",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "Tech Transfer Office",
-                    "beneficiary name": "TechTransfer",
-                    "email": "techtransfer@vub.be",
-                    "phone": "32 (0)2 629 22 07",
-                    "address": "Brussels Humanities, Sciences & Engineering Campus Pleinlaan 2 - Building M, 4th floor 1050 Brussels"
-                }
-            ]
-        },
-        {
-            "name": "Research Institute for Nature and Forest",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "",
-                    "beneficiary name": "",
-                    "email": "",
-                    "phone": "32 (0)2 430 26 37",
-                    "address": "Herman Teirlinckgebouw, Havenlaan 88 bus 73, 1000 Brussel"
-                }
-            ]
-        },
-        {
-            "name": "Royal Zoological Society of Antwerp",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "Tech Transfer Office",
-                    "beneficiary name": "TechTransfer",
-                    "email": "vera.cuypers@kmda.org",
-                    "phone": "32 (0)3 202 4551",
-                    "address": "Koningin Astridplein 20-26 Antwerpen"
-                }
-            ]
-        },
-        {
-            "name": "Unit of HIV/STD",
-            "uuid":"",
-            "children": [
-                {
-                    "departement": "",
-                    "beneficiary name": "",
-                    "email": "",
-                    "phone": "32 (0)2 430 26 37",
-                    "address": "Herman Teirlinckgebouw, Havenlaan 88 bus 73, 1000 Brussel"
-                }
-            ]
-        }
-    ]
-}
+[
+    {
+        "name": "University of Antwerpen",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "Valorisation office",
+                "beneficiary name": "Valorisation Office",
+                "email": "Valorisatie@uantwerpen.be",
+                "phone": "03 265 30 25",
+                "address": "Middelheimlaan 1 2020 Antwerpen"
+            }
+        ]
+    },
+    {
+        "name": "University of Ghent",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "Tech Transfer Office",
+                "beneficiary name": "TechTransfer",
+                "email": " techtransfer@ugent.be",
+                "phone": "32 (0)9 264 78 83",
+                "address": "Technologiepark-Zwijnaarde 15 9052 Gent-Zwijnaarde"
+            }
+        ]
+    },
+    {
+        "name": "University of Hasselt",
+        "uuid": "593ed47a-ffdf-41f3-8215-b41317609402",
+        "children": [
+            {
+                "departement": "Tech Transfer Office",
+                "beneficiary name": "TechTransfer",
+                "email": "techtransfer@uhasselt.be",
+                "phone": "32 (0)11 26 80 26",
+                "address": "Hasselt Campus 2nd floor Martelarenlaan 42 3500 Hassel"
+            }
+        ]
+    },
+    {
+        "name": "Vrije Universiteit Brussel",
+        "uuid": "a0f384af-99f2-4997-9ad1-84432f516132",
+        "children": [
+            {
+                "departement": "Tech Transfer Office",
+                "beneficiary name": "TechTransfer",
+                "email": "techtransfer@vub.be",
+                "phone": "32 (0)2 629 22 07",
+                "address": "Brussels Humanities, Sciences & Engineering Campus Pleinlaan 2 - Building M, 4th floor 1050 Brussels"
+            }
+        ]
+    },
+    {
+        "name": "Botanic Garden Meise",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "Research Department",
+                "beneficiary name": "Frederik Leliaert",
+                "email": "frederik.leliaert@botanicgardenmeise.be",
+                "phone": "32 2 260 09 20",
+                "address": "Bouchout Domain, Nieuwelaan 38 1860 Meise"
+            }
+        ]
+    },
+    {
+        "name": "Flanders Hydraulics Research",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "",
+                "beneficiary name": "",
+                "email": "",
+                "phone": "32 3 224 60 35",
+                "address": "Berchemlei 115 2140 Antwerp"
+            }
+        ]
+    },
+    {
+        "name": "Flanders Marine Institute",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "",
+                "beneficiary name": "",
+                "email": "",
+                "phone": "",
+                "address": ""
+            }
+        ]
+    },
+    {
+        "name": "Institute for Agricultural and Fisheries Research",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "",
+                "beneficiary name": "",
+                "email": "ilvo@ilvo.vlaanderen.be",
+                "phone": "32 9 272 25 00",
+                "address": "Burgemeester Van Gansberghelaan 92 box 1 9820 Merelbeke"
+            }
+        ]
+    },
+    {
+        "name": "Institute of Tropical Medicine",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "",
+                "beneficiary name": "",
+                "email": "info@itg.be",
+                "phone": "03 247 66 66",
+                "address": "Nationalestraat 155, 2000 Antwerpen"
+            }
+        ]
+    },
+    {
+        "name": "KU Leuven",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "Tech Transfer Office",
+                "beneficiary name": "TechTransfer",
+                "email": "techtransfer@vub.be",
+                "phone": "32 (0)2 629 22 07",
+                "address": "Brussels Humanities, Sciences & Engineering Campus Pleinlaan 2 - Building M, 4th floor 1050 Brussels"
+            }
+        ]
+    },
+    {
+        "name": "Research Institute for Nature and Forest",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "",
+                "beneficiary name": "",
+                "email": "",
+                "phone": "32 (0)2 430 26 37",
+                "address": "Herman Teirlinckgebouw, Havenlaan 88 bus 73, 1000 Brussel"
+            }
+        ]
+    },
+    {
+        "name": "Royal Zoological Society of Antwerp",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "Tech Transfer Office",
+                "beneficiary name": "TechTransfer",
+                "email": "vera.cuypers@kmda.org",
+                "phone": "32 (0)3 202 4551",
+                "address": "Koningin Astridplein 20-26 Antwerpen"
+            }
+        ]
+    },
+    {
+        "name": "Unit of HIV/STD",
+        "uuid": "",
+        "children": [
+            {
+                "departement": "",
+                "beneficiary name": "",
+                "email": "",
+                "phone": "32 (0)2 430 26 37",
+                "address": "Herman Teirlinckgebouw, Havenlaan 88 bus 73, 1000 Brussel"
+            }
+        ]
+    }
+]

@@ -336,6 +336,10 @@ svg {
     margin: 3rem;
 }
 
+#description_title{
+    opacity: 0.7;
+}
+
 .popup_contact {
     padding: 2rem;
     background-color: #DDD;
@@ -362,7 +366,7 @@ svg {
 }
 
 .popup__text {
-    margin-bottom: 2rem;
+    /*margin-bottom: 2rem;*/
 }
 
 .popup_contact li {
