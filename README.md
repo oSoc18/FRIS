@@ -3,7 +3,7 @@
 # FRIS
 
 
-##Intruduction
+## Intruduction
 
 FRIS is a research portal aimed at curious citizens, businesses, policymakers, journalists and researchers. The FRIS research portal, run by the Department of Economy, Science and Innovation (EWI) wants to be a simple, transparent and open platform to make Flemish research information publicly available. It is a virtual space collecting all information about publicly-funded scientific research in Flanders. Our team started to  is create a website, Open Expertise, that visualizes the data so it’s easy and user-friendly to interpret by the user. 
 
