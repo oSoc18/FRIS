@@ -64,13 +64,18 @@
             l(selectedUuid);
         });
 
+        var TTOjson;
+        $.getJSON('js/json/TTO.json', function (data) {
+            TTOjson = data;
+        });
+
         function createLinksKeywords(keywords) {
             var stringLink = "";
             var cpt = 0;
             for (var i = 0; i < keywords[0].keywords.length; i++) {
                 stringLink +=
                     '<a class="btn btn-warning margin-button-link" href="/keyword?' + keywords[0].keywords[
-                        i] + '" role="button">' +
+                    i] + '" role="button">' +
                     keywords[0].keywords[i] + '</a> ';
             }
 
@@ -156,11 +161,22 @@
                 $("#search_result").append(items.join("")).hide().fadeIn(500);
                 $('.link').click(function (e) {
                     $('#id_uuid').html(this.id);
-                    var items = [];
-                    $.getJSON("http://"+href()+":5000/organisation/" + this.id, function (data) {
-                        //l(data.uuid);
+                    $.getJSON("http://127.0.0.1:5000/organisation/" + this.id, function (data) {
+                        var TTO;
+                        for (var i = 0; i < TTOjson.length; i++) {
+                            if (TTOjson[i].uuid == data.root_organisation.uuid) {
+                                TTO = TTOjson[i];
+                            }
+                        }
+
+                        $('#contact_mail').html(TTO.children[0].email);
+                        $('#contact_phone').html(TTO.children[0].phone);
+                        $('#contact_address').html(TTO.children[0].address);
+
                         var organisation = data.root_organisation.name;
+                        $('#name_organisation').html(data.name);
                         $('#title_organisation').html(organisation);
+                        organisation = data.name;
                         $('#description_title').html(data.research_activity);
                         var organisation = replaceAll(organisation.toLowerCase(), " ",
                             "-");
@@ -183,7 +199,8 @@
     <a href="#section-tours" class="popup__close">&times;</a>
     <div class="popup__content">
         <div class="popup__scrollcontent">
-            <h1 class="heading-secondary u-margin-bottom-small" id="title_organisation"></h1>
+            <h1 id="name_organisation"></h1>
+            <h2 class="heading-secondary u-margin-bottom-small" id="title_organisation"></h2>      
             <hr>
             <div class="popup__left text-justify">
                 <div class="popup__top">
@@ -196,7 +213,7 @@
 
                 </div>
 
-                <div class="popup_publications">
+                <!--<div class="popup_publications">
                     <h3 class="heading-tertiary u-margin-bottom-small">Publications</h3>
                     <p class="popup__text">
                         <ul class="list-group">
@@ -225,7 +242,7 @@
                             </li>
                         </ul>
                     </p>
-                </div>
+                </div>-->
 
             </div>
 
@@ -233,26 +250,29 @@
                 <div class="popup_contact">
                     <h3>Want to collaborate?</h3>
                     <p>
-                        Contact the relevant Technology Transfer Office! They will get you connected.
+                        Contact the relevant Technology Transfer Office or Research Department! They will get you connected.
                     </p>
                 </div>
                 <br>
                 <div class="popup_contact">
-                    <h3 class="heading-tertiary">Contact</h3>
-                    <p class="popup__text">
-                        <ul class="list-group">
-                            <li>
-                                <i class="fa fa-envelope"></i>
-                                <span class="icon-envelope-alt"></span>address@email.be</li>
-                            <li>
-                                <i class="fa fa-phone"></i>
-                                <span class="icon-phone"></span>04777587308</li>
-                        </ul>
-
-                    </p>
+                    <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
+                    <ul class="list-group">
+                        <li>
+                            <i class="fa fa-envelope"></i>
+                            <span class="icon-envelope-alt" id="contact_mail"></span>
+                        </li>
+                        <li>
+                            <i class="fa fa-phone"></i>
+                            <span class="icon-phone" id="contact_phone"></span>
+                        </li>
+                        <li>
+                            <i class="fa fa-map-marker"></i>
+                            <span class="icon-marker" id="contact_address"></span>
+                        </li>
+                    </ul>
                 </div>
                 <div class="button" id="popup_button">
-                    <a id="link_portal">See more at researchportal.be</a>
+                    <a id="link_portal" style="font-size: 80%">See more at researchportal.be</a>
                 </div>
             </div>
         </div>
