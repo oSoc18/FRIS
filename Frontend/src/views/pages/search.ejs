@@ -67,6 +67,7 @@
         var TTOjson;
         $.getJSON('js/json/TTO.json', function (data) {
             TTOjson = data;
+            l(TTOjson);
         });
 
         function createLinksKeywords(keywords) {

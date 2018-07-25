@@ -12,8 +12,8 @@ The aim is to create an expert finding tool that makes it easier to find experti
 The FRIS research portal will make finding the right researcher for your project easier and more efficient!
 
 Partners:
-https://www.ewi-vlaanderen.be/
-https://www.researchportal.be/nl
+ - https://www.ewi-vlaanderen.be/
+ - https://www.researchportal.be/nl
 
 
 ## Install
@@ -28,7 +28,13 @@ For our webapp you will need a few programms installed:
 Before you can run the webapp you'll have to : 
 (NOTE: all this is done in command line interface)
  - Navigate to FRIS\Frontend\src
+	```bash 
+	cd Frontend\src
+	```
  - run: 'npm install' to get the necessary node modules.
+	```bash 
+	npm install
+	```
 
 Navigate to FRIS\Backend
 run: 'python requirements.txt’ to get all the libraries.
