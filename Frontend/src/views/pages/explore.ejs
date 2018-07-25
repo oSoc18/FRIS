@@ -46,7 +46,7 @@
             $(function () {
                 var uuid = getUrlParameter('uuid');
                 var quickSearch = getUrlParameter('keyword');
-                $.getJSON("http://127.0.0.1:5000/organisation/" + uuid + "/output_cluster", function (data) {
+                $.getJSON("http://"+href()+":5000/organisation/" + uuid + "/output_cluster", function (data) {
                     data.children.forEach(elt => {
                         array_datas.push(elt);
                     });
