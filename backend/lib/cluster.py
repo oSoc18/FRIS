@@ -79,24 +79,33 @@ def conditional_keyword_probs(kw_nums, kw_mapping):
     return conditionals
 
 
-def output_profiles(kw_matrix, kw_correlations):
-    mat = np.dot(kw_matrix, kw_correlations)
-    normalized = mat / np.sum(mat, axis=1)[:, np.newaxis]
-    return normalized
+def keyword_fuzzsets(kw_matrix, conditionals):
+    kw_fsets = np.zeros(kw_matrix.shape, dtype=np.float64)
+    neg_conditionals = 1 - conditionals
+
+    for i, observation in enumerate(kw_matrix):
+        kw_fsets[i, :] = 1 - np.product(neg_conditionals[observation], axis=0)
+    return kw_fsets
 
 
-def output_similarity(outputs, kw_mapping):
-    n = len(outputs)
-    similarity = np.zeros((n, n), dtype=np.float64)
-    for i, output_i in enumerate(outputs):
-        for j, output_j in enumerate(outputs):
-            kws1 = kw_mapping[output_i.uuid()]
-            kws2 = kw_mapping[output_j.uuid()]
-            similarity[i, j] = len(kws1 & kws2) / len(kws1 | kws2)
-    return similarity
+def pca(kw_fsets, retained_variance=0.99):
+    corr = np.corrcoef(kw_fsets.T)
+    eig_vals, eig_vecs = np.linalg.eigh(corr)
+
+    total = np.sum(eig_vals)
+    idxs = np.argsort(eig_vals)[::-1]
+
+    cum_energy = np.cumsum(eig_vals[idxs] / total)
+    k = np.sum(np.cumsum(eig_vals[idxs]/total) < retained_variance)
+    
+    proj = eig_vecs[:, idxs[:k]]
+
+    projected = np.dot(kw_fsets, proj)
+    return projected
+
 
 # Matthews Correlation Coefficient
-def matthews_correlation(data, reference):
+def mcc(data, reference):
     s, _ = data.shape
     n, _= reference.shape
     
@@ -115,21 +124,32 @@ def matthews_correlation(data, reference):
     return mcc
 
 
+def fix_references(parents, deleted):
+    n = len(deleted) + 1
+    for i in reversed(range(2*n-1)):
+        if deleted[parents[i] - n]:
+            parents[i] = parents[parents[i]]
+
+
+MCC_TRESHOLD = 0.2
+
 def cluster_outputs(outputs):
     keywords, kw_nums = get_keyword_set(outputs)
     kw_mapping = keyword_mapping(keywords, outputs)
+
     # discard outputs without keywords
-    outputs = [o for o in outputs if kw_mapping[o.uuid()]]
-    kw_matrix = keyword_matrix(outputs, kw_nums, kw_mapping)
-    kw_correlations = keyword_correlations(kw_nums, kw_mapping)
+    outputs = np.array([o for o in outputs if kw_mapping[o.uuid()]])
     n = len(outputs)
 
+    conditionals = conditional_keyword_probs(kw_nums, kw_mapping)
+    kw_matrix = keyword_matrix(outputs, kw_nums, kw_mapping)
 
-    profiles = output_profiles(kw_matrix, kw_correlations)
-    # TODO: avoid converting to square form and back
-    distances = squareform(distance.pdist(profiles, 'cosine'))
+    kw_fsets = keyword_fuzzsets(kw_matrix, conditionals)
+    projected = pca(kw_fsets)
 
-    Z = hierarchy.ward(squareform(distances))
+    distances = distance.pdist(projected, 'euclidean')
+    Z = hierarchy.ward(distances)
+
 
     # compute membership vectors for each node in the cluster tree
     cluster_elems = np.zeros((2 * n - 1, n), dtype=np.bool)
@@ -137,68 +157,108 @@ def cluster_outputs(outputs):
     for i in range(n-1):
         a, b = Z[i, 0:2].astype(np.int)
         cluster_elems[n+i, :] = np.logical_or(cluster_elems[a], cluster_elems[b])
-    
+
     # compute correlation between subtree membership and keywords
-    mccs = np.array([matthews_correlation(profiles[c], profiles) for c in cluster_elems])
+    mccs = np.array([mcc(kw_fsets[c], kw_fsets) for c in cluster_elems])
     # assign the best ranking keyword to each node
     kws = np.argmax(mccs, axis=1)
     # put the associated correlation in a vector for easy access
     cluster_mcc = mccs[np.arange(2*n-1), kws]
 
-
-    # Build parents list
+    # This list keeps a reference to the parent of each node
     parents = np.zeros(2 * n - 1, dtype=np.int64)
+    # make the root its own parent
     parents[2*n-2] = 2*n-2
 
     for i in reversed(range(n-1)):
         children = Z[i, 0:2].astype(np.int)
-            
-        mcc, parent_mcc = cluster_mcc[[n+i, parents[n+i]]]
-        kw, parent_kw = kws[[n+i, parents[n+i]]]
+        parents[children] = n + i
+    
+    # Keeps track of which nodes were deleted.
+    # This is used for fixing the parent references after deletion.
+    deleted = np.zeros(n-1, dtype=np.bool)
 
-        if mcc > parent_mcc and kw != parent_kw:
-            parents[children] = n + i
-        else:
-            parents[children] = parents[n+i]
+    # A node is a leaf node when it has at least one leaf child
+    is_leaf_node = np.zeros(n-1, dtype=np.bool)
+    is_leaf_node[parents[:n] - n] = True
 
-        # for now we'll ignore values that don't belong to a leaf node.
-    # because I'm not competent, I defined a leaf node as a node that has
-    # at least 1/3 of its size as direct children.
-    num_leaf_children = np.zeros(n-1, dtype=np.int)
-    for i in range(n):
-        num_leaf_children[parents[i] - n] += 1
-    print(num_leaf_children - Z[:, 3] / 3)
-    is_leaf = num_leaf_children > Z[:, 3] / 3
-    # the root may never be a leaf node.
-    is_leaf[-1] = False
 
-    for i in reversed(range(n-1)):
-        p = parents[n+i]
-        if is_leaf[p - n]:
-            # if parent is a leaf, discard this node
-            parents[parents == n + i] = p            
+    # flatten leaf nodes
+    for i in reversed(range(n - 1)):
+        if deleted[parents[n+i] - n]:
+            # n+i's parent was deleted, find a new one
+            parents[n+i] = parents[parents[n+i]]
+            deleted[i] = True
 
-    nodes = {}
-    for p in np.unique(parents):
-        if is_leaf[p - n]: 
-            research_outputs = [outputs[o].title() for o in np.where(cluster_elems[p])[0]]
-            nodes[p] = {
-                'name': keywords[kws[p]],
-                'size': len(research_outputs),
-                'research_outputs': research_outputs,
-            }
-        else:
-            nodes[p] = {
-                'name': keywords[kws[p]],
+        if is_leaf_node[parents[n+i] - n]:
+            # n+i's parent is a leaf node; flatten them!
+            deleted[i] = True
+
+
+    fix_references(parents, deleted)
+
+    is_leaf_node = np.zeros(n-1, dtype=np.bool)
+    is_leaf_node[parents[:n] - n] = True
+
+    fix_references(parents, deleted)
+    # print(deleted[np.unique(parents) - n])
+
+    is_leaf_node = np.zeros(n-1, dtype=np.bool)
+    is_leaf_node[parents[:n] - n] = True
+
+    for i in range(n-1):
+        if deleted[parents[n+i] - n]:
+            print("{} has no parent".format(n+i))
+        if (not deleted[i]) and is_leaf_node[parents[n+i] - n]:
+            print("{} is an offender".format(n+i))
+
+
+    # finally, prune nodes that form bad categories.
+    # We don't prune leaf nodes because that would mess with the tree structure.
+    for i in range(n-1):
+        if (not is_leaf_node[i]) and cluster_mcc[n+i] < MCC_TRESHOLD:
+            deleted[i] = True
+    deleted[-1] = False
+    fix_references(parents, deleted)
+
+    nodes = {
+        2*n-2: {
+            'name': 'root',
+            'size': 0,
+            'children': [],
+        }
+    }  
+
+    for i in range(n-2):
+        if deleted[i]:
+            continue
+
+        if is_leaf_node[i]:
+            nodes[n+i] = {
+                'name': keywords[kws[n+i]],
                 'size': 0,
-                'children': []
+                'research_outputs': [],
             }
-    for p in np.unique(parents)[:-1]:
-        node = nodes.pop(p)
-        parent = nodes[parents[p]]
-        parent['children'].append(node)
-        parent['size'] += node['size']
-        
+        else:
+            nodes[n+i] = {
+                'name': keywords[kws[n+i]],
+                'mcc': cluster_mcc[n+i],
+                'size': 0,
+                'children': [],
+            }
+
+    for i in range(n):
+        node = nodes[parents[i]]
+        node['size'] += 1
+    
+    for i in range(n-2):
+        print(n+i)
+        if not deleted[i]:
+            node = nodes.pop(n+i)
+            parent = nodes[parents[n+i]]
+            parent['children'].append(node)
+            parent['size'] += node['size']
+    
     tree = nodes[2*n-2]
     tree['name'] = 'root'
     return tree
