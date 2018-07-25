@@ -1,8 +1,7 @@
-# FRIS
-
 ![OpenSummerofCode2018](https://github.com/oSoc18/FRIS/blob/master/Frontend/src/public/css/img/Osoc2018.jpg?raw=true "Open Summer of Code 2018")
 
-![FrisTeamCrest](https://github.com/oSoc18/FRIS/blob/master/Frontend/src/public/css/img/fris.png?raw=true "Open Summer of Code 2018")
+# FRIS
+
 
 ##Intruduction
 
