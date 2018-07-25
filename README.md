@@ -16,14 +16,14 @@ Partners:
  - https://www.researchportal.be/nl
 
 
-## Install
+## Install important programs
 
 For our webapp you will need a few programms installed:
  - Node.js minimum v8
  - npm minimum v5.6.0
  - Python3 3.7.0
 
-## Run
+## Before you run 
 
 Before you can run the webapp you'll have to : 
 (NOTE: all this is done in command line interface)
@@ -49,17 +49,30 @@ NOTE:
 	to fix this go to: https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml 
 	and download the lates version of lxml.
 	than navigate to the downloaded file en run: ‘pip install “filename”.
+	```bash 
+	pip install 'lxml-4.2.3-cp37-cp37m-win_amd64.whl'
+	```
 
-Than to run the webserver:
-run: 'node app.js' to launche the website.
+## Run	
+### Run webserver
+ - navigate back to: Frontend\src\ and run: 'node app.js' to launche the website.
+```bash 
+node \app.js
+```
 
-and to run the python server:
-
+### Run dataserver (Python)
+ - navigate to: 'Backend\ and run: 'python3 app.py'
+```bash 
 python3 app.py
-or  if python3 is the default python :
-python app.py  &
+```
 
+Note: or  if python3 is the default python :
+```bash 
+python app.py  &
+```
 You also need to create a nat in the firewall :
- iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+```bash 
+iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+```
 
 Where the port 8080 is the port of the node application.
