@@ -167,5 +167,18 @@
                 "address": "Herman Teirlinckgebouw, Havenlaan 88 bus 73, 1000 Brussel"
             }
         ]
+    },
+    {
+        "name": "null",
+        "uuid": "0",
+        "children": [
+            {
+                "departement": "",
+                "beneficiary name": "",
+                "email": "",
+                "phone": "",
+                "address": ""
+            }
+        ]
     }
 ]
