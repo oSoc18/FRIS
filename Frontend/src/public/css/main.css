@@ -328,14 +328,15 @@ svg {
 }
 .popup__center{
     display:flex;
+    position: relative;
     width: 100%;
     vertical-align: middle;
     float: left;
-    align-content: center;
     flex-direction: column;
 }
 .float-right{
-    float: right;
+    display: flex;
+    align-items: flex-end;
 
 }
 .popup__left div{
@@ -649,4 +650,7 @@ svg {
 
 .read-less {
     display: none;
+}
+
+.min-text{
 }

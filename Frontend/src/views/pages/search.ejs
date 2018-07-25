@@ -74,8 +74,8 @@
             var cpt = 0;
             for (var i = 0; i < keywords[0].keywords.length; i++) {
                 stringLink +=
-                    '<a class="btn btn-warning margin-button-link" href="/keyword?' + keywords[0].keywords[
-                    i] + '" role="button">' +
+                    '<a class="btn btn-outline-warning margin-button-link" href="/keyword?' + keywords[0].keywords[
+                        i] + '" role="button">' +
                     keywords[0].keywords[i] + '</a> ';
             }
 
@@ -118,7 +118,7 @@
         }
 
         function search_json(words) {
-            $.getJSON("http://"+href()+":5000/organisations/search?keyword=" + words, function (
+            $.getJSON("http://" + href() + ":5000/organisations/search?keyword=" + words, function (
                 data) {
                 var items = [];
                 var heroicBlabla =
@@ -126,11 +126,18 @@
 
                 if (data.length > 0) {
                     data.forEach(element => {
-                        var shortcut = createLinksKeywords(element.researchOutputs);
-                        var cropText = (heroicBlabla).substr(0, 250) + "...";
+                        var shortcut = createLinksKeywords(element.researchOutputs),
+                            cropText;
+                        if (element.organisation.research_activity) {
+
+                            cropText = (element.organisation.research_activity).substr(0, 200) +
+                                "...";
+                        } else {
+                            cropText = "";
+                        }
                         items.push(
                             " \
-                                <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron'> \
+                                <div class='result col-xs-6 col-md-4 col-lg-4'><div class='jumbotron min-text'> \
                             <h4 class='display-6' id='" +
                             element.organisation.uuid + "'>" + element.organisation.name +
                             "</h4><hr>\
@@ -161,7 +168,8 @@
                 $("#search_result").append(items.join("")).hide().fadeIn(500);
                 $('.link').click(function (e) {
                     $('#id_uuid').html(this.id);
-                    $.getJSON("http://"+href()+":5000/organisation/" + this.id, function (data) {
+                    $.getJSON("http://" + href() + ":5000/organisation/" + this.id, function (
+                        data) {
                         var TTO;
                         for (var i = 0; i < TTOjson.length; i++) {
                             if (TTOjson[i].uuid == data.root_organisation.uuid) {
@@ -200,7 +208,7 @@
     <div class="popup__content">
         <div class="popup__scrollcontent">
             <h1 id="name_organisation"></h1>
-            <h2 class="heading-secondary u-margin-bottom-small" id="title_organisation"></h2>      
+            <h2 class="heading-secondary u-margin-bottom-small" id="title_organisation"></h2>
             <hr>
             <div class="popup__left text-justify">
                 <div class="popup__top">
