@@ -28,13 +28,9 @@
         <div class="align-items-center">
 
             <div class="row " id="search_result">
-                <div class='result col-xs-4 col-md-4 col-lg-4 '>
+                <div class='result col-centered '>
                     <a class="btn btn-warning     margin-button-link" href="/keyword?Engineering" role="button">Engineering</a>
-                </div>
-                <div class='result col-xs-4 col-md-4 col-lg-4'>
                     <a class="btn btn-warning margin-button-link" href="/keyword?Database" role="button">Database</a>
-                </div>
-                <div class='result col-xs-4 col-md-4 col-lg-4'>
                     <a class="btn btn-warning margin-button-link" href="/keyword?Water" role="button">Water</a>
                 </div>
             </div>
@@ -58,6 +54,7 @@
 
         search.keypress(function (e) {
             if (e.which == 13) {
+                href();
                 research();
             };
         });
@@ -66,20 +63,6 @@
         $('#popup').show('show', function () {
             l(selectedUuid);
         });
-
-        function createLinksKeywords(keywords) {
-            var stringLink = "";
-            var cpt = 0;
-            for (var i = 0; i < keywords[0].keywords.length; i++) {
-                stringLink +=
-                    '<a class="btn btn-outline-warning margin-button-link" href="/keyword?' + keywords[0].keywords[
-                        i] +
-                    '" role="button">' +
-                    keywords[0].keywords[i] + '</a> ';
-            }
-
-            return stringLink;
-        }
 
         function createLinksKeywords(keywords) {
             var stringLink = "";
@@ -130,7 +113,7 @@
         }
 
         function search_json(words) {
-            $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
+            $.getJSON("http://"+href()+":5000/organisations/search?keyword=" + words, function (
                 data) {
                 var items = [];
                 var heroicBlabla =
@@ -174,7 +157,7 @@
                 $('.link').click(function (e) {
                     $('#id_uuid').html(this.id);
                     var items = [];
-                    $.getJSON("http://127.0.0.1:5000/organisation/" + this.id, function (data) {
+                    $.getJSON("http://"+href()+":5000/organisation/" + this.id, function (data) {
                         //l(data.uuid);
                         var organisation = data.root_organisation.name;
                         $('#title_organisation').html(organisation);
