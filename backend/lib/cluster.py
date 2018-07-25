@@ -132,6 +132,8 @@ def fix_references(parents, deleted):
 
 
 MCC_TRESHOLD = 0.2
+MIN_LEAF_SIZE = 5
+MAX_LEAF_SIZE = 20
 
 def cluster_outputs(outputs):
     keywords, kw_nums = get_keyword_set(outputs)
@@ -218,7 +220,14 @@ def cluster_outputs(outputs):
     for i in range(n-1):
         if (not is_leaf_node[i]) and cluster_mcc[n+i] < MCC_TRESHOLD:
             deleted[i] = True
-    deleted[-1] = False
+    fix_references(parents, deleted)
+
+
+    # merge small leaf nodes together to avoid overfitting and uncomfortableness
+    for i in range(n-1):    
+        if Z[i, 3] < MIN_LEAF_SIZE and Z[parents[n+i]-n, 3] < MAX_LEAF_SIZE:
+            deleted[i] = True
+    
     fix_references(parents, deleted)
 
     nodes = {
