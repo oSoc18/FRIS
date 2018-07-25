@@ -170,15 +170,16 @@
                         );
 
                     });
-
+                    $('#result_title').html("");
                     $('#result_title').append('<h2>research groups working on ' + clearKeyword(words) +
                         '</h2>');
-                    $('#search_result').loading('stop');
 
 
                 } else {
                     items.push("No result...");
                 }
+                $('#search_result').loading('stop');
+
                 $('#div-search').animate({
                     'marginTop': '1%',
                     opacity: 1
@@ -186,22 +187,24 @@
                 $("#search_result").append(items.join("")).hide().fadeIn(500);
                 $('.link').click(function (e) {
                     $('#id_uuid').html(this.id);
-                    $.getJSON("http://" + href() + ":5000/organisation/" + this.id, function (data) {
+                    $.getJSON("http://" + href() + ":5000/organisation/" + this.id, function (
+                        data) {
 
-                            //l(data.root_organisation.uuid);
+                        //l(data.root_organisation.uuid);
                         var TTO;
                         for (var i = 0; i < TTOjson.length; i++) {
                             if (TTOjson[i].uuid == data.root_organisation.uuid) {
                                 TTO = TTOjson[i];
-                            }
-                            else if (data.root_organisation.name == "KU Leuven"){
+                            } else if (data.root_organisation.name == "KU Leuven") {
                                 TTO = TTOjson[9];
                             }
                         }
-                        var bodyContent='Dear '+data.name+', I am writing after see your publication on openexpertise.be. ';
+                        var bodyContent = 'Dear ' + data.name +
+                            ', I am writing after see your publication on openexpertise.be. ';
                         $('#contact_mail').html("<a href='mailto:" + TTO.children[0].email +
                             "?Subject=Collaboration possibility with " + data.name +
-                            "&body="+bodyContent+"' target='_top'>" + TTO.children[0].email + "</a>");
+                            "&body=" + bodyContent + "' target='_top'>" + TTO.children[
+                                0].email + "</a>");
                         $('#contact_phone').html(TTO.children[0].phone);
                         $('#contact_address').html(
                             "<a href='https://www.openstreetmap.org/search?query=" +
