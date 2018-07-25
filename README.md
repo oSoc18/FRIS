@@ -28,16 +28,21 @@ For our webapp you will need a few programms installed:
 Before you can run the webapp you'll have to : 
 (NOTE: all this is done in command line interface)
  - Navigate to FRIS\Frontend\src
-	```bash 
-	cd Frontend\src
-	```
+```bash 
+cd \FRIS\Frontend\src
+```
  - run: 'npm install' to get the necessary node modules.
-	```bash 
-	npm install
-	```
-
-Navigate to FRIS\Backend
-run: 'python requirements.txt’ to get all the libraries.
+```bash 
+npm install
+```
+ - Navigate to FRIS\Backend
+```bash 
+cd \FRIS\Backend
+```
+ - run: 'python requirements.txt’ to get all the libraries.
+```bash 
+python requirements.txt
+```
 
 NOTE:
 	if on windows there could be some problems with lxml library.
