@@ -47,10 +47,10 @@ NOTE:
 	If on windows there could be some problems with lxml library.
 	to fix this go to: https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml 
 	and download the lates version of lxml.
-	than navigate to the downloaded file en run: ‘pip install “filename”.
-	```bash 
-	pip install 'lxml-4.2.3-cp37-cp37m-win_amd64.whl'
-	```
+	than navigate to the downloaded file en run install the file.	
+```bash
+pip install 'lxml-4.2.3-cp37-cp37m-win_amd64.whl'
+```
 
 ## Run
 
