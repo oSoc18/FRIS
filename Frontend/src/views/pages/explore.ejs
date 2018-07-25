@@ -42,14 +42,10 @@
                 .style("opacity", 0);
 
             var object;
-            var array_datas = [];
             $(function () {
                 var uuid = getUrlParameter('uuid');
                 var quickSearch = getUrlParameter('keyword');
                 $.getJSON("http://"+href()+":5000/organisation/" + uuid + "/output_cluster", function (data) {
-                    data.children.forEach(elt => {
-                        array_datas.push(elt);
-                    });
                     $('#content').append("<a class='breadcrumb-item  white menu-item ' href='/keyword" +
                         quickSearch + "'> Search</a> / "); // show the name in the search bar
                     $('#content').append(" <a class='breadcrumb-item  white menu-item '  href='#'> " +
@@ -58,18 +54,6 @@
 
                 });
             });
-
-
-            function findPublications(name) {
-
-                for (var i = 0; i < array_datas.length; i++) {
-                    l(i + ". " + array_datas[i].name);
-                    if (array_datas[i].name == name.num) {
-                        return array_datas[i];
-                    }
-                }
-
-            }
 
             function init(items) {
                 d3.select(".loading").style("visibility", "visible");
@@ -200,6 +184,7 @@
                     if (obj.name && obj.children) {
                         return {
                             num: obj.name,
+                            isLeaf: false,
                             children: obj.children.map(rMap),
                             color: colors[colornr]
                         };
@@ -209,13 +194,14 @@
                     else {
                         return {
                             num: obj.name,
-                            color: "#989898"
-                            /*children: obj.research_outputs.map((ro) => {
+                            isLeaf: true,
+                            color: "#989898",
+                            research_data: obj.research_outputs.filter(a => a).map((ro) => {
                                 return {
-                                    num: ro.title,
+                                    num: ro,
                                     children: []
                                 }
-                            })*/
+                            }),
                         };
                     }
                     colornr = colornr + 1;
@@ -339,21 +325,21 @@
                                 .style("opacity", 0);
                         })
                         .on('click', function (d) {
-                            if (d.color = "#989898") {
+                            if (d.isLeaf) {
                                 l(d);
-                                var publications = findPublications(d);
+                                var publications = d.research_data;
                                 var htmlElt = [];
                                 htmlElt.push("<ul class='list-group'>");
-                                publications.research_outputs.forEach(elt => {
-                                    htmlElt.push("<li class='list-group-item'>" + elt +
+                                publications.forEach(elt => {
+                                    htmlElt.push("<li class='list-group-item'>" + elt.num +
                                         "<button class='btn btn-warning align-right float-right'>details</button></li>"
                                     );
                                 });
                                 htmlElt.push("</ul>");
                                 $('#publications').append(htmlElt);
-                                $('#title').append("Publication of "+capitalizeFirstLetter(publications.name));
+                                $('#title').html("");
+                                $('#title').append("Publication of "+capitalizeFirstLetter(d.num));
                                 window.location.href = '#popup';
-
                             }
                         });
 
