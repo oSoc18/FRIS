@@ -15,7 +15,11 @@ Partners:
  - https://www.researchportal.be/nl
 
 
-## Install important programs
+## Clone repository and Install important programs
+
+```bash 
+git clone https://github.com/oSoc18/FRIS.git
+```
 
 For our webapp you will need a few programms installed:
  - Node.js minimum v8
