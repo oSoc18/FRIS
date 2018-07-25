@@ -1,4 +1,4 @@
-![OpenSummerofCode2018](https://github.com/oSoc18/FRIS/tree/master/Frontend/src/public/css/img/Osoc2018.jpg "Open Summer of Code 2018")
+![OpenSummerofCode2018](https://github.com/oSoc18/FRIS/blob/master/Frontend/src/public/css/img/Osoc2018.jpg?raw=true "Open Summer of Code 2018")
 
 #FRIS
 
