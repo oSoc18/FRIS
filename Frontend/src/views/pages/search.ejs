@@ -113,7 +113,7 @@
         }
 
         function search_json(words) {
-            $.getJSON("http://"+href()+":5000/organisations/search?keyword=" + words, function (
+            $.getJSON("http://127.0.0.1:5000/organisations/search?keyword=" + words, function (
                 data) {
                 var items = [];
                 var heroicBlabla =
@@ -157,7 +157,7 @@
                 $('.link').click(function (e) {
                     $('#id_uuid').html(this.id);
                     var items = [];
-                    $.getJSON("http://"+href()+":5000/organisation/" + this.id, function (data) {
+                    $.getJSON("http://127.0.0.1:5000/organisation/" + this.id, function (data) {
                         //l(data.uuid);
                         var organisation = data.root_organisation.name;
                         $('#title_organisation').html(organisation);
