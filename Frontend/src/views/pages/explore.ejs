@@ -46,6 +46,7 @@
                 var uuid = getUrlParameter('uuid');
                 var quickSearch = getUrlParameter('keyword');
                 $.getJSON("http://" + href() + ":5000/organisation/" + uuid + "/output_cluster", function (data) {
+                    l(data);
                     $('#content').append("<a class='breadcrumb-item  white menu-item ' href='/keyword" +
                         quickSearch + "'> Search</a> / "); // show the name in the search bar
                     $('#content').append(" <a class='breadcrumb-item  white menu-item '  href='#'> " +
@@ -343,7 +344,7 @@
                                 $('#publications').append(htmlElt);
                                 $('#title').html("");
                                 $('#title').append("Publication of " + capitalizeFirstLetter(d.num));
-                                window.location.href = '#popup';
+                                $('#exampleModalCenter').modal('show');
                             }
                         });
 
@@ -1305,18 +1306,28 @@
             }
         </script>
 
-        <div class="popup" id="popup">
-            <a href="#section-tours" class="popup__close">&times;</a>
-            <div class="popup__content">
-                <div class="popup__scrollcontent">
-                    <div class="popup__top">
-                        <h3 class="heading-tertiary u-margin-bottom-small" id="title"></h3>
-                        <p class="popup__text">
-                        </p>
+        <!-- Modal -->
+        <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width:1250px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div>
+                            <h3 class="modal-title" id="title"></h3>
+                        </div>
+
                     </div>
-                    <div class="popup__center" id="publications">
+                    <div class="modal-body" id="publications">
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
+
             </div>
         </div>
+        </div>
+
 </body>

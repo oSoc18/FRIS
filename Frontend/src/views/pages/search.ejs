@@ -161,13 +161,14 @@
                             ">" + cropText +
                             " </div><hr><p class='lead' id='link-" +
                             element.organisation.uuid +
-                            "'><a class='btn btn-dark margin-button-link link' id='" +
+                            "'><a class='btn btn-primary margin-button-link link' id='" +
                             element.organisation.uuid +
-                            "' href='#popup' >» Details</a><a class='btn btn-warning margin-button-link' href=/explore?uuid=" +
+                            "' href='#exampleModal' id='popup_great' data-toggle='modal' data-target='#exampleModal' >» Details</a><a class='btn btn-warning margin-button-link' href=/explore?uuid=" +
                             element.organisation.uuid +
                             "&keyword=" + words +
                             " ><i class='fa fa-share-alt' aria-hidden='true'></i> Publication map </a></p></div></div>"
                         );
+
 
                     });
                     $('#result_title').html("");
@@ -216,11 +217,11 @@
                         $('#title_organisation').html(organisation);
                         organisation = data.name;
                         $('#description_title').html(data.research_activity);
-                        var organisation = replaceAll(organisation.toLowerCase(), " ",
+                        var organisation = replaceAll(data.root_organisation.name.toLowerCase(), " ",
                             "-");
                         $('#link_portal').attr('href',
                             'https://www.researchportal.be/en/organisation/' +
-                            organisation);
+                            organisation).attr('target','_blank');
                     });
 
 
@@ -233,53 +234,80 @@
 </script>
 </div>
 
-<div class="popup" id="popup">
-    <a href="#section-tours" class="popup__close">&times;</a>
-    <div class="popup__content">
-        <div class="popup__scrollcontent">
-            <h1 id="name_organisation"></h1>
-            <h2 class="heading-secondary u-margin-bottom-small" id="title_organisation"></h2>
-            <hr>
-            <div class="popup__left">
-                <div class="popup__top">
-                    <div class="popup_description">
-                        <h3>Description</h3>
-                        <div id="description_title">
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h1 id="name_organisation"></h1>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="title_organisation"></h3>
+                </div>
+
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                            <h3>Description</h3>
+                        <div id="description_title"></div>
+                        <div class="popup__top">
+
+                            <div class="popup_description">
+                                <div id="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="popup_contact  margin-content nmin-content-height">
+                            <h3>Want to collaborate?</h3>
+                            <p>
+                                Contact the relevant Technology Transfer Office or Research Department. They will get you connected.
+                            </p>
+                        </div>
+
+                        <div class="popup_contact margin-content min-content-height">
+                            <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
+                            <ul class="list-group">
+                                <li>
+                                    <i class="fa fa-envelope"></i>
+                                    <span class="icon-envelope-alt" id="contact_mail"></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone"></i>
+                                    <span class="icon-phone" id="contact_phone"></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-map-marker"></i>
+                                    <span class="icon-marker" id="contact_address"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="button" id="popup_button">
+                            <a id="link_portal" class="btn btn-warning margin-button-link" style="font-size:1.75rem;">
+                                <i class='fa fa-share-alt' aria-hidden='true'></i> See more at researchportal.be</a>
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
-            <div class="popup__right text-justify">
-                <div class="popup_contact">
-                    <h3>Want to collaborate?</h3>
-                    <p>
-                        Contact the relevant Technology Transfer Office or Research Department. They will get you connected.
-                    </p>
-                </div>
-                <br>
-                <div class="popup_contact">
-                    <h3 class="heading-tertiary u-margin-bottom-small">Contact</h3>
-                    <ul class="list-group">
-                        <li>
-                            <i class="fa fa-envelope"></i>
-                            <span class="icon-envelope-alt" id="contact_mail"></span>
-                        </li>
-                        <li>
-                            <i class="fa fa-phone"></i>
-                            <span class="icon-phone" id="contact_phone"></span>
-                        </li>
-                        <li>
-                            <i class="fa fa-map-marker"></i>
-                            <span class="icon-marker" id="contact_address"></span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="button" id="popup_button">
-                    <a id="link_portal" class="btn btn-warning margin-button-link" style="font-size:1.75rem;">
-                        <i class='fa fa-share-alt' aria-hidden='true'></i> See more at researchportal.be</a>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
+
     </div>
+</div>
 </div>

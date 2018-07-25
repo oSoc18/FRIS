@@ -682,4 +682,19 @@ svg {
     height: 120px;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-}   
+}
+
+.modal-ku {
+    width: 90%;
+    margin: auto;
+}
+
+.modal-lg {
+    max-width: 90%;
+}
+.min-content-height{
+    min-height: 200px;
+}
+.modal-body{
+    font-size: 16px;
+}
