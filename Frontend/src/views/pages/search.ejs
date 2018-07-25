@@ -9,16 +9,23 @@
     </div>
     <div class="row">
         <div id="demo" class="col-md-12">
-
             <input type="search" name="keyword" id="autocomplete" class="search__input" placeholder="What's your domain of interest ? e.g. Database, Water, Learning">
         </div>
 
+
     </div>
-    <div class="margin-content align-items-center ">
+    <div class="margin-content">
+
         <div class="row">
             <div class="col-centered">
-                <h2>Research groups in your domain of interest</h2>
+                <button class="btn btn-outline-warning" id="button_search">Search</button>
+            </div>
+        </div>
+    </div>
 
+    <div class="margin-content align-items-center ">
+        <div class="row">
+            <div class="col-centered" id="result_title">
             </div>
         </div>
     </div>
@@ -42,15 +49,19 @@
 
 <script>
     $(function () {
-        var selectedUuid = "";
-        var words = [],
-            search = $('#autocomplete');
-        var oldSearch = "";
+        var selectedUuid = "",
+            words = [],
+            search = $('#autocomplete'),
+            button_search = $('#button_search'),
+            oldSearch = "";
         if ("" != window.location.search) {
             oldSearch = window.location.search;
             oldSearch.replace("?", "");
             quickSearch(oldSearch);
         }
+        button_search.click(function (e) {
+            research();
+        });
 
         search.keypress(function (e) {
             if (e.which == 13) {
@@ -119,6 +130,9 @@
         }
 
         function search_json(words) {
+            $('#search_result').loading({
+                stoppable: true
+            });
             $.getJSON("http://" + href() + ":5000/organisations/search?keyword=" + words, function (
                 data) {
                 var items = [];
@@ -145,8 +159,7 @@
                                 " + shortcut +
                             "<hr><div id=" + element.organisation.uuid +
                             ">" + cropText +
-                            "<a href='#podpup'>Read more.</a>\
-                        </div><hr><p class='lead' id='link-" +
+                            " </div><hr><p class='lead' id='link-" +
                             element.organisation.uuid +
                             "'><a class='btn btn-dark margin-button-link link' id='" +
                             element.organisation.uuid +
@@ -157,6 +170,10 @@
                         );
 
                     });
+
+                    $('#result_title').append('<h2>research groups working on ' + clearKeyword(words) +
+                        '</h2>');
+                    $('#search_result').loading('stop');
 
 
                 } else {
@@ -177,10 +194,15 @@
                                 TTO = TTOjson[i];
                             }
                         }
-
-                        $('#contact_mail').html(TTO.children[0].email);
+                        var bodyContent='Dear '+data.name+', I am writing after see your publication on openexpertise.be. ';
+                        $('#contact_mail').html("<a href='mailto:" + TTO.children[0].email +
+                            "?Subject=Collaboration possibility with " + data.name +
+                            "&body="+bodyContent+"' target='_top'>" + TTO.children[0].email + "</a>");
                         $('#contact_phone').html(TTO.children[0].phone);
-                        $('#contact_address').html(TTO.children[0].address);
+                        $('#contact_address').html(
+                            "<a href='https://www.openstreetmap.org/search?query=" +
+                            TTO.children[0].address + "' target='_blank'>" + TTO.children[
+                                0].address + "</a>");
 
                         var organisation = data.root_organisation.name;
                         $('#name_organisation').html(data.name);
@@ -211,55 +233,21 @@
             <h1 id="name_organisation"></h1>
             <h2 class="heading-secondary u-margin-bottom-small" id="title_organisation"></h2>
             <hr>
-            <div class="popup__left text-justify">
+            <div class="popup__left">
                 <div class="popup__top">
                     <div class="popup_description">
                         <h3>Description</h3>
                         <div id="description_title">
-
                         </div>
                     </div>
-
                 </div>
-
-                <!--<div class="popup_publications">
-                    <h3 class="heading-tertiary u-margin-bottom-small">Publications</h3>
-                    <p class="popup__text">
-                        <ul class="list-group">
-                            <li>Begrijpbaarheid en controle voor context-gevoelige Internet of Things applicaties.</li>
-                            <li>Ontwikkeling van Intelligible Internet-of-Things objecten en applicaties door eind-gebruikers</li>
-                            <li>Structurele financiering instituten: structurele financiering EDM voor de werking van het instituut
-                            </li>
-                            <li>Structurele financiering instituten: projectfinanciering EDM voor fundamenteel onderzoek</li>
-                            <li>
-                                <a href="#">... see more</a>
-                            </li>
-                        </ul>
-                    </p>
-                </div>
-
-                <div class="popup_members">
-                    <h3 class="heading-tertiary u-margin-bottom-small">Members</h3>
-                    <p class="popup__text">
-                        <ul class="list-group">
-                            <li>Frank Van Reeth</li>
-                            <li>Philippe Bekaert</li>
-                            <li>Bram Bonne</li>
-                            <li>Jens Brulmans</li>
-                            <li>
-                                <a href="#">... see more</a>
-                            </li>
-                        </ul>
-                    </p>
-                </div>-->
-
             </div>
 
             <div class="popup__right text-justify">
                 <div class="popup_contact">
                     <h3>Want to collaborate?</h3>
                     <p>
-                        Contact the relevant Technology Transfer Office or Research Department! They will get you connected.
+                        Contact the relevant Technology Transfer Office or Research Department. They will get you connected.
                     </p>
                 </div>
                 <br>
@@ -281,7 +269,8 @@
                     </ul>
                 </div>
                 <div class="button" id="popup_button">
-                    <a id="link_portal" style="font-size: 80%">See more at researchportal.be</a>
+                    <a id="link_portal" class="btn btn-warning margin-button-link" style="font-size:1.75rem;">
+                        <i class='fa fa-share-alt' aria-hidden='true'></i> See more at researchportal.be</a>
                 </div>
             </div>
         </div>
