@@ -1,7 +1,7 @@
 [
     {
         "name": "University of Antwerpen",
-        "uuid": "",
+        "uuid": "2d941783-75cb-48cf-82de-0098fb9e43b0",
         "children": [
             {
                 "departement": "Valorisation office",
@@ -14,7 +14,7 @@
     },
     {
         "name": "University of Ghent",
-        "uuid": "",
+        "uuid": "13a87c7b-b2b0-472f-9503-2fff4ae55e63",
         "children": [
             {
                 "departement": "Tech Transfer Office",
@@ -53,7 +53,7 @@
     },
     {
         "name": "Botanic Garden Meise",
-        "uuid": "",
+        "uuid": "df40bdeb-6b7b-4550-8802-4af1d5fc6db7",
         "children": [
             {
                 "departement": "Research Department",
@@ -66,7 +66,7 @@
     },
     {
         "name": "Flanders Hydraulics Research",
-        "uuid": "",
+        "uuid": "b9cfbc9c-722f-4e39-b3e3-67f6fd210030",
         "children": [
             {
                 "departement": "",
@@ -79,7 +79,7 @@
     },
     {
         "name": "Flanders Marine Institute",
-        "uuid": "",
+        "uuid": "5d92d69c-1e0e-412e-b4c5-018f95e7bc6a",
         "children": [
             {
                 "departement": "",
@@ -92,7 +92,7 @@
     },
     {
         "name": "Institute for Agricultural and Fisheries Research",
-        "uuid": "",
+        "uuid": "ee5c795b-715d-4a35-83c5-6acce25f0f6d",
         "children": [
             {
                 "departement": "",
@@ -105,7 +105,7 @@
     },
     {
         "name": "Institute of Tropical Medicine",
-        "uuid": "",
+        "uuid": "dec31ec8-8f67-4c2a-975a-43ad2807a551",
         "children": [
             {
                 "departement": "",
@@ -118,7 +118,7 @@
     },
     {
         "name": "KU Leuven",
-        "uuid": "",
+        "uuid": "21742eca-761d-4e76-b574-0855719cadbf",
         "children": [
             {
                 "departement": "Tech Transfer Office",
@@ -131,7 +131,7 @@
     },
     {
         "name": "Research Institute for Nature and Forest",
-        "uuid": "",
+        "uuid": "da33e6c6-cfb2-437b-917f-3a4d7d2aaddf",
         "children": [
             {
                 "departement": "",
@@ -144,7 +144,7 @@
     },
     {
         "name": "Royal Zoological Society of Antwerp",
-        "uuid": "",
+        "uuid": "68a6acee-a43d-459e-9005-25e3892764a1",
         "children": [
             {
                 "departement": "Tech Transfer Office",
@@ -157,7 +157,7 @@
     },
     {
         "name": "Unit of HIV/STD",
-        "uuid": "",
+        "uuid": "622a4dae-fa00-43b0-9478-1990ef875ff2",
         "children": [
             {
                 "departement": "",
