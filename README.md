@@ -1,10 +1,8 @@
+# FRIS
+
 ![OpenSummerofCode2018](https://github.com/oSoc18/FRIS/blob/master/Frontend/src/public/css/img/Osoc2018.jpg?raw=true "Open Summer of Code 2018")
 
-#FRIS
-
-![OpenSummerofCode2018](https://github.com/oSoc18/FRIS/tree/master/Frontend/src/public/css/img/Osoc2018.jpg "Open Summer of Code 2018")
-
-![FrisTeamCrest](https://github.com/oSoc18/FRIS/tree/master/Frontend/src/public/css/img/Osoc2018.jpg "Open Summer of Code 2018")
+![FrisTeamCrest](https://github.com/oSoc18/FRIS/blob/master/Frontend/src/public/css/img/fris.png?raw=true "Open Summer of Code 2018")
 
 ##Intruduction
 
@@ -19,14 +17,14 @@ https://www.ewi-vlaanderen.be/
 https://www.researchportal.be/nl
 
 
-##Install
+## Install
 
 For our webapp you will need a few programms installed:
  - Node.js minimum v8
  - npm minimum v5.6.0
  - Python3 3.7.0
 
-##Run
+## Run
 
 Before you can run the webapp you'll have to : 
 (NOTE: all this is done in command line interface)
