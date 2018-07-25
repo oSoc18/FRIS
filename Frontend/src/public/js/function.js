@@ -35,6 +35,14 @@ function clearString(string) {
     return string.replace(/['"]+/g, '');
 }
 
+function clearKeyword(string) {
+    if (string.includes("?")) {
+        return string.replace("?", "");
+    } else {
+        return string;
+    }
+}
+
 function readTextFile(file, callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
@@ -86,10 +94,11 @@ function getUrlParameter(sParam) {
         }
     }
 }
-function href(){
-    if(location.host=="openexpertise.be"){
+
+function href() {
+    if (location.host == "openexpertise.be") {
         return "openexpertise.be";
-    }else{
+    } else {
         return "127.0.0.1";
     }
 }
@@ -106,6 +115,7 @@ function minimizeText(texte, limit) {
 function replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
 }
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
