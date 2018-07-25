@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify, abort
-from flask_cors import CORS,cross_origin
+from flask_cors import CORS, cross_origin
 from frisr3.organisations import OrganisationService
 from frisr3.research_outputs import ResearchOutputService
 from lib.cluster import cluster_outputs
 
 from search import search_keyword
-
+import socket
 app = Flask(__name__)
 CORS(app)
 
@@ -23,13 +23,12 @@ def organisation(uuid=None):
     if not org:
         abort(404)
 
-
     if org.is_root_organisation():
         root_org = None
     else:
         r_org = service.find_organisation(org.root_organisation_uuid())
         root_org = r_org.attributes()
-    
+
     return jsonify({
         **org.attributes(),
         'root_organisation': root_org,
@@ -54,6 +53,7 @@ def organisation_search():
     result = search_keyword(keyword)
     return jsonify(result)
 
+
 @app.route('/organisation/<uuid>/output_cluster')
 def organisation_output_cluster(uuid):
     organisation_service = OrganisationService()
@@ -66,5 +66,13 @@ def organisation_output_cluster(uuid):
     tree['name'] = org.name()
     return jsonify(tree)
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    hostname = socket.gethostname()
+    IP = socket.gethostbyname(hostname)
+    if(IP == '127.0.1.1'):
+        hostname = socket.gethostname()
+        IP = socket.gethostbyname(hostname)
+        app.run(host='openexpertise.be', port=5000, debug=True)
+    else:
+        app.run(debug=True)
