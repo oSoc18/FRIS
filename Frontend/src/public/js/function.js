@@ -86,6 +86,13 @@ function getUrlParameter(sParam) {
         }
     }
 }
+function href(){
+    if(location.host=="openexpertise.be"){
+        return "openexpertise.be";
+    }else{
+        return "127.0.0.1";
+    }
+}
 
 
 function minimizeText(texte, limit) {
@@ -98,4 +105,7 @@ function minimizeText(texte, limit) {
 
 function replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
+}
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
