@@ -9,7 +9,19 @@
     </div>
     <div class="row">
         <div id="demo" class="col-md-12">
-            <input type="search" name="keyword" id="autocomplete" class="search__input" placeholder="What's your domain of interest ? e.g. Database, Water, Learning">
+            <div class="search__input">
+                <i class="fa fa-search"></i>
+                <input type="search" name="keyword" id="autocomplete" placeholder="What's your domain of interest ? e.g. Database, Water, Learning">
+                <script>
+                    var elem = document.getElementById('autocomplete');
+                    elem.addEventListener('focusin', () => {
+                        elem.parentNode.dispatchEvent('focusin');
+                    });
+                    elem.addEventListener('focusout', () => {
+                        elem.parentNode.dispatchEvent('focusout');
+                    });    
+                </script>
+            </div>
         </div>
 
 
