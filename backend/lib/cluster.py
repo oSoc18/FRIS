@@ -175,6 +175,7 @@ def cluster_outputs(outputs):
     for i in reversed(range(n-1)):
         children = Z[i, 0:2].astype(np.int)
         parents[children] = n + i
+
     
     # Keeps track of which nodes were deleted.
     # This is used for fixing the parent references after deletion.
@@ -184,6 +185,11 @@ def cluster_outputs(outputs):
     is_leaf_node = np.zeros(n-1, dtype=np.bool)
     is_leaf_node[parents[:n] - n] = True
 
+    # merge small leaf nodes together to avoid overfitting and uncomfortableness
+    for i in reversed(range(n-1)):
+        if Z[i, 3] < MIN_LEAF_SIZE and Z[parents[n+i]-n, 3] < MAX_LEAF_SIZE:
+            deleted[i] = True
+            is_leaf_node[parents[n+i] - n] = True
 
     # flatten leaf nodes
     for i in reversed(range(n - 1)):
@@ -198,35 +204,12 @@ def cluster_outputs(outputs):
 
     fix_references(parents, deleted)
 
-    is_leaf_node = np.zeros(n-1, dtype=np.bool)
-    is_leaf_node[parents[:n] - n] = True
-
-    fix_references(parents, deleted)
-    # print(deleted[np.unique(parents) - n])
-
-    is_leaf_node = np.zeros(n-1, dtype=np.bool)
-    is_leaf_node[parents[:n] - n] = True
-
-    for i in range(n-1):
-        if deleted[parents[n+i] - n]:
-            print("{} has no parent".format(n+i))
-        if (not deleted[i]) and is_leaf_node[parents[n+i] - n]:
-            print("{} is an offender".format(n+i))
-
-
     # finally, prune nodes that form bad categories.
     # We don't prune leaf nodes because that would mess with the tree structure.
     for i in range(n-1):
         if (not is_leaf_node[i]) and cluster_mcc[n+i] < MCC_TRESHOLD:
             deleted[i] = True
-    fix_references(parents, deleted)
 
-
-    # merge small leaf nodes together to avoid overfitting and uncomfortableness
-    for i in range(n-1):    
-        if Z[i, 3] < MIN_LEAF_SIZE and Z[parents[n+i]-n, 3] < MAX_LEAF_SIZE:
-            deleted[i] = True
-    
     fix_references(parents, deleted)
 
     nodes = {
@@ -245,6 +228,7 @@ def cluster_outputs(outputs):
             nodes[n+i] = {
                 'name': keywords[kws[n+i]],
                 'size': 0,
+                'mcc': cluster_mcc[n+i],
                 'research_outputs': [],
             }
         else:
@@ -252,7 +236,6 @@ def cluster_outputs(outputs):
                 'name': keywords[kws[n+i]],
                 'mcc': cluster_mcc[n+i],
                 'size': 0,
-                'research_outputs': [],
                 'children': [],
             }
 
