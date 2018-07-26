@@ -241,7 +241,7 @@ def cluster_outputs(outputs):
 
     for i in range(n):
         node = nodes[parents[i]]
-        node['research_outputs'].append(outputs[i].title())
+        node['research_outputs'].append(outputs[i].attributes())
         node['size'] += 1
     
     for i in range(n-2):
