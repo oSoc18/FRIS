@@ -21,9 +21,9 @@ Partners:
 git clone https://github.com/oSoc18/FRIS.git
 ```
 
-For our webapp you will need a few programms installed:
- - Node.js minimum v8
- - npm minimum v5.6.0
+For our webapp you will need a few programms installed (newer versions might work):
+ - Node.js v8
+ - npm v5.6.0
  - Python3 3.7.0
 
 ## Before you run 
