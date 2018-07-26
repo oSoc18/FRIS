@@ -1190,6 +1190,8 @@
                     var scale1 = 1;
                     var shrink = Math.floor(numChildren / childrenMax);
                     var scale = (initialScale - (shrink) * scaleStep);
+                    if (scale < 0.73)
+                        scale = 0.73;
                     return scale;
                 }
                 // Takes a long sentences and chops it up

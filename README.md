@@ -21,9 +21,9 @@ Partners:
 git clone https://github.com/oSoc18/FRIS.git
 ```
 
-For our webapp you will need a few programms installed:
- - Node.js minimum v8
- - npm minimum v5.6.0
+For our webapp you will need a few programms installed (newer versions might work):
+ - Node.js v8
+ - npm v5.6.0
  - Python3 3.7.0
 
 ## Before you run 
@@ -80,6 +80,7 @@ python app.py
  - You also need to create a nat in the firewall (linux command)
 ```bash 
 iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+iptables -t nat -I PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8000
 ```
 Note: You can also launch the scripts in background, you need to add " &" at the end of the script
 Note: We used port 8080 for our service
