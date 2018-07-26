@@ -36,8 +36,8 @@ app.get('/explore', function (req, res) {
 //console.log('8080 is the magic port');
 
 const options = {
-    "key": fs.readFileSync('/etc/letsencrypt/live/privkey.pem'),
-    "cert": fs.readFileSync('/etc/letsencrypt/live/cert.pem')
+    "key": fs.readFileSync('/etc/letsencrypt/live/openexpertise.be/privkey.pem'),
+    "cert": fs.readFileSync('/etc/letsencrypt/live/openexpertise.be/cert.pem')
 }
 http.createServer(app).listen(80);
 https.createServer(options, app).listen(443);
