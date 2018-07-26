@@ -1,3 +1,26 @@
+"""
+The main challenge with clustering publications is that the keywords are very
+specific, and therefore don't overlap much. A simple similarity measure based
+on the keyword set does not perform well at all in this case.
+
+To get around that, we tried to predict the keywords that a publication _should_
+be labeled with. This was done by simply measuring the conditional probabilities
+for keyword co-occurences from the dataset.
+With some simple bayesian statistics, we then calculated for each publication
+and keyword the probability that the publication should be labelled with the
+keyword, obtaining a "fuzzy keyword set".
+This procedure of course introduces a lot of redundancy in the data. To do away
+with that, we applied PCA to the fuzzy keyword sets. We then clustered the
+result using ward's method.
+
+A taxonomy is then extracted from the clustering tree. For this. we first
+assigned to each node the keyword that correlates best with being contained in
+the subtree below this node. One can then define the 'node quality' as the
+correlation coefficient of a node with its keyword (i.e. how well this node
+performs as a classifier for the keyword). By then only keeping the 'good'
+nodes from the tree, a taxonomy is obtained.
+"""
+
 import numpy as np
 from frisr3.research_outputs import ResearchOutput
 from itertools import chain, product
