@@ -16,7 +16,6 @@ def index():
 
 
 @app.route('/organisation/<uuid>')
-@cross_origin()
 def organisation(uuid=None):
     service = OrganisationService()
     org = service.find_organisation(uuid)
@@ -36,7 +35,6 @@ def organisation(uuid=None):
 
 
 @app.route('/organisations')
-@cross_origin()
 def list_organisations():
     keyword = request.args.get('keyword')
     service = OrganisationService()
