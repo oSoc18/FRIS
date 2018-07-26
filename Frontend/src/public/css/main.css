@@ -165,22 +165,36 @@ path {
     stroke: #999
 }
 
-input[type=search] {
-    background-color: #eee;
+.search__input {
+    padding: 17px;
+    padding-left: 55px;
     border: none;
     color: #000;
     box-shadow: 1px;
     border-radius: 40px;
     display: block;
     margin: 0 auto;
-    padding: 17px;
-    padding-left: 55px;
+    background-color: #eee;
+
     font-size: 13px;
     color: gray;
-    background-image: url('http://i47.tinypic.com/r02vbq.png');
-    background-repeat: no-repeat;
-    background-position: left center;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.search__input > input {
+    background-color: #eee;
     outline: 0;
+    border: none;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.search__input > .fa {
+    line-height: 2em;
+    font-size: 1.2em;
+    margin-right: 1em;
 }
 
 .borderCircle {
@@ -212,7 +226,6 @@ input[type=search] {
     border-radius: 100px;
     width: 70%;
     transition: all .2s;
-    margin-right: -3.25rem
 }
 
 #research_button {
