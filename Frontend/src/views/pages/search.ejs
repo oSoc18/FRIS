@@ -15,10 +15,10 @@
                 <script>
                     var elem = document.getElementById('autocomplete');
                     elem.addEventListener('focusin', () => {
-                        elem.parentNode.dispatchEvent('focusin');
+                        elem.parentNode.dispatchEvent(new Event('focusin'));
                     });
                     elem.addEventListener('focusout', () => {
-                        elem.parentNode.dispatchEvent('focusout');
+                        elem.parentNode.dispatchEvent(new Event('focusout'));
                     });    
                 </script>
             </div>
