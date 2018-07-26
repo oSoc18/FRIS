@@ -206,10 +206,8 @@
                         //l(data.root_organisation.uuid);
                         var TTO;
                         for (var i = 0; i < TTOjson.length; i++) {
-                            if (TTOjson[i].uuid == data.root_organisation.uuid) {
+                            if (data.root_organisation.name == TTOjson[i].name) {
                                 TTO = TTOjson[i];
-                            } else if (data.root_organisation.name == "KU Leuven") {
-                                TTO = TTOjson[9];
                             }
                         }
                         var bodyContent = 'Dear ' + data.name +

@@ -2,9 +2,8 @@ from flask import Flask, request, jsonify, abort
 from flask_cors import CORS, cross_origin
 from frisr3.organisations import OrganisationService
 from frisr3.research_outputs import ResearchOutputService
-from lib.cluster import cluster_outputs
+from cluster import cluster_outputs
 
-from search import search_keyword
 import socket
 app = Flask(__name__)
 CORS(app)
@@ -33,23 +32,43 @@ def organisation(uuid=None):
         'root_organisation': root_org,
     })
 
-
-@app.route('/organisations')
-def list_organisations():
-    keyword = request.args.get('keyword')
-    service = OrganisationService()
-    #  TODO: do this properly ..
-    if keyword:
-        results = service.find_by_keyword(keyword)
-        return jsonify([org.attributes() for org in results])
-    return 'ok'
-
-
+# how many research outputs to consider for the search
+NUM_OUTPUTS = 100
 @app.route('/organisations/search')
 def organisation_search():
     keyword = request.args.get('keyword', '')
-    result = search_keyword(keyword)
-    return jsonify(result)
+
+    # find outputs
+    outputs = ResearchOutputService().outputs(
+        keyword=keyword,
+        count=NUM_OUTPUTS,
+    )
+
+    org_outputs = {}
+    for output in outputs:
+        for org in output.associated_organisations():
+            org_outputs.setdefault(org, []).append(output.attributes())
+    
+    orgs = OrganisationService().find_organisations(org_outputs.keys())
+    root_orgs = OrganisationService().find_organisations({
+        org.root_organisation_uuid()
+            for org in orgs
+            if not org.is_root_organisation() 
+    })
+    root_org_map = { o.uuid(): o for o in root_orgs }
+
+    data = [{
+        'organisation': {
+            **org.attributes(),
+            'root_organisation': root_org_map
+                .get(org.root_organisation_uuid())
+                .attributes(),
+        },
+        'researchOutputs': org_outputs[org.uuid()],
+    } for org in orgs]
+    
+    data.sort(key=lambda d: len(d['researchOutputs']), reverse=True)
+    return jsonify(data)
 
 
 @app.route('/organisation/<uuid>/output_cluster')
