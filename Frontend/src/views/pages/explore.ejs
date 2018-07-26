@@ -45,7 +45,7 @@
             $(function () {
                 var uuid = getUrlParameter('uuid');
                 var quickSearch = getUrlParameter('keyword');
-                $.getJSON("http://" + href() + ":5000/organisation/" + uuid + "/output_cluster", function (data) {
+                $.getJSON("https://" + href() + ":5000/organisation/" + uuid + "/output_cluster", function (data) {
                     l(data);
                     $('#content').append("<a class='breadcrumb-item  white menu-item ' href='/keyword" +
                         quickSearch + "'> Search</a> / "); // show the name in the search bar

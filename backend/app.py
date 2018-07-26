@@ -90,6 +90,6 @@ if __name__ == '__main__':
     if(IP == '127.0.1.1'):
         hostname = socket.gethostname()
         IP = socket.gethostbyname(hostname)
-        app.run(host='openexpertise.be', port=5000, debug=True)
+        app.run(host='openexpertise.be', port=5000, debug=True, ssl_context=('/etc/letsencrypt/live/openexpertise.be/cert.pem', '/etc/letsencrypt/live/openexpertise.be/privkey.pem'))
     else:
         app.run(debug=True)
