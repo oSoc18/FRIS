@@ -119,3 +119,11 @@ function replaceAll(str, find, replace) {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+function locationProtocol(){
+	if (location.protocol != 'https:'){
+		return 'https:';
+	}else{
+		return 'http:';
+	}
+}
