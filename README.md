@@ -14,42 +14,32 @@ Partners:
  - https://www.ewi-vlaanderen.be/
  - https://www.researchportal.be/nl
 
+# Setup
+## Requirements
+ - Node.js v8
+ - npm v5.6.0
+ - Python3 3.7.0
 
-## Clone repository and Install important programs
+
+## 1. Clone the repository
 
 ```bash 
 git clone https://github.com/oSoc18/FRIS.git
 ```
 
-For our webapp you will need a few programms installed (newer versions might work):
- - Node.js v8
- - npm v5.6.0
- - Python3 3.7.0
+## 2. Install dependencies
 
-## Before you run 
+For the front-end:
+- Navigate to the `Frontend/src` folder.
+- run `npm install`
 
-Before you can run the webapp you'll have to :
-(NOTE: all this is done in command line interface)
- - Navigate to FRIS\Frontend\src
-```bash 
-cd \FRIS\Frontend\src
-```
- - Install the necessary node modules.
-```bash 
-npm install
-```
- - Navigate to FRIS\Backend
-```bash 
-cd \FRIS\Backend
-```
- - Get all the python libraries.
-```bash 
-pip3 install -r requirements.txt
-```
+For the back-end:
+- Navigate to the `backend` folder.
+- run `pip3 install -r requirements.txt`.
 
 NOTE:
-	If on windows there could be some problems with lxml library.
-	to fix this go to: https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml 
+	On windows there could be some problems with lxml library.
+	to fix this go to https://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml 
 	and download the lates version of lxml.
 	than navigate to the downloaded file en run install the file.	
 ```bash
