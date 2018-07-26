@@ -4,8 +4,14 @@ from frisr3.organisations import OrganisationService
 from frisr3.research_outputs import ResearchOutputService
 from cluster import cluster_outputs
 
+from flask_caching import Cache
+
 import socket
 app = Flask(__name__)
+cache = Cache(app, config={
+    'CACHE_TYPE': 'simple',
+    'CACHE_DEFAULT_TIMEOUT': 60*60*24,
+})
 CORS(app)
 
 
@@ -15,6 +21,7 @@ def index():
 
 
 @app.route('/organisation/<uuid>')
+@cache.cached()
 def organisation(uuid=None):
     service = OrganisationService()
     org = service.find_organisation(uuid)
@@ -35,6 +42,7 @@ def organisation(uuid=None):
 # how many research outputs to consider for the search
 NUM_OUTPUTS = 100
 @app.route('/organisations/search')
+@cache.cached()
 def organisation_search():
     keyword = request.args.get('keyword', '')
 
@@ -76,6 +84,7 @@ def organisation_search():
 
 
 @app.route('/organisation/<uuid>/output_cluster')
+@cache.cached()
 def organisation_output_cluster(uuid):
     organisation_service = OrganisationService()
     org = organisation_service.find_organisation(uuid)
