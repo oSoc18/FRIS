@@ -1,3 +1,26 @@
+"""
+The main challenge with clustering publications is that the keywords are very
+specific, and therefore don't overlap much. A simple similarity measure based
+on the keyword set does not perform well at all in this case.
+
+To get around that, we tried to predict the keywords that a publication _should_
+be labeled with. This was done by simply measuring the conditional probabilities
+for keyword co-occurences from the dataset.
+With some simple bayesian statistics, we then calculated for each publication
+and keyword the probability that the publication should be labelled with the
+keyword, obtaining a "fuzzy keyword set".
+This procedure of course introduces a lot of redundancy in the data. To do away
+with that, we applied PCA to the fuzzy keyword sets. We then clustered the
+result using ward's method.
+
+A taxonomy is then extracted from the clustering tree. For this. we first
+assigned to each node the keyword that correlates best with being contained in
+the subtree below this node. One can then define the 'node quality' as the
+correlation coefficient of a node with its keyword (i.e. how well this node
+performs as a classifier for the keyword). By then only keeping the 'good'
+nodes from the tree, a taxonomy is obtained.
+"""
+
 import numpy as np
 from frisr3.research_outputs import ResearchOutput
 from itertools import chain, product
@@ -7,9 +30,27 @@ from scipy.cluster.hierarchy import fcluster
 from scipy.spatial import distance
 from scipy.spatial.distance import squareform
 
-from typing import Iterable, List
+def cluster_outputs(outputs):
+    """ perform the clustering routine """
+    keywords, kw_nums = get_keyword_set(outputs)
+    kw_mapping = keyword_mapping(keywords, outputs)
+
+    # discard outputs without keywords
+    outputs = np.array([o for o in outputs if kw_mapping[o.uuid()]])
+    n = len(outputs)
+
+    conditionals = conditional_keyword_probs(kw_nums, kw_mapping)
+    kw_matrix = keyword_matrix(outputs, kw_nums, kw_mapping)
+
+    kw_fsets = keyword_fuzzsets(kw_matrix, conditionals)
+    projected = pca(kw_fsets)
+
+    distances = distance.pdist(projected, 'euclidean')
+    Z = hierarchy.ward(distances)
+    return assemble_tree(keywords, outputs, Z, kw_fsets)
 
 def get_keyword_set(outputs):
+    """ gather the set of all keywords occuring in the outputs"""
     kw_set = set(chain.from_iterable((o.keywords() for o in outputs)))
     kws = np.array(list(kw_set))
 
@@ -17,7 +58,13 @@ def get_keyword_set(outputs):
     return (kws, kw_nums)
 
 
-def keyword_mapping(keyword_set, outputs) -> dict:
+def keyword_mapping(keyword_set, outputs):
+    """
+    Create a mapping between outputs and the keywords associated with them.
+    In addition to the keywords the research outputs have been labeled with in
+    the FRIS database, titles and abstracts are searched for known keywords
+    in order to get data on untagged outputs.
+    """
     mapping = {}
     for output in outputs:
         keywords = mapping.setdefault(output.uuid(), set())
@@ -43,6 +90,10 @@ def keyword_mapping(keyword_set, outputs) -> dict:
 
 
 def keyword_matrix(outputs, kw_nums, kw_mapping):
+    """
+    Create a boolean matrix that has outputs for rows and keywords for columns,
+    that is True if the output was labelled with the keyword.
+    """
     mat = np.zeros((len(outputs), len(kw_nums)), dtype=np.bool)
     for output_num, output in enumerate(outputs):
         for kw in kw_mapping[output.uuid()]:
@@ -50,21 +101,8 @@ def keyword_matrix(outputs, kw_nums, kw_mapping):
     return mat
 
 
-def keyword_correlations(kw_nums, kw_mapping):
-    n = len(kw_nums)
-    # count co-occurences of keywords
-    mat = np.zeros((n, n), dtype=np.int32)
-    for kw_set in kw_mapping.values():
-        nums = [kw_nums[k] for k in kw_set]
-        for k1 in nums:
-            for k2 in nums:
-                mat[k1, k2] += 1
-    counts = np.diagonal(mat)
-    correlation = mat / (counts + counts[:, np.newaxis] - mat)
-    return correlation
-
-
 def conditional_keyword_probs(kw_nums, kw_mapping):
+    """ Compute the conditional probabilities between having keywords """
     n = len(kw_nums)
 
     # count co-occurences of keywords
@@ -80,6 +118,12 @@ def conditional_keyword_probs(kw_nums, kw_mapping):
 
 
 def keyword_fuzzsets(kw_matrix, conditionals):
+    """
+    The keyword data is very sparse and incomplete. This procedure creates a
+    bayesian model of keyword co-occurence, and then uses that to predict the
+    chance of an output having a certain keyword. This results in a fuzzy
+    keyword set.
+    """
     kw_fsets = np.zeros(kw_matrix.shape, dtype=np.float64)
     neg_conditionals = 1 - conditionals
 
@@ -89,6 +133,7 @@ def keyword_fuzzsets(kw_matrix, conditionals):
 
 
 def pca(kw_fsets, retained_variance=0.99):
+    """ Extract principal components from the keyword fuzzsets """
     corr = np.corrcoef(kw_fsets.T)
     eig_vals, eig_vecs = np.linalg.eigh(corr)
 
@@ -106,6 +151,10 @@ def pca(kw_fsets, retained_variance=0.99):
 
 # Matthews Correlation Coefficient
 def mcc(data, reference):
+    """
+    Calculate the Matthews correlation coefficient between being contained in
+    the given data set and having a certain keyword.
+    """
     s, _ = data.shape
     n, _= reference.shape
     
@@ -124,34 +173,17 @@ def mcc(data, reference):
     return mcc
 
 
-def fix_references(parents, deleted):
-    n = len(deleted) + 1
-    for i in reversed(range(2*n-1)):
-        if deleted[parents[i] - n]:
-            parents[i] = parents[parents[i]]
-
-
 MCC_TRESHOLD = 0.2
 MIN_LEAF_SIZE = 5
 MAX_LEAF_SIZE = 20
 
-def cluster_outputs(outputs):
-    keywords, kw_nums = get_keyword_set(outputs)
-    kw_mapping = keyword_mapping(keywords, outputs)
-
-    # discard outputs without keywords
-    outputs = np.array([o for o in outputs if kw_mapping[o.uuid()]])
+def assemble_tree(keywords, outputs, Z, kw_fsets):
+    """
+    Assemble a hierarchy for given keywords and outputs, based on the given
+    cluster tree. This is done by removing bad internal nodes from the cluster
+    tree, until a half-decent result is obtained.
+    """
     n = len(outputs)
-
-    conditionals = conditional_keyword_probs(kw_nums, kw_mapping)
-    kw_matrix = keyword_matrix(outputs, kw_nums, kw_mapping)
-
-    kw_fsets = keyword_fuzzsets(kw_matrix, conditionals)
-    projected = pca(kw_fsets)
-
-    distances = distance.pdist(projected, 'euclidean')
-    Z = hierarchy.ward(distances)
-
 
     # compute membership vectors for each node in the cluster tree
     cluster_elems = np.zeros((2 * n - 1, n), dtype=np.bool)
@@ -172,6 +204,7 @@ def cluster_outputs(outputs):
     # make the root its own parent
     parents[2*n-2] = 2*n-2
 
+    # intialize parent references
     for i in reversed(range(n-1)):
         children = Z[i, 0:2].astype(np.int)
         parents[children] = n + i
@@ -191,7 +224,8 @@ def cluster_outputs(outputs):
             deleted[i] = True
             is_leaf_node[parents[n+i] - n] = True
 
-    # flatten leaf nodes
+    # flatten leaf nodes (so that there are no nodes that have both output
+    # children and node children)
     for i in reversed(range(n - 1)):
         if deleted[parents[n+i] - n]:
             # n+i's parent was deleted, find a new one
@@ -254,3 +288,12 @@ def cluster_outputs(outputs):
     tree = nodes[2*n-2]
     tree['name'] = 'root'
     return tree
+
+def fix_references(parents, deleted):
+    """
+    Assign children of deleted parent to their lowest non-deleted ancestor.
+    """
+    n = len(deleted) + 1
+    for i in reversed(range(2*n-1)):
+        if deleted[parents[i] - n]:
+            parents[i] = parents[parents[i]]
