@@ -336,8 +336,8 @@
                                 var htmlElt = [];
                                 htmlElt.push("<ul class='list-group'>");
                                 publications.forEach(elt => {
-                                    htmlElt.push("<li class='list-group-item'>" + elt.num +
-                                        "<button class='btn btn-warning align-right float-right'>details</button></li>"
+                                    htmlElt.push("<li class='list-group-item'><a target='_blank' href='https://www.researchportal.be/en/search?search_api_fulltext="+elt.num+"'>" + elt.num +
+                                        "</a><button class='btn btn-warning align-right float-right'>details</button></li>"
                                     );
                                 });
                                 htmlElt.push("</ul>");
