@@ -39,13 +39,17 @@ def organisation(uuid=None):
         'root_organisation': root_org,
     })
 
+
 # how many research outputs to consider for the search
 NUM_OUTPUTS = 100
 @app.route('/organisations/search')
-@cache.cached()
 def organisation_search():
     keyword = request.args.get('keyword', '')
+    data = find_organisations(keyword)
+    return jsonify(data)
 
+@cache.memoize()
+def find_organisations(keyword):
     # find outputs
     outputs = ResearchOutputService().outputs(
         keyword=keyword,
@@ -80,11 +84,13 @@ def organisation_search():
         })
     
     data.sort(key=lambda d: len(d['researchOutputs']), reverse=True)
-    return jsonify(data)
+    return data
+
+
 
 
 @app.route('/organisation/<uuid>/output_cluster')
-@cache.cached()
+@cache.memoize()
 def organisation_output_cluster(uuid):
     organisation_service = OrganisationService()
     org = organisation_service.find_organisation(uuid)
