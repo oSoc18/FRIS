@@ -58,13 +58,13 @@ pip install 'lxml-4.2.3-cp37-cp37m-win_amd64.whl'
 
 ## Run
 
-Now u can start running the services :
+Now you can start running the services :
 
 ### Run webserver
 
  - Navigate back to Frontend\src\ and run 'app.js' to launche the website.
 ```bash 
-node \app.js
+node app.js
 ```
 
 ### Run dataserver (Python)
@@ -75,10 +75,11 @@ python3 app.py
 
 Note: if python3 is the default python 
 ```bash 
-python app.py  &
+python app.py  
 ```
  - You also need to create a nat in the firewall (linux command)
 ```bash 
 iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 ```
+Note: You can also launch the scripts in background, you need to add " &" at the end of the script
 Note: We used port 8080 for our service
