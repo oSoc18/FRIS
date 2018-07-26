@@ -196,7 +196,6 @@ def cluster_outputs(outputs):
             # n+i's parent is a leaf node; flatten them!
             deleted[i] = True
 
-
     fix_references(parents, deleted)
 
     is_leaf_node = np.zeros(n-1, dtype=np.bool)
@@ -253,15 +252,16 @@ def cluster_outputs(outputs):
                 'name': keywords[kws[n+i]],
                 'mcc': cluster_mcc[n+i],
                 'size': 0,
+                'research_outputs': [],
                 'children': [],
             }
 
     for i in range(n):
         node = nodes[parents[i]]
+        node['research_outputs'].append(outputs[i].title())
         node['size'] += 1
     
     for i in range(n-2):
-        print(n+i)
         if not deleted[i]:
             node = nodes.pop(n+i)
             parent = nodes[parents[n+i]]
