@@ -32,17 +32,6 @@ def organisation(uuid=None):
         'root_organisation': root_org,
     })
 
-
-@app.route('/organisations')
-def list_organisations():
-    keyword = request.args.get('keyword')
-    service = OrganisationService()
-    #  TODO: do this properly ..
-    if keyword:
-        results = service.find_by_keyword(keyword)
-        return jsonify([org.attributes() for org in results])
-    return 'ok'
-
 # how many research outputs to consider for the search
 NUM_OUTPUTS = 100
 @app.route('/organisations/search')
